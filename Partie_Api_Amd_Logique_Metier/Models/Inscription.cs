@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
+using Partie_Api_Amd_Logique_Metier;
 
-namespace APIFORDATA.Models
+namespace Partie_Api_Amd_Logique_Metier.Models
 {
     public class Inscription
     {
@@ -25,8 +26,17 @@ namespace APIFORDATA.Models
 
         // Statut d'inscription (par exemple : "En cours", "Terminé", "Annulé")
         [Required]
-        [StringLength(50)]
-        public string Statut { get; set; }
+        public Statut Statut { get; set; }
 
+    }
+}
+
+namespace Partie_Api_Amd_Logique_Metier
+{
+    public enum Statut
+    {
+        InProgress, 
+        Completed,
+        Canceled
     }
 }

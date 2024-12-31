@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace APIFORDATA.Models
+namespace Partie_Api_Amd_Logique_Metier.Models
 {
     public class Media
     {
@@ -21,6 +21,7 @@ namespace APIFORDATA.Models
 
         [Required]
         public int FormationId { get; set; }
+
         public Formation Formation { get; set; }
     }
 }

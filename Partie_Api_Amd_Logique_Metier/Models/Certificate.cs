@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace APIFORDATA.Models
+namespace Partie_Api_Amd_Logique_Metier.Models
 {
     public class Certificate
     {
@@ -10,7 +10,7 @@ namespace APIFORDATA.Models
 
         [Required]
         [StringLength(100, ErrorMessage = "Le titre ne doit pas dépasser 100 caractères.")]
-        public string Title { get; set; }
+        public string Titre { get; set; }
 
         [Required]
         [DataType(DataType.Date)]

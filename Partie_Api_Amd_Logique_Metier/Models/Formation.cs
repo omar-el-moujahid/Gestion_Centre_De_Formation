@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace APIFORDATA.Models
+namespace Partie_Api_Amd_Logique_Metier.Models
 {
     public class Formation
     {
@@ -35,12 +36,16 @@ namespace APIFORDATA.Models
 
         [Required]
         [StringLength(100)]
-        public string EstimationDeDurée { get; set; } // Example: "20 heures"
-
+        public string EstimationDeDuree { get; set; } // Example: "20 heures"
+        [JsonIgnore]
         public ICollection<Inscription> Inscriptions { get; set; }
+        [JsonIgnore] 
         public ICollection<Evaluation> Evaluations { get; set; }
+        [JsonIgnore]
         public ICollection<Certificate> Certificates { get; set; }
+        [JsonIgnore] 
         public ICollection<Payment> Payment { get; set; }
+        [JsonIgnore] 
         public ICollection<Media> Media { get; set; }
     }
 

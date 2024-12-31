@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace APIFORDATA.Models
+namespace Partie_Api_Amd_Logique_Metier.Models
 {
     public class Category
     {
@@ -14,7 +15,7 @@ namespace APIFORDATA.Models
 
         [StringLength(500, ErrorMessage = "La description ne doit pas dépasser 500 caractères.")]
         public string Description { get; set; }
-
+        [JsonIgnore]
         public ICollection<Formation> Formations { get; set; }
     }
 }

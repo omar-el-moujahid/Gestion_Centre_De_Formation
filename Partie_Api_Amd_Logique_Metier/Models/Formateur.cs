@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace APIFORDATA.Models
+namespace Partie_Api_Amd_Logique_Metier.Models
 {
     public class Formateur:User
     {
@@ -16,6 +17,7 @@ namespace APIFORDATA.Models
         [Required]
         [Url]
         public string LienLinkedIn { get; set; }
+        [JsonIgnore]
         public ICollection<Formation> Formations { get; set; }
 
         //[StringLength(50)]
