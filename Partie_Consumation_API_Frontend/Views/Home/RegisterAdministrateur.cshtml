@@ -1,0 +1,49 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "RegisterAdministrateur";
+}
+
+<h2>Administrateur Login</h2>
+
+<div id="loginFormAdmin" class="form-content" style="margin-left:19%">
+    <h2>Login</h2>
+    <form>
+        <div class="form-group">
+            <label for="loginEmail" class="form-label">Email</label>
+            <input type="email" id="loginEmail" class="form-control" placeholder="Entrez votre email" required style="width: 350px;">
+        </div>
+        <div class="form-group">
+            <label for="loginPassword" class="form-label">Mot de passe</label>
+            <input type="password" id="loginPassword" class="form-control" placeholder="Entrez votre mot de passe" required style="width: 350px;">
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Se connecter</button>
+    </form>
+</div>
+
+@* @using (Html.BeginForm("RegisterAdministrateur", "Home", FormMethod.Post)) *@
+@* { *@
+@*     @Html.AntiForgeryToken() *@
+
+@*     <div class="form-container"> *@      
+
+@*         <!-- Champ Email --> *@
+@*         <div class="form-group"> *@
+@*             @Html.LabelFor(m => m.Email, new { @class = "form-label" }) *@
+@*             @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "Entrez votre email" }) *@
+@*             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" }) *@
+@*         </div> *@
+
+@*         <!-- Champ Mot de passe --> *@
+@*         <div class="form-group"> *@
+@*             @Html.LabelFor(m => m.MotDePasse, new { @class = "form-label" }) *@
+@*             @Html.TextBoxFor(m => m.MotDePasse, new { @class = "form-control", type = "password", placeholder = "Entrez votre mot de passe" }) *@
+@*             @Html.ValidationMessageFor(m => m.MotDePasse, "", new { @class = "text-danger" }) *@
+@*         </div> *@
+
+@*         <br /> *@
+@*         <button type="submit" class="btn btn-primary">Login</button> *@
+@*     </div> *@
+@* } *@
