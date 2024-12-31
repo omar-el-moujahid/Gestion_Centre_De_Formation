@@ -1,0 +1,369 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Courses";
+}
+<style>
+    .categories-list {
+        display: flex; /* Affiche les éléments en ligne */
+        list-style: none; /* Supprime les puces */
+        padding-left: 10%; /* Supprime le padding par défaut */
+        margin: 0; /* Supprime la marge par défaut */
+        gap: 15px; /* Espace entre les éléments */
+        text-align: center;
+        align-items: center;
+    }
+
+        .categories-list li {
+            display: inline-block; /* Affiche les éléments en ligne */
+        }
+
+            .categories-list li a {
+                text-decoration: none; /* Supprime le soulignement des liens */
+                color: #0073e6; /* Couleur du texte */
+                font-size: 16px; /* Taille de la police */
+                padding: 5px 10px; /* Espace intérieur */
+                border: 1px solid #0073e6; /* Bordure */
+                border-radius: 5px; /* Coins arrondis */
+                transition: background-color 0.3s, color 0.3s; /* Animation au survol */
+            }
+
+                .categories-list li a:hover {
+                    background-color: #0073e6; /* Fond au survol */
+                    color: #fff; /* Texte blanc au survol */
+                }
+</style>
+
+<div class="categories">
+    <div class="container-xxl py-1">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Courses Categories</h6>
+            <h1 class="mb-5">Categories</h1>
+
+            <div style="text-align: center;">
+                <!-- Liste déroulante pour les catégories -->
+                <select id="categorySelect" class="form-select mb-3" style="display: inline-block;max-width: 200px; margin: 0 auto;">
+                    <option value="">All Categories</option>
+                    <option value="programmation">Programmation</option>
+                    <option value="design">Design</option>
+                    <option value="marketing-digital">Marketing Digital</option>
+                    <option value="langues">Langues</option>
+                    <option value="sciences">Sciences</option>
+                    <option value="business">Business</option>
+                </select>
+
+                <!-- Liste déroulante pour la durée -->
+                <select id="durationSelect" class="form-select mb-3" style="display: inline-block;max-width: 200px; margin: 0 auto;">
+                    <option value="">All Durations</option>
+                    <option value="0-1">0 - 1 hour</option>
+                    <option value="1-3">1 - 3 hours</option>
+                    <option value="3-5">3 - 5 hours</option>
+                    <option value="5+">5+ hours</option>
+                </select>
+
+                <!-- Liste déroulante pour les prix -->
+                <select id="priceSelect" class="form-select mb-3" style="display: inline-block;max-width: 200px; margin: 0 auto;">
+                    <option value="">All Prices</option>
+                    <option value="0-50">$0 - $50</option>
+                    <option value="50-100">$50 - $100</option>
+                    <option value="100-150">$100 - $150</option>
+                    <option value="150-200">$150 - $200</option>
+                    <option value="200+">$200+</option>
+                </select>
+
+                <!-- Bouton de recherche -->
+                <button type="button" class="btn text-primary ms-9" style="display: inline-block;" data-bs-toggle="modal" data-bs-target="#searchModal">
+                    <i class="fa fa-search" style="font-size: 30px;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <!-- Full Screen Search Start --> *@
+@* <div class="modal fade" id="searchModal" tabindex="-1"> *@
+@*     <div class="modal-dialog modal-fullscreen"> *@
+@*         <div class="modal-content" style="background: rgba(9, 30, 62, .7);"> *@
+@*             <div class="modal-header border-0"> *@
+@*                 <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button> *@
+@*             </div> *@
+@*             <div class="modal-body d-flex align-items-center justify-content-center"> *@
+@*                 <div class="input-group" style="max-width: 600px;"> *@
+@*                     <input type="text" class="form-control bg-transparent border-primary p-3" placeholder="Type search keyword"> *@
+@*                     <button class="btn btn-primary px-4" onclick="displayProducts"><i class="bi bi-search"></i></button> *@
+@*                 </div> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@
+@* <!-- Full Screen Search End --> *@
+
+<!-- Modal de recherche -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
+            <div class="modal-header border-0">
+                <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex align-items-center justify-content-center">
+                <div class="input-group" style="max-width: 600px;">
+                    <input type="text" id="searchInput" class="form-control bg-transparent border-primary p-3" placeholder="Entrez votre recherche...">
+                    <button class="btn btn-primary px-4" onclick="filterProducts()">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Courses Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Courses</h6>
+            <h1 class="mb-5">Popular Courses</h1>
+        </div>
+        <div class="row g-4 justify-content-center" id="coursesList">
+            <!-- Les cours seront injectés ici dynamiquement -->
+        </div>
+    </div>
+</div>
+
+<!-- Script JavaScript -->
+@* // productList: @Html.Raw(Json.Serialize(Model.ProductList)) *@
+<script>
+    // Données de produits (exemple)
+    const productValues = {
+
+
+        productList: [
+            { id: 1, title: "Web Design & Development Course for Beginners", description: "Learn web design from scratch.", category: "programmation", price: "$149.00", instructor: "John Doe", duration: "1.49 Hrs", students: 30, image: "~/img/course-2.jpg" },
+            { id: 2, title: "Digital Marketing Masterclass", description: "Master the art of digital marketing.", category: "design", price: "$199.00", instructor: "Jane Doe", duration: "3.30 Hrs", students: 45, image: "~/img/course-3.jpg" },
+            // Ajoutez d'autres produits ici
+        ]
+    };
+
+    let searchInput = ""; // Valeur de recherche
+    let currentCategory = undefined; // Catégorie actuelle (optionnelle)
+
+
+
+
+
+          const categorySelect = document.getElementById('categorySelect');
+
+    // Ajouter un gestionnaire d'événements pour la sélection de catégorie
+    categorySelect.addEventListener('change', (event) => {
+        currentCategory = event.target.value.toLowerCase(); // Mettre à jour la catégorie actuelle
+        console.log("Catégorie sélectionnée :", currentCategory); // Afficher la catégorie dans la console
+
+        // Filtrer les produits si une catégorie est sélectionnée
+        if (currentCategory!=undefined) {
+            filterProducts();
+        }
+    });
+
+
+        let currentDurationRange = undefined; // Plage de durée actuelle
+
+    // Sélectionner la liste déroulante pour la durée
+    const durationSelect = document.getElementById('durationSelect');
+
+    // Ajouter un gestionnaire d'événements pour la sélection de durée
+    durationSelect.addEventListener('change', (event) => {
+        currentDurationRange = event.target.value; // Mettre à jour la plage de durée actuelle
+        console.log("Plage de durée sélectionnée :", currentDurationRange); // Afficher la plage de durée dans la console
+
+        // Filtrer les produits si une plage de durée est sélectionnée
+        if (currentDurationRange!=undefined) {
+            filterProducts();
+        }
+    });
+
+
+
+    let currentPriceRange = undefined; // Plage de prix actuelle
+
+    // Sélectionner la liste déroulante pour le prix
+    const priceSelect = document.getElementById('priceSelect');
+
+    // Ajouter un gestionnaire d'événements pour la sélection de prix
+    priceSelect.addEventListener('change', (event) => {
+        currentPriceRange = event.target.value; // Mettre à jour la plage de prix actuelle
+        console.log("Plage de prix sélectionnée :", currentPriceRange); // Afficher la plage de prix dans la console
+
+        // Filtrer les produits si une plage de prix est sélectionnée
+        if (currentPriceRange!=undefined) {
+            filterProducts();
+        }
+    });
+
+
+
+
+    // Fonction pour filtrer les produits
+    function filterProducts() {
+        // Récupérer la valeur de l'entrée de recherche
+        searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
+
+        // Filtrer les produits
+        let productsTemp = productValues.productList;
+
+        if (searchInput) {
+            productsTemp = productsTemp.filter(product =>
+                product.title.toLowerCase().includes(searchInput) ||
+                product.duration.toString().includes(searchInput) ||
+                product.category.toString().includes(searchInput) ||
+                product.description.toLowerCase().includes(searchInput)
+            );
+        }
+
+        // Filtrer par plage de durée
+        if (currentDurationRange) {
+        const [min, max] = currentDurationRange.split('-').map(Number); // Convertir la plage de durée en nombres
+        productsTemp = productsTemp.filter(product => {
+            const duration = parseFloat(product.duration.replace(' Hrs', '')); // Convertir la durée en nombre
+            if (max) {
+                return duration >= min && duration <= max; // Plage de durée définie (ex: 1 - 3 hours)
+            } else {
+                return duration >= min; // Plage de durée ouverte (ex: 5+ hours)
+            }
+        });
+    }
+
+
+
+            // Filtrer par intervalle de prix
+    if (currentPriceRange) {
+        const [min, max] = currentPriceRange.split('-').map(Number); // Convertir la plage de prix en nombres
+        productsTemp = productsTemp.filter(product => {
+            const price = parseFloat(product.price.replace('$', '')); // Convertir le prix en nombre
+            if (max) {
+                return price >= min && price <= max; // Plage de prix définie (ex: $50 - $100)
+            } else {
+                return price >= min; // Plage de prix ouverte (ex: $200+)
+            }
+        });
+    }
+
+
+        if (currentCategory) {
+            productsTemp = productsTemp.filter(product =>
+                product.category === currentCategory
+            );
+        }
+
+
+
+        // Afficher les résultats filtrés
+        displayProducts(productsTemp);
+    }
+
+    // Fonction pour afficher les produits
+    function displayProducts(products) {
+        const coursesContainer = document.getElementById("coursesList");
+        coursesContainer.innerHTML = ""; // Vider le contenu actuel
+
+        products.forEach(product => {
+            const courseHtml = `
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="course-item bg-light">
+                        <div class="position-relative overflow-hidden">
+                            <img class="img-fluid" src=https://localhost:7138/img/course-2.jpg alt="${product.title}">
+                            <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
+                                <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">Join Now</a>
+                            </div>
+                        </div>
+                        <div class="text-center p-4 pb-0">
+                            <h3 class="mb-0">${product.price}</h3>
+                            <div class="mb-3">
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small>(123)</small>
+                            </div>
+                            <h5 class="mb-4">${product.title}</h5>
+                        </div>
+                        <div class="d-flex border-top">
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-user-tie text-primary me-2"></i>${product.instructor}</small>
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-clock text-primary me-2"></i>${product.duration}</small>
+                            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>${product.students} Students</small>
+                        </div>
+                    </div>
+                </div>
+            `;
+            coursesContainer.innerHTML += courseHtml;
+        });
+    }
+
+    // Afficher tous les produits au chargement de la page
+    displayProducts(productValues.productList);
+</script>
+
+<!-- Testimonial Start -->
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
+            <h5 class="fw-bold text-primary text-uppercase">Testimonial</h5>
+            <h1 class="mb-0">What Our Clients Say About Our Digital Services</h1>
+        </div>
+        <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.6s">
+            <div class="testimonial-item bg-light my-4">
+                <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                    <img class="img-fluid rounded" src="~/img/testimonial-1.jpg" style="width: 60px; height: 60px;">
+                    <div class="ps-4">
+                        <h4 class="text-primary mb-1">Ahlam Banani</h4>
+                        <small class="text-uppercase">Student</small>
+                    </div>
+                </div>
+                <div class="pt-4 pb-5 px-5">
+                    The team delivered exactly what we needed, helping us grow our online presence and increase sales. Their expertise made all the difference.
+                </div>
+            </div>
+            <div class="testimonial-item bg-light my-4">
+                <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                    <img class="img-fluid rounded" src="~/img/testimonial-2.jpg" style="width: 60px; height: 60px;">
+                    <div class="ps-4">
+                        <h4 class="text-primary mb-1">Khalid Kanane</h4>
+                        <small class="text-uppercase">Student</small>
+                    </div>
+                </div>
+                <div class="pt-4 pb-5 px-5">
+                    The team was professional and responsive, and the results speak for themselves. Highly recommend
+                </div>
+            </div>
+            <div class="testimonial-item bg-light my-4">
+                <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                    <img class="img-fluid rounded" src="~/img/testimonial-3.jpg" style="width: 60px; height: 60px;">
+                    <div class="ps-4">
+                        <h4 class="text-primary mb-1">Fahd Wassil</h4>
+                        <small class="text-uppercase">Student</small>
+                    </div>
+                </div>
+                <div class="pt-4 pb-5 px-5">
+                    The team delivered exactly what we needed, helping us grow our online presence and increase sales. Their expertise made all the difference.
+                </div>
+            </div>
+            <div class="testimonial-item bg-light my-4">
+                <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                    <img class="img-fluid rounded" src="~/img/testimonial-4.jpg" style="width: 60px; height: 60px;">
+                    <div class="ps-4">
+                        <h4 class="text-primary mb-1">Wissal Hamil</h4>
+                        <small class="text-uppercase">Student</small>
+                    </div>
+                </div>
+                <div class="pt-4 pb-5 px-5">
+                    The team was knowledgeable, professional, and always available to answer our questions. Thanks to their efforts, our online visibility has improved, and we’ve seen a noticeable increase in customer inquiries.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonial End -->
+</div>
+
+
