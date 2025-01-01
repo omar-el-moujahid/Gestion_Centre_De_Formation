@@ -11,6 +11,10 @@ namespace Partie_Api_Amd_Logique_Metier.Models
         [StringLength(200, ErrorMessage = "Le titre ne doit pas dépasser 200 caractères.")]
         public string Title { get; set; }
 
+        // pour avoir des vedio ou peut n impotre sequenciere
+        [Required]
+        public int nombredesequence { get; set; }
+
         // Type du média (e.g., "Vidéo", "PDF")
         [Required]
         [StringLength(50, ErrorMessage = "Le type ne doit pas dépasser 50 caractères.")]

@@ -17,6 +17,9 @@ namespace Partie_Api_Amd_Logique_Metier.Models
         public string Titre { get; set; }
 
         [Required]
+        public string url_image { get; set; }
+
+        [Required]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
