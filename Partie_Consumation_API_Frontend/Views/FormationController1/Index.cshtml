@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Partie_Api_Amd_Logique_Metier.Models.Formation
+
+<h1>Détails de la Formation</h1>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <td>@Model.Id</td>
+    </tr>
+    <tr>
+        <th>Titre</th>
+        <td>@Model.Titre</td>
+    </tr>
+    <tr>
+        <th>URL de l'image</th>
+        <td>@Model.url_image</td>
+    </tr>
+    <tr>
+        <th>CategoryId</th>
+        <td>@Model.CategoryId</td>
+    </tr>
+    <tr>
+        <th>Catégorie</th>
+        <td>@Model.Category?.Name</td> <!-- Remplacez "Nom" par la propriété que vous voulez afficher -->
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>@Model.Description</td>
+    </tr>
+    <tr>
+        <th>FormateurId</th>
+        <td>@Model.FormateurId</td>
+    </tr>
+    <tr>
+        <th>Formateur</th>
+        <td>@Model.Formateur?.Name</td> <!-- Remplacez "Nom" par la propriété que vous voulez afficher -->
+    </tr>
+    <tr>
+        <th>Prix</th>
+        <td>@Model.Prix</td>
+    </tr>
+    <tr>
+        <th>Estimation de Durée</th>
+        <td>@Model.EstimationDeDuree</td>
+    </tr>
+</table>
+
+<h2>Informations complémentaires</h2>
+<ul>
+    <li><strong>Nombre d'Inscriptions :</strong> @Model.Inscriptions?.Count ?? 0</li>
+    <li><strong>Nombre d'Évaluations :</strong> @Model.Evaluations?.Count ?? 0</li>
+    <li><strong>Nombre de Certificats :</strong> @Model.Certificates?.Count ?? 0</li>
+    <li><strong>Nombre de Paiements :</strong> @Model.Payment?.Count ?? 0</li>
+    <li><strong>Nombre de Médias :</strong> @Model.Media?.Count ?? 0</li>
+</ul>

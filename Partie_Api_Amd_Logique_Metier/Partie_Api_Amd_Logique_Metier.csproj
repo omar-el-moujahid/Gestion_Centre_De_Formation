@@ -182,6 +182,10 @@
     <Compile Include="Migrations\202412311431209_InitialCreate.Designer.cs">
       <DependentUpon>202412311431209_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501011223030_ajouter colonne de sequence de url media et formation .cs" />
+    <Compile Include="Migrations\202501011223030_ajouter colonne de sequence de url media et formation .Designer.cs">
+      <DependentUpon>202501011223030_ajouter colonne de sequence de url media et formation .cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Category.cs" />
@@ -219,6 +223,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Media\htmlcssjs.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -342,6 +347,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202412311431209_InitialCreate.resx">
       <DependentUpon>202412311431209_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501011223030_ajouter colonne de sequence de url media et formation .resx">
+      <DependentUpon>202501011223030_ajouter colonne de sequence de url media et formation .cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

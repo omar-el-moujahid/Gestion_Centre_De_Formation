@@ -78,7 +78,14 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
             {
                 return BadRequest(ModelState);
             }
+            int roleid = formateur.RoleId;
 
+            var role = db.Roles.FirstOrDefault(r => r.Id == formateur.RoleId);
+            if (role == null)
+            {
+                return NotFound(); 
+            }
+            formateur.Role = role;
             db.Formateurs.Add(formateur);
             db.SaveChanges();
 
