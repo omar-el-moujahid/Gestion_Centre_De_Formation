@@ -3,6 +3,7 @@
 using Partie_Api_Amd_Logique_Metier.Models;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Partie_Consumation_API_Frontend.Service
 {
