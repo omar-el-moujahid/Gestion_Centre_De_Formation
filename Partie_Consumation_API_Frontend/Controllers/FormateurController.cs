@@ -17,7 +17,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
 
         public async Task<IActionResult> Profile()
         {
-            int formateurId = 3; // Hardcoded ID for now
+            int formateurId = 1; // Hardcoded ID for now
 
             try
             {

@@ -14,7 +14,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var formations = await _formationService.GetFormationsbyid(8);
+            var formations = await _formationService.GetFormationsbyid(1);
             return View(formations);
         }
 
