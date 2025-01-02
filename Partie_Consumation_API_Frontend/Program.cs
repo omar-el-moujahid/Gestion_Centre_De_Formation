@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<FormationService>();
+builder.Services.AddHttpClient<FormateurService>();
+
 
 var app = builder.Build();
 
