@@ -1,61 +1,112 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Partie_Api_Amd_Logique_Metier.Models.Formation
 
-@model Partie_Api_Amd_Logique_Metier.Models.Formation
+<div class="course-container">
+    <!-- Section d'image et aperçu -->
+    <div class="course-header">
+        <img src="@Model.url_image" alt="@Model.Titre" class="course-image">
+        <p>@Model.url_image</p>
+    </div>
 
-<h1>Détails de la Formation</h1>
+    <!-- Section des détails principaux -->
+    <div class="course-details">
+        <h1>@Model.Titre</h1>
+        <p class="subtitle">@Model.Description</p>
+        <p><strong>Prix :</strong> @Model.Prix $US</p>
+        <p><strong>Formateur :</strong> @Model.Formateur?.Name</p>
+        <p><strong>Dernière mise à jour :</strong> @DateTime.Now.ToString("MM/yyyy")</p>
+    </div>
 
-<table>
-    <tr>
-        <th>Id</th>
-        <td>@Model.Id</td>
-    </tr>
-    <tr>
-        <th>Titre</th>
-        <td>@Model.Titre</td>
-    </tr>
-    <tr>
-        <th>URL de l'image</th>
-        <td>@Model.url_image</td>
-    </tr>
-    <tr>
-        <th>CategoryId</th>
-        <td>@Model.CategoryId</td>
-    </tr>
-    <tr>
-        <th>Catégorie</th>
-        <td>@Model.Category?.Name</td> <!-- Remplacez "Nom" par la propriété que vous voulez afficher -->
-    </tr>
-    <tr>
-        <th>Description</th>
-        <td>@Model.Description</td>
-    </tr>
-    <tr>
-        <th>FormateurId</th>
-        <td>@Model.FormateurId</td>
-    </tr>
-    <tr>
-        <th>Formateur</th>
-        <td>@Model.Formateur?.Name</td> <!-- Remplacez "Nom" par la propriété que vous voulez afficher -->
-    </tr>
-    <tr>
-        <th>Prix</th>
-        <td>@Model.Prix</td>
-    </tr>
-    <tr>
-        <th>Estimation de Durée</th>
-        <td>@Model.EstimationDeDuree</td>
-    </tr>
-</table>
+    <!-- Boutons d'achat -->
+    <div class="course-actions">
+        <button class="buy-now">Acheter maintenant - @Model.Prix $US</button>
+        <button class="add-to-cart">Ajouter au panier</button>
+    </div>
 
-<h2>Informations complémentaires</h2>
-<ul>
-    <li><strong>Nombre d'Inscriptions :</strong> @Model.Inscriptions?.Count ?? 0</li>
-    <li><strong>Nombre d'Évaluations :</strong> @Model.Evaluations?.Count ?? 0</li>
-    <li><strong>Nombre de Certificats :</strong> @Model.Certificates?.Count ?? 0</li>
-    <li><strong>Nombre de Paiements :</strong> @Model.Payment?.Count ?? 0</li>
-    <li><strong>Nombre de Médias :</strong> @Model.Media?.Count ?? 0</li>
-</ul>
+    <!-- Ce que vous apprendrez -->
+    <div class="course-learnings">
+        <h2>Ce que vous apprendrez</h2>
+        <ul>
+            <li>Durée estimée : @Model.EstimationDeDuree</li>
+            <li>Catégorie : @Model.Category?.Name</li>
+            <li>Nombre d'inscriptions : @Model.Inscriptions?.Count ?? 0</li>
+        </ul>
+    </div>
+
+    <!-- Ce cours comprend -->
+    <div class="course-includes">
+        <h2>Ce cours comprend :</h2>
+        <ul>
+            <li>Vidéo à la demande : 63 heures</li>
+            <li>2 exercices pratiques</li>
+            <li>92 ressources téléchargeables</li>
+            <li>Accès sur mobiles et TV</li>
+            <li>Certificat de fin de formation</li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .course-container {
+        max-width: 800px;
+        margin: 0 auto;
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+    }
+
+    .course-header {
+        text-align: center;
+    }
+
+    .course-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .preview-button {
+        background-color: #000;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .course-details h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .course-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .buy-now, .add-to-cart {
+        background-color: purple;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .buy-now {
+        background-color: #ff5722;
+    }
+
+    .course-learnings, .course-includes {
+        margin-top: 20px;
+    }
+
+        .course-learnings ul, .course-includes ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .course-learnings ul li, .course-includes ul li {
+                padding: 5px 0;
+            }
+</style>
