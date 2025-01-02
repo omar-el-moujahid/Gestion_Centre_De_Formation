@@ -6,8 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<FormationService>();
+
 builder.Services.AddSingleton<FormateurService>();
 builder.Services.AddHttpClient<FormateurService>();
+
 
 
 
