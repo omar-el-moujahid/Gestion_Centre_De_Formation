@@ -20,5 +20,13 @@ namespace Partie_Consumation_API_Frontend.Service
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Formation>(content, options: new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
+        public async Task<List<Formation>> GetFormations()
+        {
+            var response = await _httpClient.GetAsync("http://localhost:62869/api/Formations");
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<Formation>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
     }
 }

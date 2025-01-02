@@ -1,6 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<Partie_Api_Amd_Logique_Metier.Models.Formation>
+
 @{
     ViewData["Title"] = "Courses";
 }
@@ -134,19 +133,23 @@
 </div>
 
 <!-- Script JavaScript -->
-@* // productList: @Html.Raw(Json.Serialize(Model.ProductList)) *@
+@* productList: @Html.Raw(Json.Serialize(Model.ProductList))  *@
 <script>
     // Données de produits (exemple)
+    // const productValues = {
+
+
+    //     productList: [
+    //         { id: 1, title: "Web Design & Development Course for Beginners", description: "Learn web design from scratch.", category: "programmation", price: "$149.00", instructor: "John Doe", duration: "1.49 Hrs", students: 30, image: "~/img/course-2.jpg" },
+    //         { id: 2, title: "Digital Marketing Masterclass", description: "Master the art of digital marketing.", category: "design", price: "$199.00", instructor: "Jane Doe", duration: "3.30 Hrs", students: 45, image: "~/img/course-3.jpg" },
+    //         Ajoutez d'autres produits ici
+    //     ]
+    // };
     const productValues = {
-
-
-        productList: [
-            { id: 1, title: "Web Design & Development Course for Beginners", description: "Learn web design from scratch.", category: "programmation", price: "$149.00", instructor: "John Doe", duration: "1.49 Hrs", students: 30, image: "~/img/course-2.jpg" },
-            { id: 2, title: "Digital Marketing Masterclass", description: "Master the art of digital marketing.", category: "design", price: "$199.00", instructor: "Jane Doe", duration: "3.30 Hrs", students: 45, image: "~/img/course-3.jpg" },
-            // Ajoutez d'autres produits ici
-        ]
+        productList: @Html.Raw(Json.Serialize(Model))
     };
 
+    console.log(productValues);
     let searchInput = ""; // Valeur de recherche
     let currentCategory = undefined; // Catégorie actuelle (optionnelle)
 
@@ -265,39 +268,42 @@
 
     // Fonction pour afficher les produits
     function displayProducts(products) {
+        console.log(products)
         const coursesContainer = document.getElementById("coursesList");
         coursesContainer.innerHTML = ""; // Vider le contenu actuel
 
         products.forEach(product => {
-            const courseHtml = `
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="course-item bg-light">
-                        <div class="position-relative overflow-hidden">
-                            <img class="img-fluid" src=https://localhost:7138/img/course-2.jpg alt="${product.title}">
-                            <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
-                                <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">Join Now</a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4 pb-0">
-                            <h3 class="mb-0">${product.price}</h3>
-                            <div class="mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small>(123)</small>
-                            </div>
-                            <h5 class="mb-4">${product.title}</h5>
-                        </div>
-                        <div class="d-flex border-top">
-                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-user-tie text-primary me-2"></i>${product.instructor}</small>
-                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-clock text-primary me-2"></i>${product.duration}</small>
-                            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>${product.students} Students</small>
-                        </div>
+             console.log(product.titre)
+                const courseHtml = `
+        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="course-item bg-light">
+                <div class="position-relative overflow-hidden">
+                    <img class="img-fluid" src="https://localhost:7138/img/course-2.jpg" alt="${product.titre}">
+                    <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
+                        <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">Join Now</a>
                     </div>
                 </div>
-            `;
+                <div class="text-center p-4 pb-0">
+                    <h3 class="mb-0">${product.titre}</h3>
+                    <div class="mb-3">
+                        <small class="fa fa-star text-primary"></small>
+                        <small class="fa fa-star text-primary"></small>
+                        <small class="fa fa-star text-primary"></small>
+                        <small class="fa fa-star text-primary"></small>
+                        <small class="fa fa-star text-primary"></small>
+                        <small>(123)</small>
+                    </div>
+                    <h5 class="mb-4">${product.prix}</h5>
+                </div>
+                <div class="d-flex border-top">
+                    <small class="flex-fill text-center border-end py-2"><i class="fa fa-user-tie text-primary me-2"></i>${product.formateur.name}</small>
+                    <small class="flex-fill text-center border-end py-2"><i class="fa fa-clock text-primary me-2"></i>${product.estimationDeDuree}</small>
+                    <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>${product.students} Students</small>
+                </div>
+            </div>
+        </div>
+    `;
+
             coursesContainer.innerHTML += courseHtml;
         });
     }
@@ -367,5 +373,6 @@
 </div>
 <!-- Testimonial End -->
 </div>
+
 
 

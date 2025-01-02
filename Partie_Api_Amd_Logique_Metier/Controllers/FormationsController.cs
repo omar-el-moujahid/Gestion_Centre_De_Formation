@@ -19,7 +19,9 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         // GET: api/Formations
         public IQueryable<Formation> GetFormations()
         {
-            return db.Formations;
+            return db.Formations
+                .Include(f => f.Category)
+                .Include(f => f.Formateur);
         }
 
         // GET: api/Formations/5
