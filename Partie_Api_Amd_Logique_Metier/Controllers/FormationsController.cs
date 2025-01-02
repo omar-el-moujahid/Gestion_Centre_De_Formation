@@ -26,8 +26,10 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         [ResponseType(typeof(Formation))]
         public IHttpActionResult GetFormation(int id)
         {
-            Formation formation = db.Formations.Find(id);
-            if (formation == null)
+            Formation formation = db.Formations
+                    .Include(f => f.Category)
+                    .Include(f => f.Formateur)
+                    .FirstOrDefault(f => f.Id == id); if (formation == null)
             {
                 return NotFound();
             }
@@ -79,6 +81,9 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
                 return BadRequest(ModelState);
             }
 
+             Formateur formateur= db.Formateurs.FirstOrDefault(f => f.Id == formation.FormateurId);
+            if (formateur == null) return NotFound();
+            formation.Formateur =formateur;
             db.Formations.Add(formation);
             db.SaveChanges();
 
