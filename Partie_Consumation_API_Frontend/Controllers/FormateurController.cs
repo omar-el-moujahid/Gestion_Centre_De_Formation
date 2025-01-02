@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Partie_Consumation_API_Frontend.Service;
+using System.Security.Claims;
 
 namespace Partie_Consumation_API_Frontend.Controllers
 {
@@ -18,7 +21,9 @@ namespace Partie_Consumation_API_Frontend.Controllers
 
             try
             {
+
                 var formateur = await _formateurService.GetFormateurById(formateurId);
+
                 if (formateur == null)
                 {
                     return NotFound($"Formateur with ID {formateurId} not found.");
@@ -34,5 +39,6 @@ namespace Partie_Consumation_API_Frontend.Controllers
             }
         }
     }
+
 
 }
