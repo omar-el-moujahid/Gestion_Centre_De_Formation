@@ -1,0 +1,16 @@
+﻿@model Partie_Api_Amd_Logique_Metier.Models.Formateur
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Formateur Profile</title>
+</head>
+<body>
+    <h1>Profile of @Model.Name @Model.Prenom</h1>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Specialty:</strong> @Model.Specialite</p>
+    <p><strong>Biography:</strong> @Model.Biographie</p>
+    <p><strong>LinkedIn:</strong> <a href="@Model.LienLinkedIn">@Model.LienLinkedIn</a></p>
+</body>
+</html>
