@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Partie_Api_Amd_Logique_Metier.Models;
 using Partie_Consumation_API_Frontend.Models;
+using Partie_Consumation_API_Frontend.Service;
 using System.Diagnostics;
 
 namespace Partie_Consumation_API_Frontend.Controllers
@@ -7,15 +9,26 @@ namespace Partie_Consumation_API_Frontend.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly FormationService _formationService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger , FormationService formationService)
         {
             _logger = logger;
+            _formationService = formationService;
+
         }
+        //public HomeController(FormationService formationService)
+        //{
+        //}
 
         public IActionResult Index()
         {
             return View();
+        }
+        public async Task<IActionResult> Courses()
+        {
+            var formations = await _formationService.GetFormations();
+            return View(formations);
         }
         public IActionResult About()
         {
@@ -49,10 +62,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
         {
             return View();
         }
-        public IActionResult Courses()
-        {
-            return View();
-        }
+       
 
         public IActionResult Register()
         {
