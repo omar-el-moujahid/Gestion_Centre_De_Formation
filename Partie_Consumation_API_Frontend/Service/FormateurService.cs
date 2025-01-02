@@ -14,7 +14,7 @@ namespace Partie_Consumation_API_Frontend.Service
             _httpClient = httpClient;
         }
 
-        public async Task<Formateur?> GetFormateurById(int id=3)
+        public async Task<Formateur?> GetFormateurById(int id=1)
         {
             var response = await _httpClient.GetAsync($"http://localhost:62869/api/Formateurs/{id}");
             response.EnsureSuccessStatusCode();
