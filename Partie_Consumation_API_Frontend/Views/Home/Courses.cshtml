@@ -279,9 +279,14 @@
             <div class="course-item bg-light">
                 <div class="position-relative overflow-hidden">
                     <img class="img-fluid" src="${product.url_image}" alt="${product.titre}">
-                    <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
-                        <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">Join Now</a>
-                    </div>
+                    // <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
+                    //     <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">Join Now</a>
+                    // </div>
+                        <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
+        <a href="/FormationController1/Index/${product.id}" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">
+            Join Now
+        </a>
+    </div>
                 </div>
                 <div class="text-center p-4 pb-0">
                     <h3 class="mb-0">${product.titre}</h3>

@@ -364,14 +364,83 @@
         }
     }
 
+    @if (ViewBag.title == "Participant")
+    {
+        <div class="container-fluid bg-dark px-5 d-none d-lg-block">
+            <div class="row gx-0">
+                <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
+                    <div class="d-inline-flex align-items-center" style="height: 45px;">
+                        <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>Ensaf, Fes, Morroco</small>
+                        <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>0707909282</small>
+                        <small class="text-light"><i class="fa fa-envelope-open me-2"></i>youssefibnezzyn@gmail.com</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center text-lg-end">
+                    <div class="d-inline-flex align-items-center" style="height: 45px;">
+                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
+                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
+                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="container-fluid position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand p-0">
+
+                    <svg width="145" height="60" xmlns="http://www.w3.org/2000/svg">
+
+                        <rect x="10" y="15" width="30" height="30" rx="5" ry="5" stroke="black" stroke-width="3" fill="#6930c3" />
+                        <text x="26" y="37" font-size="20" font-family="Arial" text-anchor="middle" fill="white">C</text>
+
+
+                        <text x="50" y="37" font-size="25" font-family="Arial" fill="#64dfdf">Codem</text>
+                    </svg>
+
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a class="nav-item nav-link " asp-area="" asp-controller="Home" asp-action="Index" style="color:black">Home</a>
+                        <a class="nav-item nav-link " asp-area="" asp-controller="Home" asp-action="About" style="color:black">About</a>
+                        <a class="nav-item nav-link " asp-area="" asp-controller="Home" asp-action="Services" style="color:black">Services</a>
+                        <a class="nav-item nav-link " asp-area="" asp-controller="Home" asp-action="Courses" style="color:black" >Courses</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="color:black" >Pages</a>
+                            <div class="dropdown-menu m-0">
+                                <a asp-area="" asp-controller="Home" asp-action="Price" class="dropdown-item" style="color:black" >Pricing Plan</a>
+                                <a asp-area="" asp-controller="Home" asp-action="features" class="dropdown-item" style="color:black" >Our features</a>
+                                <a asp-area="" asp-controller="Home" asp-action="team" class="dropdown-item" style="color:black" >Team Members</a>
+                                <a asp-area="" asp-controller="Home" asp-action="testimonial" class="dropdown-item" style="color:black" >Testimonial</a>
+                                <a asp-area="" asp-controller="Home" asp-action="quote" class="dropdown-item" style="color:black" >Free Quote</a>
+                            </div>
+                        </div>
+                        <a asp-area="" asp-controller="Home" asp-action="contact" class="nav-item nav-link">Contact</a>
+                        <ul class="nav-item nav-link" style="list-style:none;padding-top: 4%;">
+                            <li>
+                                <a class="btn btn-primary py-2 px-4 ms-2" aasp-area="" asp-controller="Home" asp-action="Register">Register</a>
+                            </li>
+                        </ul>
+                    </div>
+                    @* <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-targezt="#searchModal"><i class="fa fa-search"></i></butaton> *@
+
+                    @* <partial name="_LoginPartial" /> *@
+                </div>
+               
+         
+        </div>
+            
+    }
 
     @RenderBody()
 
 
 
 
-    @if (ViewBag.title != "Participant")
+    @if (ViewBag.title != "articipant")
     {
         @if (ViewBag.title != "Formateur")
         {
