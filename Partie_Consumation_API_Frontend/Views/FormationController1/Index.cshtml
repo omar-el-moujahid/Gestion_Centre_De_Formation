@@ -4,9 +4,13 @@
     ViewData["Title"] = "Participant";
 }
 <div class="parent">
+    <div class="gap"></div>
     <div class="course-container">
         <div class="course-container-info">
             <!-- Titre et image -->
+            <div class="image_countainer">
+
+            </div>
             <div class="course-header">
                 <h1 class="course-title">@Model.Titre</h1>
                 <img src="@Model.url_image" alt="@Model.Titre" class="course-image">
@@ -146,10 +150,15 @@
 
 <style>
     .parent {
-        background-image: url("/img/images.jpg");
-        background-size: contain; /* Ajuste l'image pour qu'elle couvre tout l'élément */
-        background-position: center; /* Centre l'image */
-        background-repeat: no-repeat; /* Empêche la répétition */
+        /* background-image: url("/img/images.jpg"); */
+        /* background-size: contain; /* Ajuste l'image pour qu'elle couvre tout l'élément */ */
+        /* background-position: center; /* Centre l'image */ */
+        /* background-repeat: no-repeat; /* Empêche la répétition */ */ 
+        margin-top: 2 rem;
+    }
+
+    .gap{
+        margin-top:100px
     }
     .course-container {
         max-width: 800px;
@@ -160,7 +169,6 @@
     }
     .course-container-info{
         text-align: left;
-        background-color:black;
     }
     .course-header {
         margin-bottom: 20px;
@@ -173,7 +181,7 @@
     }
 
     .course-image {
-        max-width: 100%;
+        width: 100%;
         height: auto;
         border-radius: 5px;
         margin: 20px 0;
