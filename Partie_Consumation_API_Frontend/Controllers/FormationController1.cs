@@ -12,9 +12,10 @@ namespace Partie_Consumation_API_Frontend.Controllers
         {
             _formationService = formationService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id) 
         {
-            var formations = await _formationService.GetFormationsbyid(1);
+            Console.WriteLine($"Formation ID reçu : {id}");
+            var formations = await _formationService.GetFormationsbyid(id);
             return View(formations);
         }
 
