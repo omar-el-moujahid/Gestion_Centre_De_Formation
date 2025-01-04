@@ -7,6 +7,7 @@
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Auth";
+    var role = ViewData["Role"] as string;
 }
 
 @section VendorStyles
@@ -23,68 +24,78 @@
 }
 
 
+
 @* ************** Content ************** *@
+@if (!string.IsNullOrEmpty(role))
+{
+    <div class="container-xxl">
+        <div class="authentication-wrapper authentication-basic container-p-y">
+            <div class="authentication-inner">
+                <!-- Register -->
+                <div class="card px-sm-6 px-0">
+                    <div class="card-body">
+                        <!-- Logo -->
+                        <div class="app-brand justify-content-center">
 
-<div class="container-xxl">
-    <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner">
+                            <a>
+                                <svg width="145" height="60" xmlns="http://www.w3.org/2000/svg">
 
-            <!-- Register Card -->
-            <div class="card px-sm-6 px-0">
-                <div class="card-body">
-                    <p style="padding-bottom:20px;">
-
-                        <a href="/Admine/DashboardView">
-                            <img width="20" height="20" src="~/images/return_img.png" alt="sign out" style="color:#e0e1dd; margin-right:5px;" />
-
-                        </a>
-                    </p>
-                    <!-- Logo -->
-                    <div class="app-brand justify-content-center mb-6">
-                        <a>
-                            <svg width="145" height="60" xmlns="http://www.w3.org/2000/svg">
-
-                                <rect x="10" y="15" width="30" height="30" rx="5" ry="5" stroke="black" stroke-width="3" fill="#6930c3" />
-                                <text x="26" y="37" font-size="20" font-family="Arial" text-anchor="middle" fill="white">C</text>
+                                    <rect x="10" y="15" width="30" height="30" rx="5" ry="5" stroke="black" stroke-width="3" fill="#6930c3" />
+                                    <text x="26" y="37" font-size="20" font-family="Arial" text-anchor="middle" fill="white">C</text>
 
 
-                                <text x="50" y="37" font-size="25" font-family="Arial" fill="#64dfdf">Codem</text>
-                            </svg>
-                        </a>
-                    </div>
-                    <!-- /Logo -->
-                    <h4 class="mb-1">Adventure starts here 🚀</h4>
-                    <p class="mb-6">Make your app management easy and fun!</p>
+                                    <text x="50" y="37" font-size="25" font-family="Arial" fill="#64dfdf">Codem</text>
+                                </svg>
+                            </a>
 
-                    <form id="formAuthentication" class="mb-6" action="~/" method="POST">
-                        <div class="mb-6">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" autofocus>
                         </div>
-                        <div class="mb-6">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email">
-                        </div>
-                        <div class="mb-6 form-password-toggle">
-                            <label class="form-label" for="password">Password</label>
-                            <div class="input-group input-group-merge">
-                                <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
-                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                        <!-- /Logo -->
+                        <h4 class="mb-3">Welcome to Codem! 👋</h4>
+
+
+                        <form asp-action="DashboardView">
+                            @Html.AntiForgeryToken()
+                            <div class="mb-6">
+                                <label for="email" class="form-label">Email or Username</label>
+                                <input type="text" class="form-control" id="email" name="email-username" placeholder="Enter your email or username" autofocus>
                             </div>
-                        </div>
+                            <div class="mb-6 form-password-toggle">
+                                <label class="form-label" for="password">Password</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="mb-6" style="padding-top:40px;">
+                                <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
+                            </div>
 
 
-                        <button class="btn btn-primary d-grid w-100 mt-3">
-                            Sign up
-                        </button>
-                    </form>
 
 
+                        </form>
+                        @if (role == "participant")
+                        {
+                            <div class="mb-8" style="padding-top:20px;padding-bottom:20px;">
+                                <div class="d-flex justify-content-center mt-8">
+
+                                    <a href="/">
+                                        <span>Create an Account</span>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
                 </div>
+                <!-- /Register -->
             </div>
-            <!-- Register Card -->
         </div>
     </div>
-</div>
-
+}
+else
+{
+    <h1>Role non spécifié.</h1>
+}
 
