@@ -1,0 +1,128 @@
+﻿@model List<Partie_Api_Amd_Logique_Metier.Models.Formation>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Formateur";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formations</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            background-color: #007BFF;
+            color: white;
+            width: 200px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+            .sidebar a {
+                color: white;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+                .sidebar a:hover {
+                    text-decoration: underline;
+                }
+
+        .topbar {
+            background-color: #f8f9fa;
+            padding: 10px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+            .topbar a {
+                text-decoration: none;
+                color: #007BFF;
+                font-weight: bold;
+            }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .formations-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .formation-card {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+            .formation-card h3 {
+                margin: 0 0 10px;
+                color: #333;
+            }
+
+            .formation-card p {
+                margin: 5px 0;
+                color: #555;
+            }
+
+            .formation-card a {
+                display: inline-block;
+                margin-top: 10px;
+                color: #007BFF;
+                text-decoration: none;
+            }
+
+                .formation-card a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <a href="/Auth/Index">Déconnexion</a>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <a href="/Formateur/Profile">Profil</a>
+            <a href="/Formateur/List">Formations</a>
+            <a href="/Dashboard">Tableau de bord</a>
+        </div>
+        <div class="main-content">
+            <h1>Mes Formations</h1>
+            <div class="formations-container">
+                @foreach (var formation in Model)
+                {
+                    <div class="formation-card">
+                        <h3>@formation.Titre</h3>
+                        <p><strong>Description:</strong> @formation.Description</p>
+                        <p><strong>Durée:</strong> @formation.EstimationDeDuree</p>
+                        <a href="/Formation/Details/@formation.Id">Voir les détails</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
