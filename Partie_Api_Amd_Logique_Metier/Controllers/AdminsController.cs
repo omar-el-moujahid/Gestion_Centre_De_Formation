@@ -114,5 +114,17 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         {
             return db.Admins.Count(e => e.Id == id) > 0;
         }
+        // GET: api/Admin by mail paasword
+        [ResponseType(typeof(Participant))]
+        public IHttpActionResult GetAdminbymailparrticipant(string mail, string password)
+        {
+            Admin admin = db.Admins.Include(p => p.Role).FirstOrDefault(p => p.Email == mail && p.Password == password);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(admin);
+        }
     }
 }

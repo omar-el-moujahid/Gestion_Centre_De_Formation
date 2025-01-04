@@ -9,7 +9,10 @@ builder.Services.AddHttpClient<FormationService>();
 
 builder.Services.AddSingleton<FormateurService>();
 builder.Services.AddHttpClient<FormateurService>();
+
+builder.Services.AddHttpClient<AuthService>();
 builder.Services.AddHttpClient<PaiementService>();
+
 
 
 

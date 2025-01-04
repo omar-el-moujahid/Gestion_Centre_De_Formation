@@ -51,14 +51,15 @@
                         </div>
                         <!-- /Logo -->
                         <h4 class="mb-3">Welcome to Codem! 👋</h4>
-
-
-                        <form asp-action="DashboardView">
+                        @using (Html.BeginForm("login", "Auth", FormMethod.Post))
+                        {
                             @Html.AntiForgeryToken()
                             <div class="mb-6">
                                 <label for="email" class="form-label">Email or Username</label>
-                                <input type="text" class="form-control" id="email" name="email-username" placeholder="Enter your email or username" autofocus>
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email or username" autofocus>
                             </div>
+                            <input type="hidden" id="rolee" name="rolee" value=@role />
+
                             <div class="mb-6 form-password-toggle">
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">
@@ -69,18 +70,16 @@
 
                             <div class="mb-6" style="padding-top:40px;">
                                 <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
-                            </div>
+                            </div>                      
+                        }
 
-
-
-
-                        </form>
+                        
                         @if (role == "participant")
                         {
                             <div class="mb-8" style="padding-top:20px;padding-bottom:20px;">
                                 <div class="d-flex justify-content-center mt-8">
 
-                                    <a href="/">
+                                    <a href="/Auth/signUp">
                                         <span>Create an Account</span>
                                     </a>
                                 </div>
