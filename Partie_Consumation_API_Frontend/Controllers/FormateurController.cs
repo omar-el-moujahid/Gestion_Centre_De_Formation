@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 ﻿using Microsoft.AspNetCore.Mvc;
 using Partie_Api_Amd_Logique_Metier.Models;
 
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+=======
+using Microsoft.AspNetCore.Mvc;
+using Partie_Api_Amd_Logique_Metier.Models;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+>>>>>>> 383340a622ee1a5ca22c3d52e1cea39f470af165
 using Partie_Consumation_API_Frontend.Service;
 using System.Security.Claims;
 
@@ -19,7 +27,9 @@ namespace Partie_Consumation_API_Frontend.Controllers
 
         public async Task<IActionResult> Profile()
         {
-            int formateurId = 3; // Hardcoded ID for now
+
+            int formateurId = 1; // Hardcoded ID for now
+
             try
             {
 
