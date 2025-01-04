@@ -19,7 +19,7 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         // GET: api/Participants
         public IQueryable<Participant> GetUsers()
         {
-            return db.Participants;
+            return db.Participants.Include(f=>f.Role);
         }
 
         // GET: api/Participants/5
@@ -78,7 +78,7 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            participant.Role= db.Roles.FirstOrDefault(role=>role.Id == participant.RoleId);
             db.Participants.Add(participant);
             db.SaveChanges();
 
@@ -113,6 +113,19 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         private bool ParticipantExists(int id)
         {
             return db.Participants.Count(e => e.Id == id) > 0;
+        }
+
+        // GET: api/Participants by mail paasword
+        [ResponseType(typeof(Participant))]
+        public IHttpActionResult GetParticipantbymailparrticipant(string mail, string password )
+        {
+            Participant participant =  db.Participants.Include(p => p.Role).FirstOrDefault(p => p.Email == mail && p.Password == password);
+            if (participant == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(participant);
         }
     }
 }

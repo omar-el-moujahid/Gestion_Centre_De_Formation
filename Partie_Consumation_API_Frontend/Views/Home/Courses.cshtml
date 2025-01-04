@@ -46,7 +46,7 @@
                     <option value="">All Categories</option>
                     <option value="programmation">Programmation</option>
                     <option value="design">Design</option>
-                    <option value="marketing-digital">Marketing Digital</option>
+                    <option value="Marketing Digital">Marketing Digital</option>
                     <option value="langues">Langues</option>
                     <option value="sciences">Sciences</option>
                     <option value="business">Business</option>
@@ -64,17 +64,18 @@
                 <!-- Liste déroulante pour les prix -->
                 <select id="priceSelect" class="form-select mb-3" style="display: inline-block;max-width: 200px; margin: 0 auto;">
                     <option value="">All Prices</option>
-                    <option value="0-50">$0 - $50</option>
-                    <option value="50-100">$50 - $100</option>
-                    <option value="100-150">$100 - $150</option>
-                    <option value="150-200">$150 - $200</option>
-                    <option value="200+">$200+</option>
+                    <option value="0-50">0 MAD - 50 MAD</option>
+                    <option value="50-100">50 MAD - 100 MAD</option>
+                    <option value="100-150">100 MAD - 150 MAD</option>
+                    <option value="150-200">150 MAD - 200 MAD</option>
+                    <option value="200+">200 MAD+</option>
                 </select>
 
                 <!-- Bouton de recherche -->
                 <button type="button" class="btn text-primary ms-9" style="display: inline-block;" data-bs-toggle="modal" data-bs-target="#searchModal">
                     <i class="fa fa-search" style="font-size: 30px;"></i>
                 </button>
+
             </div>
         </div>
     </div>
@@ -99,11 +100,14 @@
 @* <!-- Full Screen Search End --> *@
 
 <!-- Modal de recherche -->
-<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+<!-- Modal de recherche -->
+<!-- Modale -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel">
     <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
+        <div class="modal-content" style="background: rgba(9, 30, 62, .3);">
             <div class="modal-header border-0">
-                <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" style="color:whitesmoke !important;" id="searchModalLabel">Recherche</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" style="background-color:whitesmoke !important;" aria-label="Fermer"></button>
             </div>
             <div class="modal-body d-flex align-items-center justify-content-center">
                 <div class="input-group" style="max-width: 600px;">
@@ -117,6 +121,23 @@
     </div>
 </div>
 
+<!-- Script pour gérer l'accessibilité -->
+<script>
+    const modal = document.getElementById('searchModal');
+
+    // Gérer aria-hidden dynamiquement
+    modal.addEventListener('show.bs.modal', () => {
+        modal.setAttribute('aria-hidden', 'false');
+    });
+    modal.addEventListener('hide.bs.modal', () => {
+        modal.setAttribute('aria-hidden', 'true');
+    });
+
+    // Gérer la focalisation
+    modal.addEventListener('shown.bs.modal', () => {
+        modal.querySelector('input').focus();
+    });
+</script>
 <!-- Courses Start -->
 <div class="container-xxl py-5">
     <div class="container">
@@ -127,7 +148,7 @@
         <div class="row g-4 justify-content-center" id="coursesList">
             <!-- Les cours seront injectés ici dynamiquement -->
 
-      
+
         </div>
     </div>
 </div>
@@ -211,54 +232,105 @@
     // Fonction pour filtrer les produits
     function filterProducts() {
         // Récupérer la valeur de l'entrée de recherche
-        searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
+            const searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
 
-        // Filtrer les produits
-        let productsTemp = productValues.productList;
+    // Filtrer les produits
+    let productsTemp = productValues.productList;
 
-        if (searchInput) {
+           if (searchInput) {
             productsTemp = productsTemp.filter(product =>
-                product.title.toLowerCase().includes(searchInput) ||
-                product.estimationDeDuree.toString().includes(searchInput) ||
-                product.category.name.toLowerCase().includes(searchInput) ||
-                product.description.toLowerCase().includes(searchInput)
+                (product.titre && product.titre.toLowerCase().includes(searchInput)) ||
+                (product.estimationDeDuree && product.estimationDeDuree.toString().includes(searchInput)) ||
+                (product.category && product.category.name && product.category.name.toLowerCase().includes(searchInput)) ||
+                (product.description && product.description.toLowerCase().includes(searchInput))
             );
-        }
+            }
+
 
         // Filtrer par plage de durée
-        if (currentDurationRange) {
-        const [min, max] = currentDurationRange.split('-').map(Number); // Convertir la plage de durée en nombres
+               if (currentDurationRange) {
+        let min, max;
+
+        // Gérer les plages ouvertes (ex: "5+")
+        if (currentDurationRange.endsWith('+')) {
+            min = parseFloat(currentDurationRange); // Extraire la valeur minimale
+        } else {
+            // Gérer les plages définies (ex: "1-3")
+            [min, max] = currentDurationRange.split('-').map(Number); // Convertir la plage de durée en nombres
+        }
+
         productsTemp = productsTemp.filter(product => {
-            const duration = parseFloat(product.duration.replace(' Hrs', '')); // Convertir la durée en nombre
-            if (max) {
-                return duration >= min && duration <= max; // Plage de durée définie (ex: 1 - 3 hours)
-            } else {
-                return duration >= min; // Plage de durée ouverte (ex: 5+ hours)
+            // Vérifier si la durée existe et est valide
+            if (product.estimationDeDuree) {
+                // Convertir la durée en nombre
+                const duration = parseFloat(product.estimationDeDuree.replace(' Hrs', ''));
+
+                // Si la conversion échoue, ignorer ce produit
+                if (isNaN(duration)) {
+                    return false;
+                }
+
+                // Filtrer selon la plage de durée
+                if (currentDurationRange.endsWith('+')) {
+                    // Plage ouverte (ex: "5+")
+                    return duration >= min;
+                } else if (max) {
+                    // Plage définie (ex: "1-3")
+                    return duration >= min && duration <= max;
+                } else {
+                    // Cas par défaut (ne devrait pas se produire)
+                    return false;
+                }
             }
+            return false; // Ignorer les produits sans durée valide
         });
     }
 
 
 
             // Filtrer par intervalle de prix
-    if (currentPriceRange) {
-        const [min, max] = currentPriceRange.split('-').map(Number); // Convertir la plage de prix en nombres
+             if (currentPriceRange) {
         productsTemp = productsTemp.filter(product => {
-            const price = parseFloat(product.price.replace('$', '')); // Convertir le prix en nombre
-            if (max) {
-                return price >= min && price <= max; // Plage de prix définie (ex: $50 - $100)
-            } else {
-                return price >= min; // Plage de prix ouverte (ex: $200+)
+            // Vérifier si le prix existe et est valide
+            if (product.prix !== null && product.prix !== undefined) {
+                // Convertir le prix en nombre (si nécessaire)
+                const price = typeof product.prix === 'string' ? parseFloat(product.prix.replace('MAD', '').trim()) : product.prix;
+
+                // Si la conversion échoue, ignorer ce produit
+                if (isNaN(price)) {
+                    return false;
+                }
+
+                // Filtrer selon la plage de prix
+                if (currentPriceRange.endsWith('+')) {
+                    // Plage ouverte (ex: "200+")
+                    const min = parseFloat(currentPriceRange); // Extraire la valeur minimale
+                    return price >= min;
+                } else {
+                    // Plage définie (ex: "50-100")
+                    const [min, max] = currentPriceRange.split('-').map(Number); // Convertir la plage de prix en nombres
+                    if (max) {
+                        return price >= min && price <= max;
+                    } else {
+                        // Cas par défaut (ne devrait pas se produire)
+                        return false;
+                    }
+                }
             }
+            return false; // Ignorer les produits sans prix valide
         });
     }
 
 
-        if (currentCategory) {
-            productsTemp = productsTemp.filter(product =>
-                product.category === currentCategory
-            );
-        }
+            if (currentCategory) {
+        productsTemp = productsTemp.filter(product => {
+            // Vérifier si la catégorie existe
+            if (product.category && product.category.name) {
+                return product.category.name.toLowerCase() === currentCategory.toLowerCase();
+            }
+            return false; // Ignorer les produits sans catégorie valide
+        });
+    }
 
 
 
@@ -279,14 +351,9 @@
             <div class="course-item bg-light">
                 <div class="position-relative overflow-hidden">
                     <img class="img-fluid" src="${product.url_image}" alt="${product.titre}">
-                    // <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
-                    //     <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">Join Now</a>
-                    // </div>
-                        <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
-        <a href="/FormationController1/Index/${product.id}" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">
-            Join Now
-        </a>
-    </div>
+                    <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
+                        <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">Join Now</a>
+                    </div>
                 </div>
                 <div class="text-center p-4 pb-0">
                     <h3 class="mb-0">${product.titre}</h3>
@@ -378,6 +445,3 @@
 </div>
 <!-- Testimonial End -->
 </div>
-
-
-
