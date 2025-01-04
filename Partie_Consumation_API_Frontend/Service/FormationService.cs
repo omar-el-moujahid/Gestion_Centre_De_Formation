@@ -12,7 +12,8 @@ namespace Partie_Consumation_API_Frontend.Service
             _httpClient = httpClient;
         }
 
-        public async Task<Formation> GetFormationsbyid(int id =8)
+
+        public async Task<Formation> GetFormationsbyid(int id = 1)
         {
             var response = await _httpClient.GetAsync($"http://localhost:62869/api/Formations/{id}");
             response.EnsureSuccessStatusCode();

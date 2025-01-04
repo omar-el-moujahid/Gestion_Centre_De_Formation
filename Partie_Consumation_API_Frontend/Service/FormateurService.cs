@@ -1,4 +1,7 @@
-﻿using Partie_Api_Amd_Logique_Metier.Models;
+
+﻿using Newtonsoft.Json;
+using Partie_Api_Amd_Logique_Metier.Models;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace Partie_Consumation_API_Frontend.Service
@@ -12,7 +15,9 @@ namespace Partie_Consumation_API_Frontend.Service
             _httpClient = httpClient;
         }
 
-        public async Task<Formateur?> GetFormateurById(int id=3)
+
+        public async Task<Formateur?> GetFormateurById(int id=1)
+
         {
             var response = await _httpClient.GetAsync($"http://localhost:62869/api/Formateurs/{id}");
             response.EnsureSuccessStatusCode();
@@ -98,3 +103,4 @@ namespace Partie_Consumation_API_Frontend.Service
     }
 
 }
+
