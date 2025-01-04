@@ -74,6 +74,8 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         [ResponseType(typeof(Payment))]
         public IHttpActionResult PostPayment(Payment payment)
         {
+            payment.Formation = db.Formations.FirstOrDefault(f => f.Id == payment.FormationId);
+            payment.Participant = db.Participants.FirstOrDefault(p => p.Id == payment.ParticipantId);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -101,6 +103,18 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
             return Ok(payment);
         }
 
+        // get payement base of the formation_id and the participant_id
+        [ResponseType(typeof(Payment))]
+        public IHttpActionResult GetPayment_2ids(int formation_id , int participant_id)
+        {
+            Payment payment = db.Payments.FirstOrDefault(p => p.FormationId == formation_id && p.ParticipantId == participant_id );
+            if (payment == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(payment);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -340,20 +340,26 @@
 
     // Fonction pour afficher les produits
     function displayProducts(products) {
-        console.log(products)
         const coursesContainer = document.getElementById("coursesList");
+
         coursesContainer.innerHTML = ""; // Vider le contenu actuel
 
         products.forEach(product => {
-             console.log(product.titre)
+             console.log(product.id)
+
                 const courseHtml = `
         <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
             <div class="course-item bg-light">
                 <div class="position-relative overflow-hidden">
                     <img class="img-fluid" src="${product.url_image}" alt="${product.titre}">
-                    <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
-                        <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">Join Now</a>
-                    </div>
+
+                    // <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
+                    //     <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">Join Now</a>
+                    // </div>
+                        <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
+    <a href="/FormationController1/Index?id=${product.id}" class="btn btn-sm btn-primary">Join Now</a>
+
+    </div>
                 </div>
                 <div class="text-center p-4 pb-0">
                     <h3 class="mb-0">${product.titre}</h3>
@@ -378,6 +384,7 @@
 
             coursesContainer.innerHTML += courseHtml;
         });
+
     }
 
     // Afficher tous les produits au chargement de la page
