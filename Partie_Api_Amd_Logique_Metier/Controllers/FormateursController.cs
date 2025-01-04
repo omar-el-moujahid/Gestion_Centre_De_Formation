@@ -121,5 +121,18 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         {
             return db.Formateurs.Count(e => e.Id == id) > 0;
         }
+
+        // GET: api/Frmateur by mail paasword
+        [ResponseType(typeof(Formateur))]
+        public IHttpActionResult GetFormateurbymailparrticipant(string mail, string password)
+        {
+            Formateur formateur = db.Formateurs.Include(p => p.Role).FirstOrDefault(p => p.Email == mail && p.Password == password);
+            if (formateur == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(formateur);
+        }
     }
 }
