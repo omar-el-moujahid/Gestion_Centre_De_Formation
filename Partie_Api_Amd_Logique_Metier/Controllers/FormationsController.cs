@@ -121,5 +121,24 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         {
             return db.Formations.Count(e => e.Id == id) > 0;
         }
+        // GET: api/Formations/ByFormateur/3
+        [HttpGet]
+        [Route("api/Formations/ByFormateur/{formateurId}")]
+        public IHttpActionResult GetFormationsByFormateur(int formateurId)
+        {
+            var formations = db.Formations
+                .Include(f => f.Category)
+                .Include(f => f.Formateur)
+                .Where(f => f.FormateurId == formateurId)
+                .ToList();
+
+            if (!formations.Any())
+            {
+                return NotFound(); // Aucun résultat trouvé
+            }
+
+            return Ok(formations); // Retourne la liste des formations
+        }
+
     }
 }

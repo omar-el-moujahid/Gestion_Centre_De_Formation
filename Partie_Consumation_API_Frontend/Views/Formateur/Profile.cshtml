@@ -8,15 +8,281 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formateur Profile</title>
+    <style>
+        body {
+            margin-top: 20px;
+            color: #1a202c;
+            text-align: left;
+            background-color: #e2e8f0;
+        }
+
+        .main-body {
+            padding: 15px;
+        }
+
+        .card {
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 0 solid rgba(0,0,0,.125);
+            border-radius: .25rem;
+        }
+
+        .card-body {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 1rem;
+        }
+
+        .form-container label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+        }
+
+        .form-container button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: .25rem;
+            cursor: pointer;
+        }
+
+            .form-container button:hover {
+                background-color: #0056b3;
+            }
+
+    
+
+        .tab-content {
+            padding: 20px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-top: none;
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+            .action-buttons button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                background-color: #f8f9fa;
+                color: #343a40;
+                border: 1px solid #ced4da;
+            }
+
+                .action-buttons button:hover {
+                    background-color: #e2e6ea;
+                }
+    </style>
 </head>
 <body>
-    <h1>Profile of @Model.Name @Model.Prenom</h1>
-    <p><strong>Email:</strong> @Model.Email</p>
-    <p><strong>Specialty:</strong> @Model.Specialite</p>
-    <p><strong>Biography:</strong> @Model.Biographie</p>
-    <p><strong>LinkedIn:</strong> <a href="@Model.LienLinkedIn">@Model.LienLinkedIn</a></p>
+    <div class="container">
+        <div class="main-body">
+
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                                <div class="mt-3">
+                                    <h4>@Model.Name @Model.Prenom</h4>
+                                    <p class="text-secondary mb-1">@Model.Specialite</p>
+                                    <p class="text-muted font-size-sm">@Model.Biographie</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn" onclick="showTab('profile')">Profile</button>
+                        <button class="btn" onclick="showTab('courses')">Mes Cours</button>
+                        <button class="btn" onclick="showTab('dashboard')">Tableau de Bord</button>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="tab-content" id="myTabContent">
+                        <!-- Profile Section -->
+                        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="card mb-3">
+                                <div class="card-body form-container">
+                                    @if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+                                    {
+                                        <div class="alert alert-success">
+                                            @ViewBag.SuccessMessage
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                                    {
+                                        <div class="alert alert-danger">
+                                            @ViewBag.ErrorMessage
+                                        </div>
+                                    }
+                                    <form method="post" action="/Formateur/UpdateProfile">
+                                        <label for="Name">Nom</label>
+                                        <input type="text" id="Name" name="Name" value="@Model.Name" required>
+
+                                        <label for="Prenom">Prénom</label>
+                                        <input type="text" id="Prenom" name="Prenom" value="@Model.Prenom" required>
+
+                                        <label for="Email">Email</label>
+                                        <input type="email" id="Email" name="Email" value="@Model.Email" required>
+
+                                        <label for="Specialite">Spécialité</label>
+                                        <input type="text" id="Specialite" name="Specialite" value="@Model.Specialite" required>
+
+                                        <label for="Biographie">Biographie</label>
+                                        <textarea id="Biographie" name="Biographie" rows="4">@Model.Biographie</textarea>
+
+                                        <label for="LienLinkedIn">LinkedIn</label>
+                                        <input type="url" id="LienLinkedIn" name="LienLinkedIn" value="@Model.LienLinkedIn">
+
+                                        <button type="submit">Enregistrer</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dans la section Mes Cours -->
+                        <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h1>Mes Formations</h1>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFormationModal">
+                                    <i class="fas fa-plus"></i> Ajouter une formation
+                                </button>
+                            </div>
+
+                            <div class="formations-container">
+                                @if (ViewBag.Formations != null)
+                                {
+                                    @foreach (dynamic formation in ViewBag.Formations)
+                                    {
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between">
+                                                    <h5 class="card-title">@formation.Titre</h5>
+                                                    <div>
+                                                        <button type="button" class="btn btn-sm btn-primary"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#editFormationModal"
+                                                                data-formation-id="@formation.Id">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <form asp-action="DeleteFormation" method="post" style="display: inline;">
+                                                            <input type="hidden" name="id" value="@formation.Id" />
+                                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette formation ?')">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <p class="card-text">@formation.Description</p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="text-muted">Durée: @formation.EstimationDeDuree</span>
+                                                    <span class="text-muted">Prix: @formation.Prix €</span>
+                                                </div>
+                                                <hr />
+                                                
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="alert alert-info">
+                                        Aucune formation disponible pour le moment.
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Modals -->
+                        <div class="modal fade" id="addFormationModal" tabindex="-1">
+                            <div class="modal-dialog">
+                                @await Html.PartialAsync("_AddFormationPartial")
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="editFormationModal" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div id="editFormationContent">
+                                    <!-- Le contenu sera chargé dynamiquement -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tableau de Bord Section -->
+                        <div class="tab-pane fade" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                            <h1>Tableau de Bord</h1>
+                            <p>Cette section est en cours de réalisation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-pane');
+            tabs.forEach(tab => {
+                tab.classList.remove('show', 'active');
+            });
+
+            const selectedTab = document.getElementById(tabId);
+            selectedTab.classList.add('show', 'active');
+        }
+            document.addEventListener('DOMContentLoaded', function() {
+            const editModal = document.getElementById('editFormationModal');
+            if (editModal) {
+                editModal.addEventListener('show.bs.modal', function(event) {
+                    const button = event.relatedTarget;
+                    const formationId = button.getAttribute('data-formation-id');
+
+                    fetch(`/Formateur/EditFormation/${formationId}`)
+                        .then(response => response.text())
+                        .then(html => {
+                            document.getElementById('editFormationContent').innerHTML = html;
+                        });
+                });
+            }
+        });
+ 
+
+    </script>
 </body>
 </html>
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> a309e8d801075d00925c6df490cc3c8d4e2c1d12
