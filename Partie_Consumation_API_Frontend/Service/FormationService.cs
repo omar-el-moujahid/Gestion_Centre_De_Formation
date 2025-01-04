@@ -11,16 +11,29 @@ namespace Partie_Consumation_API_Frontend.Service
         {
             _httpClient = httpClient;
         }
-
-
-        public async Task<Formation> GetFormationsbyid(int id = 1)
+        public async Task<Formation> GetFormationsbyid(int id )
         {
             var response = await _httpClient.GetAsync($"http://localhost:62869/api/Formations/{id}");
-            response.EnsureSuccessStatusCode();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Error: {response.StatusCode}, Message: {await response.Content.ReadAsStringAsync()}");
+                throw new HttpRequestException($"Error: {response.StatusCode}");
+            }
 
             var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<Formation>(content, options: new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return JsonSerializer.Deserialize<Formation>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
+
+
+        //public async Task<Formation> GetFormationsbyid(int id = 1)
+        //{
+        //    var response = await _httpClient.GetAsync($"http://localhost:62869/api/Formations/{id}");
+        //    response.EnsureSuccessStatusCode();
+
+        //    var content = await response.Content.ReadAsStringAsync();
+        //    return JsonSerializer.Deserialize<Formation>(content, options: new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        //}
         public async Task<List<Formation>> GetFormations()
         {
             var response = await _httpClient.GetAsync("http://localhost:62869/api/Formations");

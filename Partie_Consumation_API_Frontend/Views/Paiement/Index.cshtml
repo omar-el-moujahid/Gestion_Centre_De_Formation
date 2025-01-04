@@ -1,0 +1,247 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewData["Title"] = "Paiement";
+    ViewData["title"] = "Participant";
+
+}
+
+<div class="main-content">
+    <h1>Paiement</h1>
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <p class="text-danger">@TempData["ErrorMessage"]</p>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <p class="text-success">@TempData["SuccessMessage"]</p>
+    }
+
+    @if (ViewData["formation_id"] != null && ViewData["participant_id"] != null)
+    {
+        <p>Formation ID : @ViewData["formation_id"]</p>
+        <p>Participant ID : @ViewData["participant_id"]</p>
+    }
+    else
+    {
+        <p>Erreur : Les données nécessaires ne sont pas disponibles.</p>
+    }
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <p>Erreur : Les données nécessaires ne sont pas disponibles.</p>
+
+    }
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <p>!Erreur : Les données nécessaires ne sont pas disponibles.</p>
+
+    }
+<div class="container">
+    <h1>Paiement</h1>
+    <div class="row">
+        <!-- Payment Cards -->
+        <div class="col-lg-4 mb-lg-0 mb-3">
+            <div class="card p-3">
+                <div class="img-box">
+                    <img src="https://www.freepnglogos.com/uploads/visa-logo-download-png-21.png" alt="Visa">
+                </div>
+                <div class="number">
+                    <label class="fw-bold">**** **** **** 1060</label>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                    <small><span class="fw-bold">Expiry date:</span> <span>10/16</span></small>
+                    <small><span class="fw-bold">Name:</span> <span>Omar</span></small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-lg-0 mb-3">
+            <div class="card p-3">
+                <div class="img-box">
+                    <img src="https://www.freepnglogos.com/uploads/mastercard-png/file-mastercard-logo-svg-wikimedia-commons-4.png" alt="Mastercard">
+                </div>
+                <div class="number">
+                    <label class="fw-bold">**** **** **** 1060</label>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                    <small><span class="fw-bold">Expiry date:</span> <span>10/16</span></small>
+                    <small><span class="fw-bold">Name:</span> <span>Omar</span></small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-lg-0 mb-3">
+            <div class="card p-3">
+                <div class="img-box">
+                    <img src="https://www.freepnglogos.com/uploads/discover-png-logo/credit-cards-discover-png-logo-4.png" alt="Discover">
+                </div>
+                <div class="number">
+                    <label class="fw-bold">**** **** **** 1060</label>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                    <small><span class="fw-bold">Expiry date:</span> <span>10/16</span></small>
+                    <small><span class="fw-bold">Name:</span> <span>Omar</span></small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Form -->
+        <div class="col-lg-12 mt-4">
+            <div class="card p-3">
+                <h4 class="fw-bold">Credit Card Payment</h4>
+                    <form action="/Paiement/Create" method="POST" class="form">
+                        <!-- Champs masqués -->
+                        <input type="hidden" name="formation_id" value="@ViewData["formation_id"]" />
+                        <input type="hidden" name="participant_id" value="@ViewData["participant_id"]" />
+
+                        <div class="row">
+                            <!-- Champs pour les informations de paiement -->
+                            <div class="col-12">
+                                <div class="form__div">
+                                    <input type="text" name="cardNumber" class="form-control" placeholder=" " required>
+                                    <label class="form__label">Card Number</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form__div">
+                                    <input type="text" name="expiryDate" class="form-control" placeholder=" " required>
+                                    <label class="form__label">MM/YY</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form__div">
+                                    <input type="password" name="cvv" class="form-control" placeholder=" " required>
+                                    <label class="form__label">CVV</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form__div">
+                                    <input type="text" name="cardHolderName" class="form-control" placeholder=" " required>
+                                    <label class="form__label">Cardholder Name</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    Acheter le Cours
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: #eee;
+    }
+
+    .container {
+        margin: 30px auto;
+    }
+
+        .container .card {
+            width: 100%;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            background: #fff;
+            border-radius: 8px;
+        }
+
+    .card .img-box {
+        width: 80px;
+        height: 50px;
+    }
+
+    .card img {
+        width: 100%;
+        object-fit: fill;
+    }
+
+    .card .number {
+        font-size: 18px;
+        margin: 10px 0;
+    }
+
+    .form__div {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 45px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .form__label {
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        background: #fff;
+        padding: 0 5px;
+        font-size: 12px;
+        color: #aaa;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus + .form__label,
+    .form-control:not(:placeholder-shown) + .form__label {
+        top: -8px;
+        font-size: 10px;
+        color: #1c6acf;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        background: #1c6acf;
+        color: #fff;
+        cursor: pointer;
+        text-align: center;
+    }
+
+        .btn.payment {
+            width: 100%;
+            text-transform: uppercase;
+            font-size: 16px;
+            margin-top: 24px;
+        }
+</style>
+<style>
+    body {
+        background: #eee;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        margin: 100px auto 30px; /* Ensure space between header and content */
+    }
+
+    header {
+        position: relative; /* Make sure header stays independent of other content */
+        z-index: 10; /* Prevent it from overlapping with the body */
+    }
+
+    .main-content {
+        margin-top: 100px; /* Add space below the navigation */
+    }
+</style>
