@@ -1,11 +1,8 @@
-<<<<<<< HEAD
 ﻿using Microsoft.AspNetCore.Mvc;
 using Partie_Api_Amd_Logique_Metier.Models;
-=======
 
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
->>>>>>> a309e8d801075d00925c6df490cc3c8d4e2c1d12
 using Partie_Consumation_API_Frontend.Service;
 using System.Security.Claims;
 
