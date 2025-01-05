@@ -76,16 +76,21 @@ namespace Partie_Consumation_API_Frontend.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(string email, string password, string rolee)
+
+        public async Task<IActionResult> login(string email , string password, string rolee)
+
         {
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(rolee))
             {
+
                 ModelState.AddModelError("", "Email, password, and role are required.");
                 return RedirectToAction("Index", "Auth");
+
             }
             string returnUrl = TempData["ReturnUrl"] as string;
             switch (rolee.ToLower())
             {
+
                 case "participant":
                     Participant participant = await _authService.authparticipant(email, password);
                     if (participant != null)
@@ -117,7 +122,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
                         HttpContext.Session.SetString("UserRolefromclass", value: admin.Role.Name);
                         HttpContext.Session.SetString("UserRole", rolee);
                      
-                        return RedirectToAction("Index", "Home");
+                         return RedirectToAction("Index", "Admine");
                     }
                     break;
 
@@ -139,6 +144,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
                 default:
                     ModelState.AddModelError("", "Invalid role.");
                     return RedirectToAction("Index", "Auth");
+
             }
 
             ModelState.AddModelError("", "Invalid login attempt.");

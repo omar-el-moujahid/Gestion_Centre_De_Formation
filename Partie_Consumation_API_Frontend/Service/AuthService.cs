@@ -113,6 +113,11 @@ namespace Partie_Consumation_API_Frontend.Service
                 throw new Exception("An error occurred while authenticating the participant.", ex);
             }
         }
+
+
+
+
+
         public async Task<Formateur> authformateur(string mail, string password)
         {
             try

@@ -1,4 +1,13 @@
+
+
+using Microsoft.AspNetCore.Mvc;
+using Partie_Api_Amd_Logique_Metier.Models;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
 ﻿using Microsoft.AspNetCore.Mvc;
+
 using Partie_Consumation_API_Frontend.Service;
 
 namespace Partie_Consumation_API_Frontend.Controllers

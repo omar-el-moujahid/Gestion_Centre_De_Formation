@@ -12,6 +12,15 @@ builder.Services.AddHttpClient<FormateurService>();
 
 builder.Services.AddHttpClient<AuthService>();
 builder.Services.AddHttpClient<PaiementService>();
+builder.Services.AddHttpClient<AdmineService>();
+
+
+
+
+
+
+
+
 builder.Services.AddHttpClient<InscriptionService>();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -21,9 +30,9 @@ builder.Services.AddControllers()
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Temps d'inactivité avant expiration
-    options.Cookie.HttpOnly = true; // Sécuriser les cookies de session
-    options.Cookie.IsEssential = true; // Nécessaire pour la conformité RGPD
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Temps d'inactivitÃ© avant expiration
+    options.Cookie.HttpOnly = true; // SÃ©curiser les cookies de session
+    options.Cookie.IsEssential = true; // NÃ©cessaire pour la conformitÃ© RGPD
 });
 var app = builder.Build();
 

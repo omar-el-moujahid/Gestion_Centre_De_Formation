@@ -1,0 +1,477 @@
+﻿:root, [data-coreui-theme=light] {
+    --cui-gutter-x: 1.5rem;
+    --cui-gutter-y: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #9e9ea4;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+    display: none;
+}
+
+
+/*scrollbar*/
+.has-scrollbar {
+    padding-bottom: 5px;
+}
+
+    .has-scrollbar::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    .has-scrollbar::-webkit-scrollbar-thumb {
+        background: transparent;
+        border: 3px solid var(--white);
+        -webkit-border-radius: 20px;
+        border-radius: 20px;
+    }
+
+    .has-scrollbar:hover::-webkit-scrollbar-thumb {
+        background: hsl(0, 0%, 90%);
+    }
+
+    .has-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: hsl(0, 0%, 80%);
+    }
+/*end*/
+
+/*main div*/
+.grid-container {
+    display: grid;
+    grid-template-columns: 260px 1fr 1fr 1fr;
+    grid-template-rows: 0.2fr 3fr;
+    grid-template-areas:
+        'sidebar header header header'
+        'sidebar main main main';
+    height: 100vh;
+}
+/*end*/
+
+/*header*/
+.header {
+    grid-area: header;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px 0 30px;
+    box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
+}
+
+.material-icons-outlined {
+    vertical-align: middle;
+    line-height: 1px;
+    font-size: 35px;
+    color: #e0e1dd;
+}
+
+.menu-icon {
+    display: none;
+}
+
+.header-nav {
+    display: flex;
+    flex-direction: row;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.py-1 {
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+}
+/*end*/
+
+
+
+
+
+
+
+
+
+
+/*sidebar*/
+
+
+#sidebar {
+    grid-area: sidebar;
+    height: 100%;
+    width: 260px;
+    background-color: #240046;
+    overflow: hidden;
+}
+
+.sidebar-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 30px 30px 30px;
+}
+
+    .sidebar-title > span {
+        display: none;
+    }
+
+.sidebar-brand {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.sidebar-list {
+    padding: 0;
+    margin-top: 15px;
+    list-style-type: none;
+}
+
+.sidebar-list-item {
+    padding: 0px 20px 0px 20px;
+    font-size: 18px;
+}
+
+    .sidebar-list-item:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+    }
+
+    .sidebar-list-item > a {
+        text-decoration: none;
+        color: #9e9ea4;
+    }
+
+.sidebar-responsive {
+    display: inline !important;
+    position: absolute;
+    z-index: 12 !important;
+}
+
+.link_spp {
+    display: grid;
+    grid-template-columns: 30% 70%
+}
+
+.pied {
+    position: absolute;
+    bottom: 10px;
+    margin-left: 4%;
+}
+
+
+/*end*/
+
+
+
+
+
+
+
+
+
+
+/*main*/
+.main-container {
+    grid-area: main;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 20px;
+    padding-left: 40px;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.main-title {
+    margin-bottom: 20px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: calc(-1* var(--cui-gutter-y));
+    margin-right: calc(-0.5* var(--cui-gutter-x));
+    margin-left: calc(-0.5* var(--cui-gutter-x));
+}
+
+.row1 {
+    grid-column: 1/span 1;
+    width: 100%;
+}
+
+.row2 {
+    grid-column: 2/span 1;
+    width: 100%;
+}
+
+.row3 {
+    grid-column: 1/span 1;
+    width: 100%;
+}
+
+.row4 {
+    grid-column: 2/span 1;
+    width: 100%;
+}
+
+
+
+.card {
+    box-shadow: rgba(50, 50, 93, 0.02) 0 2px 5px -1px, rgba(0, 0, 0, 0.05) 0 1px 3px -1px;
+}
+
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 1rem 1rem;
+    background-color: #fffffa;
+}
+
+small, .small {
+    font-size: 0.875em;
+}
+
+/* Apply a fixed aspect ratio to the canvas */
+canvas {
+    display: block;
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    aspect-ratio: 1357 / 600; /* Enforces the desired aspect ratio */
+    overflow: hidden; /* Prevents content from overflowing */
+}
+
+/* Additional styling for specific behavior */
+canvas {
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+
+.listmanaeg {
+    border: none;
+    width: 100%;
+    color: #e0e1dd;
+}
+
+
+.Students {
+    grid-column: span 2;
+    display: none;
+}
+
+.Admins {
+    grid-column: span 2;
+    display: none;
+}
+
+.Teachers {
+    grid-column: span 2;
+    display: none;
+}
+
+.Courses {
+    grid-column: span 2;
+    display: none;
+}
+
+.Categories {
+    grid-column: span 2;
+    display: none;
+}
+
+.Orders {
+    grid-column: span 2;
+    display: none;
+}
+
+.button_DASHBOARD {
+    border: none;
+}
+
+
+
+.input-group {
+    width: 75%;
+    background-color: #D9E8D8;
+    max-height: 60px;
+    padding: 0 .8rem;
+    border-radius: 2rem;
+    display: grid;
+    grid-template-columns: 90% 10%;
+    align-items: center;
+    transition: .2s;
+}
+
+
+
+    .input-group img {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: .5rem .8rem .5rem .8rem;
+        background-color: transparent;
+        border: none;
+        outline: none;
+    }
+
+
+
+
+.export__file {
+    position: relative;
+}
+
+    .export__file .export__file-btn {
+        display: inline-block;
+        width: 2rem;
+        height: 2rem;
+        background: #fff6 url(~/images/save_img.png) center / 80% no-repeat;
+        border-radius: 50%;
+        transition: .2s ease-in-out;
+    }
+
+        .export__file .export__file-btn:hover {
+            background-color: #fff;
+            transform: scale(1.15);
+            cursor: pointer;
+        }
+
+    .export__file input {
+        display: none;
+    }
+
+    .export__file .export__file-options {
+        position: absolute;
+        right: 0;
+        width: 12rem;
+        border-radius: .5rem;
+        overflow: hidden;
+        text-align: center;
+        opacity: 0;
+        transform: scale(.8);
+        transform-origin: top right;
+        box-shadow: 0 .2rem .5rem #0004;
+        transition: .2s;
+    }
+
+    .export__file input:checked + .export__file-options {
+        opacity: 1;
+        transform: scale(1);
+        z-index: 100;
+    }
+
+    .export__file .export__file-options label {
+        display: block;
+        width: 100%;
+        padding: .6rem 0;
+        background-color: #f2f2f2;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        transition: .2s ease-in-out;
+    }
+
+        .export__file .export__file-options label:first-of-type {
+            padding: 1rem 0;
+            background-color: #86e49d !important;
+        }
+
+        .export__file .export__file-options label:hover {
+            transform: scale(1.05);
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+    .export__file .export__file-options img {
+        width: 2rem;
+        height: auto;
+    }
+
+
+
+.hide {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 992px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.2fr 3fr;
+        grid-template-areas:
+            'header'
+            'main';
+    }
+
+    #sidebar {
+        display: none;
+        width: 280px;
+    }
+
+    .menu-icon {
+        display: inline;
+    }
+
+    .sidebar-title > span {
+        display: inline;
+        position: relative;
+        top: 0px;
+        left: 20px;
+        margin-bottom: 50px;
+    }
+
+    .pied {
+        margin-left: 31%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .main-cards {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 0;
+    }
+
+    .charts {
+        grid-template-columns: 1fr;
+        margin-top: 30px;
+    }
+}
+
+
+
+@media screen and (max-width: 576px) {
+    .hedaer-left {
+        display: none;
+    }
+}

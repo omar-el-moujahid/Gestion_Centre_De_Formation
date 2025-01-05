@@ -117,6 +117,10 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
             return db.Participants.Count(e => e.Id == id) > 0;
         }
 
+
+
+
+
         // GET: api/Participants by mail paasword
         [ResponseType(typeof(Participant))]
         public IHttpActionResult GetParticipantbymailparrticipant(string mail, string password )
