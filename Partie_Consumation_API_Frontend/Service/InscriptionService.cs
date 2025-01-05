@@ -13,7 +13,7 @@ namespace Partie_Consumation_API_Frontend.Service
         }
         public async Task<Inscription> GetInscriptiony2Ids(int id_Formation = 1, int id_participant = 1)
         {
-            var response = await _httpClient.GetAsync($"api/Inscriptions?formation_id={id_Formation}&participant_id={id_participant}");
+            var response = await _httpClient.GetAsync($"http://localhost:62869/api/Inscriptions?id_formation={id_Formation}&participant_id={id_participant}");
 
             if (!response.IsSuccessStatusCode)
             {

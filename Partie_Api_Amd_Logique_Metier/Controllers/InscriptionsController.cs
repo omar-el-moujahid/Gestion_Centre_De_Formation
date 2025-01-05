@@ -114,5 +114,17 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         {
             return db.Inscriptions.Count(e => e.Id == id) > 0;
         }
+        // GET: api/Inscriptions/5
+        [ResponseType(typeof(Inscription))]
+        public IHttpActionResult GetInscriptionby2id(int id_formation , int participant_id)
+        {
+            Inscription inscription = db.Inscriptions.FirstOrDefault(i => i.FormationId == id_formation && i.ParticipaantId==participant_id);
+            if (inscription == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(inscription);
+        }
     }
 }

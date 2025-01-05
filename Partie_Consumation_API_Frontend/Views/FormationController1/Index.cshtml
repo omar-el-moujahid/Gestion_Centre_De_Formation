@@ -60,9 +60,30 @@
         <div class="course-action<a href=" c:\users\pc\source\repos\gestion_centre_de_formation\partie_consumation_api_frontend\views\formationcontroller1\index.cshtml">
             c:\users\pc\source\repos\gestion_centre_de_formation\partie_consumation_api_frontend\views\formationcontroller1\index.cshtml</a>s">
             <button class="buy-now">
+                @* @if (ViewData["ActionLabel"] == "Acheter") *@
+                @* { *@
+                @*     <a href="/Paiement/Index?formation_id=@Model.Id" class="buy-now"> *@
+                @*         Acheter le Cours *@
+                @*     </a> *@
+                @* } *@
+                @* @if (ViewData["ActionLabel"] == "Consulter") *@
+                @* { *@
+                @*     <a href="/Paiement/Index?formation_id=@Model.Id" class="buy-now"> *@
+                @*         Consulter le Cours *@
+                @*     </a> *@
+                @* } *@
+                @if (ViewData["ActionLabel"].ToString() == "Acheter")
+                {
                 <a href="/Paiement/Index?formation_id=@Model.Id" class="buy-now">
                     Acheter le Cours
                 </a>
+                }
+                @if (ViewData["ActionLabel"].ToString() == "Consulter")
+                {
+                    <a href="/Paiement/Index?formation_id=@Model.Id" class="buy-now">
+                        Consulter le Cours
+                </a>
+                }
             </button>
             <button class="add-to-cart">Ajouter au panier</button>
         </div>
