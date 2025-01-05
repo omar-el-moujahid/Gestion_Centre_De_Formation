@@ -83,7 +83,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
                 ModelState.AddModelError("", "Email, password, and role are required.");
                 return RedirectToAction("Index", "Auth");
             }
-
+            string returnUrl = TempData["ReturnUrl"] as string;
             switch (rolee.ToLower())
             {
                 case "participant":
@@ -96,6 +96,12 @@ namespace Partie_Consumation_API_Frontend.Controllers
                         HttpContext.Session.SetString("UserPrenom", value: participant.Prenom);
                         HttpContext.Session.SetString("UserRolefromclass", value: participant.Role.Name);
                         HttpContext.Session.SetString("UserRole", rolee);
+                        if (!string.IsNullOrEmpty(returnUrl))
+                        {
+                            TempData.Remove("ReturnUrl"); // Supprime l'URL après utilisation
+                            return Redirect(returnUrl);
+                        }
+
                         return RedirectToAction("Index", "Home");
                     }
                     break;
@@ -110,6 +116,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
                         HttpContext.Session.SetString("UserPrenom", value: admin.Prenom);
                         HttpContext.Session.SetString("UserRolefromclass", value: admin.Role.Name);
                         HttpContext.Session.SetString("UserRole", rolee);
+                     
                         return RedirectToAction("Index", "Home");
                     }
                     break;
@@ -124,6 +131,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
                         HttpContext.Session.SetString("UserPrenom", value: formateur.Prenom);
                         HttpContext.Session.SetString("UserRolefromclass", value: formateur.Role.Name);
                         HttpContext.Session.SetString("UserRole", rolee);
+                     
                         return RedirectToAction("Index", "Home");
                     }
                     break;
