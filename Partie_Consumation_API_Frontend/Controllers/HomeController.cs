@@ -94,5 +94,26 @@ namespace Partie_Consumation_API_Frontend.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult ShowSession()
+        {
+            // Récupération des données de session existantes
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            var userId = HttpContext.Session.GetString("UserId");
+            var userNom = HttpContext.Session.GetString("UserNom");
+            var userPrenom = HttpContext.Session.GetString("UserPrenom");
+            var userRole = HttpContext.Session.GetString("UserRolefromclass");
+
+            // Si les données de session sont nulles, retournez un message d'erreur
+            if (string.IsNullOrEmpty(userEmail) || string.IsNullOrEmpty(userId))
+            {
+                return Content("Aucune session valide n'a été trouvée.");
+            }
+
+            // Affichage des données de session
+            return Content($"User Email: {userEmail}, User ID: {userId}, Nom: {userNom}, Prénom: {userPrenom}, Rôle: {userRole}");
+        }
+
+
     }
 }

@@ -1,12 +1,14 @@
 
+
 using Microsoft.AspNetCore.Mvc;
 using Partie_Api_Amd_Logique_Metier.Models;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+﻿using Microsoft.AspNetCore.Mvc;
+
 using Partie_Consumation_API_Frontend.Service;
-using System.Security.Claims;
 
 namespace Partie_Consumation_API_Frontend.Controllers
 {
@@ -51,7 +53,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
         {
             try
             {
-                int formateurId = 3; // Votre ID fixe
+                int formateurId = 1; // Votre ID fixe
 
                 // Créer un objet dynamique avec les données du formulaire
                 dynamic updatedFormateur = new
@@ -88,8 +90,8 @@ namespace Partie_Consumation_API_Frontend.Controllers
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = $"Une erreur est survenue : {ex.Message}";
-                var currentProfile = await _formateurService.GetFormateurById(3);
-                ViewBag.Formations = await _formateurService.GetFormationsByFormateurId(3);
+                var currentProfile = await _formateurService.GetFormateurById(1);
+                ViewBag.Formations = await _formateurService.GetFormationsByFormateurId(1);
                 return View("Profile", currentProfile);
             }
         }

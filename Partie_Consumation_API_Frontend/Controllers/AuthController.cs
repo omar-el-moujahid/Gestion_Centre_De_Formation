@@ -76,40 +76,79 @@ namespace Partie_Consumation_API_Frontend.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> login(string email , string password, string rolee)
+
         {
-            if(rolee == "participant")
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(rolee))
             {
 
-               var participant =await _authService.authparticipant(email, password);
-                if(participant !=null)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                return RedirectToAction("Index", new { role = "participant" });
+                ModelState.AddModelError("", "Email, password, and role are required.");
+                return RedirectToAction("Index", "Auth");
+
             }
-            if (rolee == "administrateur")
+            string returnUrl = TempData["ReturnUrl"] as string;
+            switch (rolee.ToLower())
             {
 
-                var admini =await _authService.authadmin(email , password);
-                if (admini != null)
-                {
-                    return RedirectToAction("Index", "Admine");
-                }
-                return RedirectToAction("Index","Auth", new { role = "administrateur" });
-            }
-            if (rolee == "formateur")
-            {
+                case "participant":
+                    Participant participant = await _authService.authparticipant(email, password);
+                    if (participant != null)
+                    {
+                        HttpContext.Session.SetString("UserEmail", participant.Email);
+                        HttpContext.Session.SetString("UserId", participant.Id.ToString());
+                        HttpContext.Session.SetString("UserNom", value: participant.Name);
+                        HttpContext.Session.SetString("UserPrenom", value: participant.Prenom);
+                        HttpContext.Session.SetString("UserRolefromclass", value: participant.Role.Name);
+                        HttpContext.Session.SetString("UserRole", rolee);
+                        if (!string.IsNullOrEmpty(returnUrl))
+                        {
+                            TempData.Remove("ReturnUrl"); // Supprime l'URL après utilisation
+                            return Redirect(returnUrl);
+                        }
 
-                var formateu =await _authService.authadmin(email, password);
-                if (formateu != null)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                return RedirectToAction("Index", new { role = "formateur" });
-            }
-            return RedirectToAction("Index", new { role = "participant" });
+                        return RedirectToAction("Index", "Home");
+                    }
+                    break;
 
+                case "administrateur":
+                    Admin admin = await _authService.authadmin(email, password);
+                    if (admin != null)
+                    {
+                        HttpContext.Session.SetString("UserEmail", admin.Email);
+                        HttpContext.Session.SetString("UserId", admin.Id.ToString());
+                        HttpContext.Session.SetString("UserNom", value: admin.Name);
+                        HttpContext.Session.SetString("UserPrenom", value: admin.Prenom);
+                        HttpContext.Session.SetString("UserRolefromclass", value: admin.Role.Name);
+                        HttpContext.Session.SetString("UserRole", rolee);
+                     
+                         return RedirectToAction("Index", "Admine");
+                    }
+                    break;
+
+                case "formateur":
+                    Formateur formateur = await _authService.authformateur(email, password);
+                    if (formateur != null)
+                    {
+                        HttpContext.Session.SetString("UserEmail", formateur.Email);
+                        HttpContext.Session.SetString("UserId", formateur.Id.ToString());
+                        HttpContext.Session.SetString("UserNom", value: formateur.Name);
+                        HttpContext.Session.SetString("UserPrenom", value: formateur.Prenom);
+                        HttpContext.Session.SetString("UserRolefromclass", value: formateur.Role.Name);
+                        HttpContext.Session.SetString("UserRole", rolee);
+                     
+                        return RedirectToAction("Index", "Home");
+                    }
+                    break;
+
+                default:
+                    ModelState.AddModelError("", "Invalid role.");
+                    return RedirectToAction("Index", "Auth");
+
+            }
+
+            ModelState.AddModelError("", "Invalid login attempt.");
+            return RedirectToAction("Index", "Auth", new { role = rolee });
         }
     }
 
