@@ -19,7 +19,7 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         // GET: api/Admins
         public IQueryable<Admin> GetUsers()
         {
-            return db.Admins;
+            return db.Admins.Include(a=>a.Role);
         }
 
         // GET: api/Admins/5
@@ -70,6 +70,7 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+
         // POST: api/Admins
         [ResponseType(typeof(Admin))]
         public IHttpActionResult PostAdmin(Admin admin)
@@ -78,12 +79,16 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            admin.Role=db.Roles.FirstOrDefault(role => role.Id == admin.RoleId);
             db.Admins.Add(admin);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = admin.Id }, admin);
         }
+
+
+
+
 
         // DELETE: api/Admins/5
         [ResponseType(typeof(Admin))]
@@ -114,11 +119,26 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         {
             return db.Admins.Count(e => e.Id == id) > 0;
         }
+
+
         // GET: api/Admin by mail paasword
         [ResponseType(typeof(Participant))]
-        public IHttpActionResult GetAdminbymailparrticipant(string mail, string password)
+        public IHttpActionResult GetAdminbymailpassword(string mail, string password)
         {
             Admin admin = db.Admins.Include(p => p.Role).FirstOrDefault(p => p.Email == mail && p.Password == password);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(admin);
+        }
+
+
+        [ResponseType(typeof(Participant))]
+        public IHttpActionResult GetAdminbymail(string mail)
+        {
+            Admin admin = db.Admins.Include(p => p.Role).FirstOrDefault(p => p.Email == mail);
             if (admin == null)
             {
                 return NotFound();

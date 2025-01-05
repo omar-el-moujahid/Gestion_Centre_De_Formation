@@ -12,6 +12,8 @@ builder.Services.AddHttpClient<FormateurService>();
 
 builder.Services.AddHttpClient<AuthService>();
 builder.Services.AddHttpClient<PaiementService>();
+builder.Services.AddHttpClient<AdmineService>();
+
 
 
 

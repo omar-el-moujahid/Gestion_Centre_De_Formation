@@ -76,12 +76,12 @@ namespace Partie_Consumation_API_Frontend.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult login(string email , string password, string rolee)
+        public async Task<IActionResult> login(string email , string password, string rolee)
         {
             if(rolee == "participant")
             {
 
-               var participant = _authService.authparticipant(email, password);
+               var participant =await _authService.authparticipant(email, password);
                 if(participant !=null)
                 {
                     return RedirectToAction("Index", "Home");
@@ -91,17 +91,17 @@ namespace Partie_Consumation_API_Frontend.Controllers
             if (rolee == "administrateur")
             {
 
-                var admini = _authService.authadmin(email,password);
+                var admini =await _authService.authadmin(email , password);
                 if (admini != null)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Admine");
                 }
-                return RedirectToAction("Index", new { role = "administrateur" });
+                return RedirectToAction("Index","Auth", new { role = "administrateur" });
             }
             if (rolee == "formateur")
             {
 
-                var formateu = _authService.authadmin(email, password);
+                var formateu =await _authService.authadmin(email, password);
                 if (formateu != null)
                 {
                     return RedirectToAction("Index", "Home");
