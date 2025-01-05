@@ -20,14 +20,14 @@ namespace Partie_Consumation_API_Frontend.Service
         public async Task<Formateur?> GetFormateurById(int id=1)
 
         {
-            var response = await _httpClient.GetAsync($"http://localhost:62869/api/Formateurs/{id}");
+            var response = await _httpClient.GetAsync($"http://localhost:62869/api/Formateurs/1");
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Formateur>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
-        public async Task<List<Formation>> GetFormationsByFormateurId(int formateurId=3)
+        public async Task<List<Formation>> GetFormationsByFormateurId(int formateurId=1)
         {
             var response = await _httpClient.GetAsync($"http://localhost:62869/api/Formations/ByFormateur/{formateurId}");
             response.EnsureSuccessStatusCode();

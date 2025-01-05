@@ -175,6 +175,7 @@
     <Compile Include="Controllers\FormateursController.cs" />
     <Compile Include="Controllers\FormationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InscriptionsController.cs" />
     <Compile Include="Controllers\MediaController.cs" />
     <Compile Include="Controllers\ParticipantsController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />

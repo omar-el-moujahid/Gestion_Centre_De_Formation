@@ -54,7 +54,7 @@ namespace Partie_Consumation_API_Frontend.Service
                 {
                     // Read and deserialize the response content into a Participant object
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    var participant = JsonConvert.DeserializeObject<Participant>(jsonResponse);
+                    Participant participant = JsonConvert.DeserializeObject<Participant>(jsonResponse);
 
                     // Return the participant object
                     return participant;
