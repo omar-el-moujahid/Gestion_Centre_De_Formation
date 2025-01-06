@@ -143,7 +143,8 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
                     EstimationDeDuree = i.Formation.EstimationDeDuree,
                     Prix = i.Formation.Prix,
                     Status = i.Statut, // État de l'inscription
-                    DateInscription = i.DateInscription
+                    DateInscription = i.DateInscription,
+                    url = i.Formation.url_image,
                 })
                 .ToList();
 

@@ -169,52 +169,7 @@
                         </div>
 
                         <!-- Dans la section Mes Cours -->
-                        @* <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab"> *@
-                        @*     <div class="d-flex justify-content-between align-items-center mb-4"> *@
-                        @*         <h1>Mes Formations</h1> *@
-                        @*     </div> *@
-
-                        @*     <div class="formations-container"> *@
-                        @*         @if (ViewData["Formations"] != null) *@
-                        @*         { *@
-                        @*             var formations = ViewData["Formations"] as List<InscriptionViewModel>; *@
-                        @*             if (formations != null && formations.Any()) *@
-                        @*             { *@
-                        @*                 foreach (var formation in formations) *@
-                        @*                 { *@
-                        @*                     <div class="card mb-3"> *@
-                        @*                         <div class="card-body"> *@
-                        @*                             <h5 class="card-title">@formation.Titre</h5> *@
-                        @*                             <p class="card-text">@formation.Description</p> *@
-                        @*                             <div class="d-flex justify-content-between"> *@
-                        @*                                 <span class="text-muted">Durée : @formation.EstimationDeDuree heures</span> *@
-                        @*                                 <span class="text-muted">Prix : @formation.Prix €</span> *@
-                        @*                             </div> *@
-                        @*                             <div> *@
-                        @*                                 <strong>État :</strong> @(formation.Status == 0 ? "En cours" : "Complet") *@
-                        @*                             </div> *@
-                        @*                             <div> *@
-                        @*                                 <strong>Date d'inscription :</strong> @formation.DateInscription.ToString("dd/MM/yyyy HH:mm") *@
-                        @*                             </div> *@
-                        @*                         </div> *@
-                        @*                     </div> *@
-                        @*                 } *@
-                        @*             } *@
-                        @*             else *@
-                        @*             { *@
-                        @*                 <div class="alert alert-info"> *@
-                        @*                     Aucune formation disponible pour le moment. *@
-                        @*                 </div> *@
-                        @*             } *@
-                        @*         } *@
-                        @*         else *@
-                        @*         { *@
-                        @*             <div class="alert alert-danger"> *@
-                        @*                 Les données des formations n'ont pas pu être chargées. ViewData["Formations"] is null. *@
-                        @*             </div> *@
-                        @*         } *@
-                        @*     </div> *@
-                        @* </div> *@
+                       
                         <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <h1>Mes Formations</h1>
@@ -223,27 +178,78 @@
                             <div class="formations-container">
                                 @if (ViewData["Formations"] != null)
                                 {
-                                    <p>
-                                        view has a values @ViewData["Formations"]
-                                        </p>
-                                    <p>Type de ViewData["Formations"] : @ViewData["Formations"].GetType()</p>
-
                                     var formations = ViewData["Formations"] as IEnumerable<InscriptionViewModel>;
                                     foreach (var formation in formations)
                                     {
-                                        <p>
-                                            view has a values @formation
-                                        </p>
-                                        <div class="card mb-3">
-                                            <div class="card-body">
-                                                <h5 class="card-title">@formation.Titre</h5>
-                                                <p class="card-text">@formation.Description</p>
-                                                <div class="d-flex justify-content-between">
-                                                    <span class="text-muted">Durée : @formation.EstimationDeDuree heures</span>
-                                                    <span class="text-muted">Prix : @formation.Prix €</span>
+                                        <div class="card mb-3" style="border: 1px solid #ddd; border-radius: 8px;">
+                                            <div class="row g-0">
+                                                <div class="col-md-3 d-flex align-items-center justify-content-center" style="background-color: #f9f9f9;">
+                                                    <img src="@formation.url" class="img-fluid p-3" alt="Image de la formation" style="max-height: 150px; object-fit: contain;">
                                                 </div>
-                                                <div>
-                                                    <strong>État :</strong> @formation.Status
+                                                <div class="col-md-9">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-2">@formation.Titre</h5>
+                                                        <p class="card-text text-muted mb-3" style="font-size: 0.9rem;">@formation.Description</p>
+                                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                                            <span class="badge bg-light text-dark">Durée : @formation.EstimationDeDuree heures</span>
+                                                            <span class="badge bg-light text-dark">Prix : @formation.Prix €</span>
+                                                        </div>
+                                                        <div>
+                                                            @if (@formation.Status == 0)
+                                                            {
+                                                                <strong>État :</strong> <span>En Cours</span>
+                                                            }
+                                                            @if (@formation.Status == 1)
+                                                            {
+                                                                <strong>État :</strong> <span>Terminé</span>
+                                                            }
+                                                        </div>
+                                                        @if (@formation.Status == 0)
+                                                        {
+                                                            <a href="@formation.url" class="btn btn-primary mt-3" style="border-radius: 20px; padding: 0.5rem 1.5rem;">Accéder à la formation</a>
+                                                        }
+                                                        @if (@formation.Status == 1)
+                                                        {
+                                                            <a href="@formation.url" class="btn btn-primary mt-3" style="border-radius: 20px; padding: 0.5rem 1.5rem;">Accéder au Certificat</a>
+                                                            <button type="button" class="btn btn-success mt-3" style="border-radius: 20px; padding: 0.5rem 1.5rem;" data-bs-toggle="modal" data-bs-target="#evaluateModal-@formation.FormationId">Évaluer la formation</button>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal pour évaluation -->
+                                        <div class="modal fade" id="evaluateModal-@formation.FormationId" tabindex="-1" aria-labelledby="evaluateModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="evaluateModalLabel">Évaluer la formation : @formation.Titre</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="text-center">
+                                                            <img src="@formation.url" alt="Image de la formation" class="img-fluid mb-3" style="max-height: 150px;">
+                                                            <p><strong>@formation.Description</strong></p>
+                                                        </div>
+                                                        <form method="post" action="/EvaluateFormation">
+                                                            <input type="hidden" name="formationId" value="@formation.FormationId" />
+                                                            <div class="mb-3">
+                                                                <label for="rating" class="form-label">Votre note</label>
+                                                                <select class="form-select" id="rating" name="rating">
+                                                                    <option value="1">1 étoile</option>
+                                                                    <option value="2">2 étoiles</option>
+                                                                    <option value="3">3 étoiles</option>
+                                                                    <option value="4">4 étoiles</option>
+                                                                    <option value="5">5 étoiles</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="review" class="form-label">Votre avis (optionnel)</label>
+                                                                <textarea class="form-control" id="review" name="review" rows="3" placeholder="Partagez votre expérience"></textarea>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary">Soumettre</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -284,45 +290,6 @@
         </div>
     </div>
 
-    @* <script> *@
-    @*     function showTab(tabId) { *@
-    @*         const tabs = document.querySelectorAll('.tab-pane'); *@
-    @*         tabs.forEach(tab => { *@
-    @*             tab.classList.remove('show', 'active'); *@
-    @*         }); *@
-
-    @*         const selectedTab = document.getElementById(tabId); *@
-    @*         selectedTab.classList.add('show', 'active'); *@
-    @*     } *@
-    @*         document.addEventListener('DOMContentLoaded', function() { *@
-    @*         const editModal = document.getElementById('editFormationModal'); *@
-    @*         if (editModal) { *@
-    @*             editModal.addEventListener('show.bs.modal', function(event) { *@
-    @*                 const button = event.relatedTarget; *@
-    @*                 const formationId = button.getAttribute('data-formation-id'); *@
-
-    @*                 fetch(`/Formateur/EditFormation/${formationId}`) *@
-    @*                     .then(response => response.text()) *@
-    @*                     .then(html => { *@
-    @*                         document.getElementById('editFormationContent').innerHTML = html; *@
-    @*                     }); *@
-    @*             }); *@
-    @*         } *@
-    @*     }); *@
-
-
-    @* </script> *@
-    @* <script> *@
-    @*     function showTab(tabId) { *@
-    @*         const tabs = document.querySelectorAll('.tab-pane'); *@
-    @*         tabs.forEach(tab => { *@
-    @*             tab.classList.remove('show', 'active'); *@
-    @*         }); *@
-
-    @*         const selectedTab = document.getElementById(tabId); *@
-    @*         selectedTab.classList.add('show', 'active'); *@
-    @*     } *@
-    @* </script> *@
     <script>
         // Sérialiser les données de ViewData["Formations"] en JSON
         var formationsData = @Html.Raw(Json.Serialize(ViewData["Formations"]));
@@ -330,23 +297,7 @@
         // Afficher les données dans la console
         console.log("Formations Data:", formationsData);
     </script>
-    @* <script> *@
-    @*     function showTab(tabId) { *@
-    @*         console.log(`Showing tab: ${tabId}`); // Debugging statement *@
 
-    @*         const tabs = document.querySelectorAll('.tab-pane'); *@
-    @*         tabs.forEach(tab => { *@
-    @*             tab.classList.remove('show', 'active'); *@
-    @*         }); *@
-
-    @*         const selectedTab = document.getElementById(tabId); *@
-    @*         if (selectedTab) { *@
-    @*             selectedTab.classList.add('show', 'active'); *@
-    @*         } else { *@
-    @*             console.error(`Tab with ID ${tabId} not found.`); *@
-    @*         } *@
-    @*     } *@
-    @* </script> *@
     <script>
         function showTab(tabId) {
             console.log(`Showing tab: ${tabId}`); // Debugging statement
