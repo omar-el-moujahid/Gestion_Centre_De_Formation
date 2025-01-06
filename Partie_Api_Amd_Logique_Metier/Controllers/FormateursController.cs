@@ -6,8 +6,11 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Mvc;
 using Partie_Api_Amd_Logique_Metier.Models;
 
 namespace Partie_Api_Amd_Logique_Metier.Controllers
@@ -19,7 +22,7 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         // GET: api/Formateurs
         public IQueryable<Formateur> GetUsers()
         {
-            return db.Formateurs;
+            return db.Formateurs.Include(f=>f.Role);
         }
 
         // GET: api/Formateurs/5
@@ -134,5 +137,21 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
 
             return Ok(formateur);
         }
+
+
+
+        [ResponseType(typeof(Formateur))]
+        public IHttpActionResult GetAdminbymail(string mail)
+        {
+            Formateur formateur = db.Formateurs.Include(p => p.Role).FirstOrDefault(p => p.Email == mail);
+            if (formateur == null)
+            {
+                return NotFound();
+            }
+            return Ok(formateur);
+        }
+
+        
+
     }
 }

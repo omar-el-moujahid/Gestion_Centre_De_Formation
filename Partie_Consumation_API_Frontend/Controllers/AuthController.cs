@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
-using Microsoft.EntityFrameworkCore;
+
 using Partie_Api_Amd_Logique_Metier.Models;
 using Partie_Consumation_API_Frontend.Service;
 using System.Data;
@@ -47,7 +48,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register(Participant model , string confirmPassword)
+        public IActionResult Register(Participant model, string confirmPassword)
         {
             // Vérifier si les mots de passe correspondent
             if (model.Password != confirmPassword)
@@ -62,7 +63,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
                 _authService.CreateStudents(model);
                 return RedirectToAction("Index", new { role = "participant" });
             }
-                
+
 
         }
 
@@ -77,7 +78,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> login(string email , string password, string rolee)
+        public async Task<IActionResult> login(string email, string password, string rolee)
 
         {
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(rolee))
@@ -121,8 +122,8 @@ namespace Partie_Consumation_API_Frontend.Controllers
                         HttpContext.Session.SetString("UserPrenom", value: admin.Prenom);
                         HttpContext.Session.SetString("UserRolefromclass", value: admin.Role.Name);
                         HttpContext.Session.SetString("UserRole", rolee);
-                     
-                         return RedirectToAction("Index", "Admine");
+
+                        return RedirectToAction("Index", "Admine");
                     }
                     break;
 
@@ -136,7 +137,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
                         HttpContext.Session.SetString("UserPrenom", value: formateur.Prenom);
                         HttpContext.Session.SetString("UserRolefromclass", value: formateur.Role.Name);
                         HttpContext.Session.SetString("UserRole", rolee);
-                     
+
                         return RedirectToAction("Index", "Home");
                     }
                     break;
@@ -153,4 +154,3 @@ namespace Partie_Consumation_API_Frontend.Controllers
     }
 
 }
-
