@@ -9,5 +9,6 @@
         public decimal Prix { get; set; }
         public int Status { get; set; } // 0 = En cours, 1 = Complet (ajustez en fonction de vos besoins)
         public DateTime DateInscription { get; set; }
+        public string url { get; set; }
     }
 }
