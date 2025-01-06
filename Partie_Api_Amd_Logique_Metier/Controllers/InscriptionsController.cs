@@ -6,8 +6,10 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Mvc;
 using Partie_Api_Amd_Logique_Metier.Models;
 
 namespace Partie_Api_Amd_Logique_Metier.Controllers
@@ -126,5 +128,34 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
 
             return Ok(inscription);
         }
+        // GET: api/Inscriptions/5
+        [ResponseType(typeof(IEnumerable<object>))]
+        public IHttpActionResult GetFormationsByParticipant(int participantId)
+        {
+            // Récupérer toutes les inscriptions pour le participant donné
+            var inscriptions = db.Inscriptions
+                .Where(i => i.ParticipaantId == participantId)
+                .Select(i => new
+                {
+                    FormationId = i.Formation.Id,
+                    Titre = i.Formation.Titre,
+                    Description = i.Formation.Description,
+                    EstimationDeDuree = i.Formation.EstimationDeDuree,
+                    Prix = i.Formation.Prix,
+                    Status = i.Statut, // État de l'inscription
+                    DateInscription = i.DateInscription
+                })
+                .ToList();
+
+            // Vérifier si aucune inscription n'est trouvée
+            if (inscriptions == null || !inscriptions.Any())
+            {
+                return NotFound(); // Retourner 404 si aucune inscription n'est trouvée
+            }
+
+            return Ok(inscriptions); // Retourner la liste des inscriptions enrichies
+        }
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Partie_Api_Amd_Logique_Metier.Models;
+using Partie_Consumation_API_Frontend.Models;
 using System.Text;
 using System.Text.Json;
 
@@ -58,6 +59,22 @@ namespace Partie_Consumation_API_Frontend.Service
             }
         }
 
+        public async Task<List<InscriptionViewModel>> GetFormationsByParticipantIdWithState(int participantId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"http://localhost:62869/api/Inscriptions?participantId={participantId}");
+                response.EnsureSuccessStatusCode();
 
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<InscriptionViewModel>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur : {ex.Message}");
+                return new List<InscriptionViewModel>();
+            }
+        }
+        
     }
 }

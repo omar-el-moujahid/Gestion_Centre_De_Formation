@@ -13,6 +13,8 @@ builder.Services.AddHttpClient<FormateurService>();
 builder.Services.AddHttpClient<AuthService>();
 builder.Services.AddHttpClient<PaiementService>();
 builder.Services.AddHttpClient<InscriptionService>();
+builder.Services.AddHttpClient<ParticipantService>();
+
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {

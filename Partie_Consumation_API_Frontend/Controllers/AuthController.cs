@@ -102,7 +102,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
                             return Redirect(returnUrl);
                         }
 
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Profile", "ParticipantController1", new { participantId = participant.Id });
                     }
                     break;
 
