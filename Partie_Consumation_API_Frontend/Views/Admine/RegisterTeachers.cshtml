@@ -1,13 +1,11 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-
-@model Partie_Api_Amd_Logique_Metier.Models.Admin
+@model Partie_Api_Amd_Logique_Metier.Models.Formateur
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Admin";
 }
-
 @section VendorStyles
 {
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -21,9 +19,6 @@
     <link rel="stylesheet" href="~/css/Auth/page_auth.css">
 }
 
-
-@* ************** Content ************** *@
-
 <div class="container-xxl">
     <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
@@ -31,6 +26,7 @@
             <!-- Register Card -->
             <div class="card px-sm-6 px-0">
                 <div class="card-body">
+
                     <p style="padding-bottom:20px;text-align:end;">
 
                         <a href="/Admine/Index">
@@ -68,35 +64,57 @@
 
 
 
-                    @using (Html.BeginForm("AddAdmin", "Admine", FormMethod.Post))
+                    @using (Html.BeginForm("AddFormateur", "Admine", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
 
                         <div class="form-container">
-
+                            <!-- Nom -->
                             <div class="form-group">
-                                @Html.LabelFor(m => m.Name, new { @class = "form-label", @for = "Name" })
-                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", id = "Name", placeholder = "Enter your username" })
+                                @Html.LabelFor(m => m.Name, new { @class = "form-label" })
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter your name" })
                                 @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
                             </div>
+
+                            <!-- Prénom -->
                             <div class="form-group">
-                                @Html.LabelFor(m => m.Prenom, new { @class = "form-label", @for = "Prenom" })
-                                @Html.TextBoxFor(m => m.Prenom, new { @class = "form-control", id = "Prenom", placeholder = "Enter your first name" })
+                                @Html.LabelFor(m => m.Prenom, new { @class = "form-label" })
+                                @Html.TextBoxFor(m => m.Prenom, new { @class = "form-control", placeholder = "Enter your first name" })
                                 @Html.ValidationMessageFor(m => m.Prenom, "", new { @class = "text-danger" })
                             </div>
 
+                            <!-- Spécialité -->
                             <div class="form-group">
-                                @Html.LabelFor(m => m.Email, new { @class = "form-label", @for = "Email" })
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", id = "Email", type = "email", placeholder = "Enter your email" })
+                                @Html.LabelFor(m => m.Specialite, new { @class = "form-label" })
+                                @Html.TextBoxFor(m => m.Specialite, new { @class = "form-control", placeholder = "Enter your specialty" })
+                                @Html.ValidationMessageFor(m => m.Specialite, "", new { @class = "text-danger" })
+                            </div>
+
+                            <!-- Biographie -->
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Biographie, new { @class = "form-label" })
+                                @Html.TextAreaFor(m => m.Biographie, new { @class = "form-control", placeholder = "Enter your biography", rows = 5 })
+                                @Html.ValidationMessageFor(m => m.Biographie, "", new { @class = "text-danger" })
+                            </div>
+
+                            <!-- Lien LinkedIn -->
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.LienLinkedIn, new { @class = "form-label" })
+                                @Html.TextBoxFor(m => m.LienLinkedIn, new { @class = "form-control", placeholder = "Enter the LinkedIn link" })
+                                @Html.ValidationMessageFor(m => m.LienLinkedIn, "", new { @class = "text-danger" })
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter your email", type = "email" })
                                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                             </div>
 
+                            <!-- Mot de passe -->
                             <div class="form-group">
-                                @Html.LabelFor(m => m.Password, new { @class = "form-label", @id = "password", @for = "Password" })
-                                <div class="input-group">
-                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", id = "Password", placeholder = "••••••••" })
-                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                                </div>
+                                @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "••••••••" })
                                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
 
@@ -125,4 +143,3 @@
         </div>
     </div>
 </div>
-

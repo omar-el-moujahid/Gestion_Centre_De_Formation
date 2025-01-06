@@ -122,7 +122,7 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
 
 
         // GET: api/Admin by mail paasword
-        [ResponseType(typeof(Participant))]
+        [ResponseType(typeof(Admin))]
         public IHttpActionResult GetAdminbymailpassword(string mail, string password)
         {
             Admin admin = db.Admins.Include(p => p.Role).FirstOrDefault(p => p.Email == mail && p.Password == password);
@@ -135,7 +135,7 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         }
 
 
-        [ResponseType(typeof(Participant))]
+        [ResponseType(typeof(Admin))]
         public IHttpActionResult GetAdminbymail(string mail)
         {
             Admin admin = db.Admins.Include(p => p.Role).FirstOrDefault(p => p.Email == mail);
