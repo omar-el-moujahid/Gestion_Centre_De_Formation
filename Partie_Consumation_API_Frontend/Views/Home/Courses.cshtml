@@ -1,5 +1,4 @@
-﻿@model List<Partie_Api_Amd_Logique_Metier.Models.Formation>
-
+﻿@model Partie_Api_Amd_Logique_Metier.Models.CoursesViewModel
 @{
     ViewData["Title"] = "Courses";
 }
@@ -44,12 +43,17 @@
                 <!-- Liste déroulante pour les catégories -->
                 <select id="categorySelect" class="form-select mb-3" style="display: inline-block;max-width: 200px; margin: 0 auto;">
                     <option value="">All Categories</option>
-                    <option value="programmation">Programmation</option>
-                    <option value="design">Design</option>
-                    <option value="Marketing Digital">Marketing Digital</option>
-                    <option value="langues">Langues</option>
-                    <option value="sciences">Sciences</option>
-                    <option value="business">Business</option>
+                    
+                    @foreach (var catégories in Model.Categories)
+                    {
+                        <option value="@catégories.Name">@catégories.Name</option>
+                    }
+                    @* <option value="programmation">Programmation</option> *@
+                    @* <option value="design">Design</option> *@
+                    @* <option value="Marketing Digital">Marketing Digital</option> *@
+                    @* <option value="langues">Langues</option> *@
+                    @* <option value="sciences">Sciences</option> *@
+                    @* <option value="business">Business</option> *@
                 </select>
 
                 <!-- Liste déroulante pour la durée -->
@@ -166,8 +170,9 @@
     //         Ajoutez d'autres produits ici
     //     ]
     // };
+
     const productValues = {
-        productList: @Html.Raw(Json.Serialize(Model))
+        productList: @Html.Raw(Json.Serialize(Model.Formations))
     };
 
     console.log(productValues);
@@ -353,9 +358,9 @@
                 <div class="position-relative overflow-hidden">
                     <img class="img-fluid" src="${product.url_image}" alt="${product.titre}">
 
-                    // <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
-                    //     <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">Join Now</a>
-                    // </div>
+                     <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
+                         <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">Join Now</a>
+                     </div>
                         <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
     <a href="/FormationController1/Index?id=${product.id}" class="btn btn-sm btn-primary">Join Now</a>
 

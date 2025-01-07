@@ -21,14 +21,28 @@ namespace Partie_Consumation_API_Frontend.Controllers
         //{
         //}
 
+        
+
         public IActionResult Index()
         {
             return View();
         }
+        //public IActionResult Actualite()
+        //{
+        //    return View();
+        //}
         public async Task<IActionResult> Courses()
         {
             var formations = await _formationService.GetFormations();
-            return View(formations);
+            var categories = await _formationService.GetCategories();
+
+            var viewModel = new CoursesViewModel
+            {
+                Formations = formations,
+                Categories = categories
+            };
+
+            return View(viewModel);
         }
         public IActionResult About()
         {
