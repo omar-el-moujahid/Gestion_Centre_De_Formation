@@ -1,4 +1,4 @@
-﻿
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
 
@@ -11,7 +11,11 @@ namespace Partie_Consumation_API_Frontend.Controllers
 {
     public class AuthController : Controller
     {
+       
+
+
         private readonly AuthService _authService;
+       
 
         [ActivatorUtilitiesConstructor]
         public AuthController(AuthService authService)
@@ -81,8 +85,11 @@ namespace Partie_Consumation_API_Frontend.Controllers
         public async Task<IActionResult> login(string email, string password, string rolee)
 
         {
+
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(rolee))
             {
+                
+
 
                 ModelState.AddModelError("", "Email, password, and role are required.");
                 return RedirectToAction("Index", "Auth");

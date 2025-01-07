@@ -11,12 +11,14 @@ namespace Partie_Consumation_API_Frontend.Service
 {
     public class AuthService
     {
+       
         private readonly HttpClient _httpClient;
         public AuthService(HttpClient httpClient)
         {
             _httpClient = httpClient;
+            
         }
-
+       
 
         public async void CreateStudents(Participant newstudent)
         {
@@ -41,6 +43,8 @@ namespace Partie_Consumation_API_Frontend.Service
             //var content = await response.Content.ReadAsStringAsync();
             //return JsonSerializer.Deserialize<Formation>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
+
+        
 
         public async Task<Participant> authparticipant(string mail, string password)
         {

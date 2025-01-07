@@ -58,6 +58,15 @@ namespace Partie_Consumation_API_Frontend.Service
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<FromationForMedia>(content,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+
+        public async Task<List<Category>> GetCategories()
+        {
+            var response = await _httpClient.GetAsync("http://localhost:62869/api/Categories");
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<Category>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
     }
 }

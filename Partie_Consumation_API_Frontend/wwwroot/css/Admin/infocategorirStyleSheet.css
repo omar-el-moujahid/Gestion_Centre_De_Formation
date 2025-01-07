@@ -1,0 +1,169 @@
+﻿
+body {
+    background: #ffffff;
+    max-height: 100vh;
+}
+/*scrollbar*/
+.has-scrollbar {
+    padding-bottom: 5px;
+}
+
+    .has-scrollbar::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    .has-scrollbar::-webkit-scrollbar-thumb {
+        background: transparent;
+        border: 3px solid var(--white);
+        -webkit-border-radius: 20px;
+        border-radius: 20px;
+    }
+
+    .has-scrollbar:hover::-webkit-scrollbar-thumb {
+        background: hsl(0, 0%, 90%);
+    }
+
+    .has-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: hsl(0, 0%, 80%);
+    }
+/*end*/
+
+
+.grid-container {
+    display: grid;
+    grid-template-rows: 0.2fr 3fr;
+    height: 100vh;
+}
+
+.header {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px 0 30px;
+    box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
+}
+
+.mainContent {
+    height: 100%;
+    overflow: hidden;
+    margin: 30px;
+    margin-left: 40px;
+    margin-right: 40px;
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+}
+
+.main-title {
+    width: 100%;
+}
+
+.button_DASHBOARD {
+    border: none;
+    display: flex;
+    text-decoration: none;
+    gap: 10px;
+}
+
+.subMainContent {
+    margin-left: 60px;
+    margin-right: 60px;
+    height: 100%;
+    display: flex;
+    gap: 30px;
+}
+
+.card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.062);
+}
+
+.cookieHeading {
+    font-size: 1.2em;
+    font-weight: 800;
+    color: rgb(26, 26, 26);
+}
+
+.cookieDescription {
+    text-align: center;
+    font-size: 0.7em;
+    font-weight: 600;
+    color: rgb(99, 99, 99);
+}
+
+
+.buttonContainer {
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+}
+
+.acceptButton {
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #7b57ff;
+    transition-duration: .2s;
+    border: none;
+    color: rgb(241, 241, 241);
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px -1px #977ef3, 0 2px 4px -1px #977ef3;
+    transition: all .6s ease;
+}
+
+
+
+
+    .acceptButton:hover {
+        background-color: #9173ff;
+        box-shadow: 0 10px 15px -3px #977ef3, 0 4px 6px -2px #977ef3;
+        transition-duration: .2s;
+    }
+
+.main-container {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 1rem 1rem;
+    background-color: #fffffa;
+}
+
+.input-group {
+    max-width: 40%;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 90% 10%;
+    background-color: #D9E8D8;
+    border-radius: 2rem;
+    /* width: 100%; */
+}
+
+
+    .input-group img {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: .5rem .8rem .5rem .8rem;
+        background-color: transparent;
+        border: none;
+        outline: none;
+    }
+
