@@ -6,6 +6,7 @@
     ViewData["Title"] = "Admin";
     var existAdmin = ViewData["existAdmin"] as string;
     var existFormateur = ViewData["existFormateur"] as string;
+    var existCategori = ViewData["existCategory"] as string;
 }
 
 
@@ -48,17 +49,17 @@
 
             <li class="nav-item dropdown">
                 <button id="btnlanguage"
-                        class="btn btn-link nav-link"
-                        type="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                class="btn btn-link nav-link"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
                     <img width="30" class="icon icon-lg" src="~/images/language_img.png" />
                 </button>
 
                 <ul id="listlanguageAf"
-                    class="dropdown-menu dropdown-menu-end"
-                    style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
-                    data-popper-placement="bottom-end">
+                class="dropdown-menu dropdown-menu-end"
+                style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                data-popper-placement="bottom-end">
                     <li>
                         <button class="dropdown-item d-flex align-items-center active" type="button" data-coreui-language-value="en" onclick="i18next.changeLanguage(&quot;en&quot;)">
                             <img width="30" class="icon icon-lg me-3" src="~/images/english_img.png" />English
@@ -84,17 +85,17 @@
 
             <li class="nav-item dropdown">
                 <button id="btnLightDarck"
-                        class="btn btn-link nav-link"
-                        type="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                class="btn btn-link nav-link"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
                     <img width="30" class="icon icon-lg theme-icon-active" src="~/images/contrast_img.png" />
                 </button>
 
                 <ul id="LightDarck"
-                    class="dropdown-menu dropdown-menu-end"
-                    style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
-                    data-popper-placement="bottom-end">
+                class="dropdown-menu dropdown-menu-end"
+                style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                data-popper-placement="bottom-end">
                     <li>
                         <button class="dropdown-item d-flex align-items-center" type="button" data-coreui-theme-value="light">
                             <img width="30" class="icon icon-lg me-3" src="~/images/light_img.png" /><span data-coreui-i18n="light">Light</span>
@@ -376,13 +377,13 @@
                                                     <td>
                                                         <div class="dropdown">
                                                             <button class="btn btn-link nav-link"
-                                                                    type="button"
-                                                                    data-bs-toggle="dropdown"
-                                                                    aria-expanded="false">
+                                                            type="button"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
                                                                 <img width="50" height="50" src="~/images/option_img.png" class="icon" />
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end"
-                                                                data-popper-placement="bottom-end">
+                                                            data-popper-placement="bottom-end">
                                                                 <li>
                                                                     @using (Html.BeginForm("DeleteAdmin", "Admine", FormMethod.Post))
                                                                     {
@@ -474,16 +475,16 @@
                                             <div class="dropdown">
 
                                                 <button class="btn btn-link nav-link"
-                                                        type="button"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
+                                                type="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false">
                                                     <img width="50" height="50" src="~/images/option_img.png" class="icon" />
                                                 </button>
 
 
                                                 <ul class="dropdown-menu dropdown-menu-end"
-                                                    style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
-                                                    data-popper-placement="bottom-end">
+                                                style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                data-popper-placement="bottom-end">
 
                                                     <li>
                                                         <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal" data-coreui-i18n="delete">Delete</a>
@@ -516,16 +517,16 @@
                                             <div class="dropdown">
 
                                                 <button class="btn btn-link nav-link"
-                                                        type="button"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
+                                                type="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false">
                                                     <img width="50" height="50" src="~/images/option_img.png" class="icon" />
                                                 </button>
 
 
                                                 <ul class="dropdown-menu dropdown-menu-end"
-                                                    style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
-                                                    data-popper-placement="bottom-end">
+                                                style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                data-popper-placement="bottom-end">
 
                                                     <li>
                                                         <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal" data-coreui-i18n="delete">Delete</a>
@@ -558,16 +559,16 @@
                                             <div class="dropdown">
 
                                                 <button class="btn btn-link nav-link"
-                                                        type="button"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
+                                                type="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false">
                                                     <img width="50" height="50" src="~/images/option_img.png" class="icon" />
                                                 </button>
 
 
                                                 <ul class="dropdown-menu dropdown-menu-end"
-                                                    style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
-                                                    data-popper-placement="bottom-end">
+                                                style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                data-popper-placement="bottom-end">
 
                                                     <li>
                                                         <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal" data-coreui-i18n="delete">Delete</a>
@@ -686,28 +687,28 @@
                                                     <div class="dropdown">
 
                                                         <button class="btn btn-link nav-link"
-                                                                type="button"
-                                                                data-bs-toggle="dropdown"
-                                                                aria-expanded="false">
+                                                        type="button"
+                                                        data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
                                                             <img width="50" height="50" src="~/images/option_img.png" class="icon" />
                                                         </button>
 
 
                                                         <ul class="dropdown-menu dropdown-menu-end"
-                                                            style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
-                                                            data-popper-placement="bottom-end">
+                                                        style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                        data-popper-placement="bottom-end">
 
                                                             <li>
                                                                 @using (Html.BeginForm("DeleteFormateur", "Admine", FormMethod.Post))
                                                                 {
                                                                     @Html.AntiForgeryToken()
-                                                                    <input type="hidden" id="idFormateurDelete" name="idFormateurDelete" value=@subFormateur.Id />
+                                                                    <input type="hidden" id="idFormateurDelete" name="idFormateurDelete" value="@subFormateur.Id" />
                                                                     <button type="submit" class="dropdown-item text-danger">Delete</button>
                                                                 }
 
                                                             </li>
                                                             <li>
-                                                                <a class="dropdown-item" href="/Admine/infoFormateur?idFormateur=@subFormateur.Id" data-coreui-i18n="info">info</a>
+                                                                <a class="dropdown-item" href="/Admine/infoFormateur?idFormateur=@subFormateur.Id">info</a>
 
                                                             </li>
 
@@ -715,6 +716,8 @@
 
                                                     </div>
                                                 </td>
+
+
                                             </tr>
                                         }
 
@@ -726,132 +729,6 @@
                                         </tr>
                                     }
 
-
-
-
-
-
-
-
-                                    <!--
-
-                                    <tr class="align-middle">
-
-                                        <td>
-                                            <div class="text-nowrap">Marzouki</div>
-
-                                        </td>
-                                        <td>
-                                            <div class="small text-body-secondary text-nowrap">
-                                                <span data-coreui-i18n="new">marzouki@gimail.com</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="small text-body-secondary text-nowrap">
-                                                <span data-coreui-i18n="speciality_Teachers">indus</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="dropdown">
-
-                                                <button class="btn btn-link nav-link"
-                                                        type="button"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    <img width="50" height="50" src="~/images/option_img.png" class="icon" />
-                                                </button>
-
-
-                                                <ul class="dropdown-menu dropdown-menu-end"
-                                                    style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
-                                                    data-popper-placement="bottom-end">
-
-                                                    <li>
-                                                        <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal" data-coreui-i18n="delete">Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="align-middle">
-
-                                        <td>
-                                            <div class="text-nowrap">Yiorgos</div>
-
-                                        </td>
-                                        <td>
-                                            <div class="small text-body-secondary text-nowrap">
-                                                <span data-coreui-i18n="new">Yiorgos@gimail.com</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="small text-body-secondary text-nowrap">
-                                                <span data-coreui-i18n="speciality_Teachers">embarki</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="dropdown">
-
-                                                <button class="btn btn-link nav-link"
-                                                        type="button"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    <img width="50" height="50" src="~/images/option_img.png" class="icon" />
-                                                </button>
-
-
-                                                <ul class="dropdown-menu dropdown-menu-end"
-                                                    style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
-                                                    data-popper-placement="bottom-end">
-
-                                                    <li>
-                                                        <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal" data-coreui-i18n="delete">Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="align-middle">
-
-                                        <td>
-                                            <div class="text-nowrap">Avraamu</div>
-
-                                        </td>
-                                        <td>
-                                            <div class="small text-body-secondary text-nowrap">
-                                                <span data-coreui-i18n="new">Avraamu@gimail.com</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="small text-body-secondary text-nowrap">
-                                                <span data-coreui-i18n="speciality_Teachers">gtr</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="dropdown">
-
-                                                <button class="btn btn-link nav-link"
-                                                        type="button"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    <img width="50" height="50" src="~/images/option_img.png" class="icon" />
-                                                </button>
-
-
-                                                <ul class="dropdown-menu dropdown-menu-end"
-                                                    style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
-                                                    data-popper-placement="bottom-end">
-
-                                                    <li>
-                                                        <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal" data-coreui-i18n="delete">Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    -->
                                 </tbody>
                             </table>
                         </div>
@@ -879,7 +756,14 @@
                                     <img width="50" height="50" class="icon" style="padding-right:10px;padding-bottom:10px;" src="~/images/book.png" />
                                     Courses
                                 </div>
-                                <div class="card-subtitle text-body-secondary mb-4" data-coreui-i18n="registeredCoursesCounter" style="color:black;">1.232.150 registered Courses</div>
+                                @if (ViewData["existFormatio"] == "exist"){
+                                    <div class="card-subtitle text-body-secondary mb-4" data-coreui-i18n="registeredCoursesCounter" style="color:black;">@Model.countFormatons registered Courses</div>
+
+                                }else{
+                                    <div class="card-subtitle text-body-secondary mb-4" data-coreui-i18n="registeredCoursesCounter" style="color:black;">0 registered Courses</div>
+
+                                }
+                                
                                 <div class="input-group-Courses input-group">
                                     <input type="search" placeholder="Search...">
                                     <img width="30" height="30" src="~/images/search_img.png" alt="">
@@ -904,124 +788,58 @@
                                     </tr>
                                 </thead>
                                 <tbody class="tbody-Courses">
-                                    <tr class="align-middle">
+                                    @if (ViewData["existFormatio"] == "exist"){
+                                        @foreach (var subformation in Model.formations){
+                                            <tr class="align-middle">
 
-                                        <td>
-                                            <div class="text-nowrap">Yiorgos Avraamu</div>
-                                        </td>
-                                        <td>
-                                            <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Prix">40$</span></div>
+                                                <td>
+                                                    <div class="text-nowrap">@subformation.Titre</div>
+                                                </td>
+                                                <td>
+                                                    <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Prix">@subformation.Prix $</span></div>
 
-                                        </td>
-                                        <td>
-                                            <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Duration">4h</span></div>
+                                                </td>
+                                                <td>
+                                                    <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Duration">@subformation.EstimationDeDuree  h</span></div>
 
-                                        </td>
+                                                </td>
 
-                                        <td>
-                                            <div class="dropdown">
+                                                <td>
+                                                    <div class="dropdown">
 
-                                                <button class="btn btn-link nav-link"
-                                                        type="button"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    <img width="50" height="50" src="~/images/option_img.png" class="icon" />
-                                                </button>
-
-
-                                                <ul class="dropdown-menu dropdown-menu-end"
-                                                    style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
-                                                    data-popper-placement="bottom-end">
-                                                    <li>
-                                                        <a class="dropdown-item" href="/Admine/infocours" data-coreui-i18n="info">Info</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal" data-coreui-i18n="delete">Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                        <button class="btn btn-link nav-link"
+                                                                type="button"
+                                                                data-bs-toggle="dropdown"
+                                                                aria-expanded="false">
+                                                            <img width="50" height="50" src="~/images/option_img.png" class="icon" />
+                                                        </button>
 
 
-                                    <tr class="align-middle">
+                                                        <ul class="dropdown-menu dropdown-menu-end"
+                                                            style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                            data-popper-placement="bottom-end">
+                                                            
+                                                            <li>
+                                                                @using (Html.BeginForm("DeleteFormation", "Admine", FormMethod.Post))
+                                                                {
+                                                                    @Html.AntiForgeryToken()
+                                                                    <input type="hidden" id="idFormationDelete" name="idFormationDelete" value="@subformation.Id" />
+                                                                    <button type="submit" class="dropdown-item text-danger">Delete</button>
+                                                                }
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
 
-                                        <td>
-                                            <div class="text-nowrap">Html</div>
-                                        </td>
-                                        <td>
-                                            <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Prix">50$</span></div>
-
-                                        </td>
-                                        <td>
-                                            <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Duration">5h</span></div>
-
-                                        </td>
-
-                                        <td>
-                                            <div class="dropdown">
-
-                                                <button class="btn btn-link nav-link"
-                                                        type="button"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    <img width="50" height="50" src="~/images/option_img.png" class="icon" />
-                                                </button>
-
-
-                                                <ul class="dropdown-menu dropdown-menu-end"
-                                                    style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
-                                                    data-popper-placement="bottom-end">
-                                                    <li>
-                                                        <a class="dropdown-item" href="/Admine/infocours" data-coreui-i18n="info">Info</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal" data-coreui-i18n="delete">Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    }else{
+                                        <tr>
+                                            <td colspan="4" class="text-center">No trainers found.</td>
+                                        </tr>
+                                    }
 
 
-                                    <tr class="align-middle">
-
-                                        <td>
-                                            <div class="text-nowrap">Java Script</div>
-                                        </td>
-                                        <td>
-                                            <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Prix">60$</span></div>
-
-                                        </td>
-                                        <td>
-                                            <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Duration">8h</span></div>
-
-                                        </td>
-
-                                        <td>
-                                            <div class="dropdown">
-
-                                                <button class="btn btn-link nav-link"
-                                                        type="button"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    <img width="50" height="50" src="~/images/option_img.png" class="icon" />
-                                                </button>
-
-
-                                                <ul class="dropdown-menu dropdown-menu-end"
-                                                    style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
-                                                    data-popper-placement="bottom-end">
-                                                    <li>
-                                                        <a class="dropdown-item" href="/Admine/infocours" data-coreui-i18n="info">Info</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal" data-coreui-i18n="delete">Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1045,7 +863,27 @@
                                     <img width="50" height="50" class="icon" style="padding-right:10px;padding-bottom:10px;" src="~/images/categories_img.png" />
                                     Categories
                                 </div>
-                                <div class="card-subtitle text-body-secondary mb-4" data-coreui-i18n="registeredCategoriesCounter" style="color:black;">1.232.150 registered Categories</div>
+
+
+                                @if (existCategori == "exist" && ViewData["Error"] == null)
+                                {
+
+                                    <div class="card-subtitle text-body-secondary mb-4" data-coreui-i18n="registeredCategoriesCounter" style="color:black;">
+                                        @Model.countCategory registered Categories
+                                    </div>
+
+
+
+                                }
+                                else
+                                {
+                                    <div class="card-subtitle text-body-secondary mb-4" data-coreui-i18n="registeredCategoriesCounter" style="color:black;">
+                                        0 registered Categories
+                                    </div>
+
+                                }
+
+
                                 <div class="input-group-Categories input-group">
                                     <input type="search" placeholder="Search...">
                                     <img width="30" height="30" src="~/images/search_img.png" alt="">
@@ -1091,40 +929,61 @@
                                     </tr>
                                 </thead>
                                 <tbody class="tbody-categories">
-                                    <tr class="align-middle">
 
-                                        <td>
-                                            <div class="text-nowrap">info</div>
+                                    @if (existCategori == "exist" && ViewData["Error"] == null)
+                                    {
+                                        @foreach (var subCategory in Model.Categorys)
+                                        {
+                                            <tr class="align-middle">
 
-                                        </td>
+                                                <td>
+                                                    <div class="text-nowrap">@subCategory.Name</div>
 
-                                        <td>
-                                            <div class="dropdown" style="padding-left: 40%;">
+                                                </td>
 
-                                                <button class="btn btn-link nav-link"
-                                                        type="button"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    <img width="50" height="50" src="~/images/option_img.png" class="icon" />
-                                                </button>
+                                                <td>
+                                                    <div class="dropdown" style="padding-left: 40%;">
 
-
-                                                <ul class="dropdown-menu dropdown-menu-end"
-                                                    style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
-                                                    data-popper-placement="bottom-end">
-                                                    <li>
-                                                        <a class="dropdown-item" href="#" data-coreui-i18n="info">Info</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmModal" data-coreui-i18n="delete">Delete</a>
-
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                        <button class="btn btn-link nav-link"
+                                                                type="button"
+                                                                data-bs-toggle="dropdown"
+                                                                aria-expanded="false">
+                                                            <img width="50" height="50" src="~/images/option_img.png" class="icon" />
+                                                        </button>
 
 
+                                                        <ul class="dropdown-menu dropdown-menu-end"
+                                                            style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                            data-popper-placement="bottom-end">
+                                                            <li>
+                                                                <a class="dropdown-item" href="/Admine/infoCategory?idCategory=@subCategory.Id">Info</a>
+                                                            </li>
+                                                            <li>
+                                                                @using (Html.BeginForm("DeleteCategory", "Admine", FormMethod.Post))
+                                                                {
+                                                                    @Html.AntiForgeryToken()
+                                                                    <input type="hidden" id="idCategoryDelete" name="idCategoryDelete" value="@subCategory.Id" />
+                                                                    <button type="submit" class="dropdown-item text-danger">Delete</button>
+                                                                }
+
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }else{
+                                        <tr>
+                                            <td colspan="2" class="text-center">No trainers found.</td>
+                                        </tr>
+                                    }
+
+
+
+
+                                   
+
+                                    <!--
                                     <tr class="align-middle">
 
                                         <td>
@@ -1192,6 +1051,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    -->
                                 </tbody>
                             </table>
                         </div>

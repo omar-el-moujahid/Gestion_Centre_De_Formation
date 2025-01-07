@@ -1,0 +1,106 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Admin";
+}
+@model Partie_Api_Amd_Logique_Metier.Models.Category
+@section VendorStyles
+{
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+}
+@section PageStyles {
+    <link rel="stylesheet" href="~/css/Auth/page_auth.css">
+}
+
+
+
+<div class="container-xxl">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+
+            <!-- Register Card -->
+            <div class="card px-sm-6 px-0">
+                <div class="card-body">
+                    <p style="padding-bottom:20px;text-align:end;">
+
+                        <a href="/Admine/Index">
+                            <img width="20" height="20" src="~/images/x_img.png" alt="sign out" style="color:#e0e1dd; margin-right:5px;" />
+
+                        </a>
+                    </p>
+                    <!-- Logo -->
+                    <div class="app-brand justify-content-center mb-6">
+                        <a>
+                            <svg width="145" height="60" xmlns="http://www.w3.org/2000/svg">
+
+                                <rect x="10" y="15" width="30" height="30" rx="5" ry="5" stroke="black" stroke-width="3" fill="#6930c3" />
+                                <text x="26" y="37" font-size="20" font-family="Arial" text-anchor="middle" fill="white">C</text>
+
+
+                                <text x="50" y="37" font-size="25" font-family="Arial" fill="#64dfdf">Codem</text>
+                            </svg>
+                        </a>
+                    </div>
+
+                    @if (ViewData["Error"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @ViewData["Error"]
+                        </div>
+                    }
+                    @if (ViewData["Success"] != null)
+                    {
+                        <div class="alert alert-success" style="margin-top:20px;margin-bottom:20px;">@ViewData["Success"]</div>
+                    }
+                    <!-- /Logo -->
+                    <h4 class="mb-2">Adventure starts here 🚀</h4>
+
+
+
+
+                    @using (Html.BeginForm("RegisterCategory", "Admine", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+
+                        <div class="mb-6">
+                            @Html.LabelFor(m => m.Name, new { @class = "form-label", @for = "name_categorie" })
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", id = "name_categorie", placeholder = "Enter category name" })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                        </div>
+
+
+
+                        <div class="mb-6">
+                            @Html.LabelFor(m => m.Description, new { @class = "form-label" })
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter category description", rows = 5 })
+                            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                        </div>
+                        
+                       
+                        <button class="btn btn-primary d-grid w-100 mt-3">
+                            Add category
+                        </button>
+
+
+                        
+                    }
+
+                    
+
+
+                </div>
+            </div>
+            <!-- Register Card -->
+        </div>
+    </div>
+</div>
+
