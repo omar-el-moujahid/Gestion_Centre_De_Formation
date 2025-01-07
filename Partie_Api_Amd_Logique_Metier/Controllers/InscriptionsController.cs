@@ -157,6 +157,15 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
             return Ok(inscriptions); // Retourner la liste des inscriptions enrichies
         }
 
+        [ResponseType(typeof(IEnumerable<Formation>))]
+        public IQueryable<Inscription> GetFormationsByIdCategory(int FormationId)
+        {
+            return db.Inscriptions
+               .Where(f => f.FormationId == FormationId);
+
+
+        }
+
 
     }
 }

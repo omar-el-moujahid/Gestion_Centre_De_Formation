@@ -114,5 +114,19 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         {
             return db.Categories.Count(e => e.Id == id) > 0;
         }
+
+
+
+        [ResponseType(typeof(Category))]
+        public IHttpActionResult GetCategorybyName(string Name)
+        {
+            Category category = db.Categories.FirstOrDefault(p => p.Name == Name);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(category);
+        }
     }
 }

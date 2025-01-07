@@ -29,7 +29,7 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         [ResponseType(typeof(Formateur))]
         public IHttpActionResult GetFormateur(int id)
         {
-            Formateur formateur = db.Formateurs.Find(id);
+            Formateur formateur = db.Formateurs.Include(f=>f.Role).FirstOrDefault(f=>f.Id == id);
             if (formateur == null)
             {
                 return NotFound();
@@ -150,6 +150,9 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
             }
             return Ok(formateur);
         }
+
+
+
 
         
 
