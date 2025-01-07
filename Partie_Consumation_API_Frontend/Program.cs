@@ -43,6 +43,11 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true; // Sécuriser les cookies de session
     options.Cookie.IsEssential = true; // Nécessaire pour la conformité RGPD
 });
+
+// Register EvaluationService
+builder.Services.AddScoped<EvaluationService>();
+
+
 var app = builder.Build();
 
 app.UseSession();
