@@ -26,7 +26,9 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         [ResponseType(typeof(Participant))]
         public IHttpActionResult GetParticipant(int id)
         {
-            Participant participant = db.Participants.Find(id);
+            Participant participant = db.Participants
+                    .Include(p => p.Role).Include(p=>p.Inscriptions).Include(p => p.Certificates).Include(p => p.Payments)
+                    .FirstOrDefault(p => p.Id == id);       
             if (participant == null)
             {
                 return NotFound();
@@ -114,6 +116,10 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         {
             return db.Participants.Count(e => e.Id == id) > 0;
         }
+
+
+
+
 
         // GET: api/Participants by mail paasword
         [ResponseType(typeof(Participant))]

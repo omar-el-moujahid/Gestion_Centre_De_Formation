@@ -21,7 +21,14 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
         {
             return db.Formations
                 .Include(f => f.Category)
-                .Include(f => f.Formateur);
+                .Include(f => f.Formateur)
+               ; 
+            return db.Formations
+                .Include(f => f.Category)
+                .Include(f => f.Formateur)
+                .Include(f => f.Inscriptions)
+                .Include(f => f.Media)
+                .Include(f => f.Evaluations);
         }
 
         // GET: api/Formations/5

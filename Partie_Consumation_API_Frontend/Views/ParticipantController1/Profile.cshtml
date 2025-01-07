@@ -1,0 +1,324 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Partie_Api_Amd_Logique_Metier.Models.Participant
+@{
+        Layout = "_Layout";
+    ViewData["Title"] = "Participant";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formateur Profile</title>
+    <style>
+        body {
+            margin-top: 20px;
+            color: #1a202c;
+            text-align: left;
+            background-color: #e2e8f0;
+        }
+
+        .container{
+            margin-top: 8rem;
+        }
+        .main-body {
+            padding: 15px;
+        }
+
+        .card {
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 0 solid rgba(0,0,0,.125);
+            border-radius: .25rem;
+        }
+
+        .card-body {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 1rem;
+        }
+
+        .form-container label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+        }
+
+        .form-container button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: .25rem;
+            cursor: pointer;
+        }
+
+            .form-container button:hover {
+                background-color: #0056b3;
+            }
+
+
+
+        .tab-content {
+            padding: 20px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-top: none;
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+            .action-buttons button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                background-color: #f8f9fa;
+                color: #343a40;
+                border: 1px solid #ced4da;
+            }
+
+                .action-buttons button:hover {
+                    background-color: #e2e6ea;
+                }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-body">
+
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                                <div class="mt-3">
+                                    <h4>@Model.Name @Model.Prenom</h4>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn" onclick="showTab('profile')">Profile</button>
+                        <button class="btn" onclick="showTab('courses')">Mes Cours</button>
+                        @* <button class="btn" onclick="showTab('dashboard')">Tableau de Bord</button> *@
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="tab-content" id="myTabContent">
+                        <!-- Profile Section -->
+                        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="card mb-3">
+                                <div class="card-body form-container">
+                                    @if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+                                    {
+                                        <div class="alert alert-success">
+                                            @ViewBag.SuccessMessage
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                                    {
+                                        <div class="alert alert-danger">
+                                            @ViewBag.ErrorMessage
+                                        </div>
+                                    }
+                                    <form method="post" asp-action="UpdateProfile" asp-controller="ParticipantController1" asp-route-participantId="@Model.Id">
+                                        <label for="Name">Nom</label>
+                                        <input type="text" id="Name" name="Name" value="@Model.Name" required>
+
+                                        <label for="Prenom">Prénom</label>
+                                        <input type="text" id="Prenom" name="Prenom" value="@Model.Prenom" required>
+
+                                        <label for="Email">Email</label>
+                                        <input type="email" id="Email" name="Email" value="@Model.Email" required>
+
+                                        <button type="submit">Enregistrer</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dans la section Mes Cours -->
+                       
+                        <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h1>Mes Formations</h1>
+                            </div>
+                            <p>Nombre de formations : @((ViewData["Formations"] as IEnumerable<InscriptionViewModel>)?.Count() ?? 0)</p>
+                            <div class="formations-container">
+                                @if (ViewData["Formations"] != null)
+                                {
+                                    var formations = ViewData["Formations"] as IEnumerable<InscriptionViewModel>;
+                                    foreach (var formation in formations)
+                                    {
+                                        <div class="card mb-3" style="border: 1px solid #ddd; border-radius: 8px;">
+                                            <div class="row g-0">
+                                                <div class="col-md-3 d-flex align-items-center justify-content-center" style="background-color: #f9f9f9;">
+                                                    <img src="@formation.url" class="img-fluid p-3" alt="Image de la formation" style="max-height: 150px; object-fit: contain;">
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-2">@formation.Titre</h5>
+                                                        <p class="card-text text-muted mb-3" style="font-size: 0.9rem;">@formation.Description</p>
+                                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                                            <span class="badge bg-light text-dark">Durée : @formation.EstimationDeDuree heures</span>
+                                                            <span class="badge bg-light text-dark">Prix : @formation.Prix €</span>
+                                                        </div>
+                                                        <div>
+                                                            @if (@formation.Status == 0)
+                                                            {
+                                                                <strong>État :</strong> <span>En Cours</span>
+                                                            }
+                                                            @if (@formation.Status == 1)
+                                                            {
+                                                                <strong>État :</strong> <span>Terminé</span>
+                                                            }
+                                                        </div>
+                                                        @if (@formation.Status == 0)
+                                                        {
+                                                            <a href="@formation.url" class="btn btn-primary mt-3" style="border-radius: 20px; padding: 0.5rem 1.5rem;">Accéder à la formation</a>
+                                                        }
+                                                        @if (@formation.Status == 1)
+                                                        {
+                                                            <a href="@formation.url" class="btn btn-primary mt-3" style="border-radius: 20px; padding: 0.5rem 1.5rem;">Accéder au Certificat</a>
+                                                            <button type="button" class="btn btn-success mt-3" style="border-radius: 20px; padding: 0.5rem 1.5rem;" data-bs-toggle="modal" data-bs-target="#evaluateModal-@formation.FormationId">Évaluer la formation</button>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal pour évaluation -->
+                                        <div class="modal fade" id="evaluateModal-@formation.FormationId" tabindex="-1" aria-labelledby="evaluateModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="evaluateModalLabel">Évaluer la formation : @formation.Titre</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="text-center">
+                                                            <img src="@formation.url" alt="Image de la formation" class="img-fluid mb-3" style="max-height: 150px;">
+                                                            <p><strong>@formation.Description</strong></p>
+                                                        </div>
+                                                        <form method="post" action="/EvaluateFormation">
+                                                            <input type="hidden" name="formationId" value="@formation.FormationId" />
+                                                            <div class="mb-3">
+                                                                <label for="rating" class="form-label">Votre note</label>
+                                                                <select class="form-select" id="rating" name="rating">
+                                                                    <option value="1">1 étoile</option>
+                                                                    <option value="2">2 étoiles</option>
+                                                                    <option value="3">3 étoiles</option>
+                                                                    <option value="4">4 étoiles</option>
+                                                                    <option value="5">5 étoiles</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="review" class="form-label">Votre avis (optionnel)</label>
+                                                                <textarea class="form-control" id="review" name="review" rows="3" placeholder="Partagez votre expérience"></textarea>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary">Soumettre</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="alert alert-info">
+                                        Aucune formation disponible pour le moment.
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        @* <!-- Modals --> *@
+                        @* <div class="modal fade" id="addFormationModal" tabindex="-1"> *@
+                        @*     <div class="modal-dialog"> *@
+                        @*         @await Html.PartialAsync("_AddFormationPartial") *@
+                        @*     </div> *@
+                        @* </div> *@
+
+                        @* <div class="modal fade" id="editFormationModal" tabindex="-1"> *@
+                        @*     <div class="modal-dialog"> *@
+                        @*         <div id="editFormationContent"> *@
+                        @*             <!-- Le contenu sera chargé dynamiquement --> *@
+                        @*         </div> *@
+                        @*     </div> *@
+                        @* </div> *@
+
+                        <!-- Tableau de Bord Section -->
+                        <div class="tab-pane fade" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                            <h1>Tableau de Bord</h1>
+                            <p>Cette section est en cours de réalisation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sérialiser les données de ViewData["Formations"] en JSON
+        var formationsData = @Html.Raw(Json.Serialize(ViewData["Formations"]));
+
+        // Afficher les données dans la console
+        console.log("Formations Data:", formationsData);
+    </script>
+
+    <script>
+        function showTab(tabId) {
+            console.log(`Showing tab: ${tabId}`); // Debugging statement
+
+            // Afficher les données de ViewData["Formations"] dans la console
+            if (tabId === 'courses') {
+                console.log("Formations Data:", formationsData);
+            }
+
+            const tabs = document.querySelectorAll('.tab-pane');
+            tabs.forEach(tab => {
+                tab.classList.remove('show', 'active');
+            });
+
+            const selectedTab = document.getElementById(tabId);
+            if (selectedTab) {
+                selectedTab.classList.add('show', 'active');
+            } else {
+                console.error(`Tab with ID ${tabId} not found.`);
+            }
+        }
+    </script>
+</body>
+</html>

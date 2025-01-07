@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Partie_Api_Amd_Logique_Metier;
 using Partie_Api_Amd_Logique_Metier.Models;
 using Partie_Consumation_API_Frontend.Service;
 
@@ -8,53 +9,105 @@ namespace Partie_Consumation_API_Frontend.Controllers
     {
         private readonly PaiementService _paiementService;
         private readonly FormationService _formationService;
+        private readonly InscriptionService _inscriptionService;
 
-        public PaiementController(PaiementService paiementService, FormationService formationService)
+        public PaiementController(PaiementService paiementService, FormationService formationService, InscriptionService inscriptionService)
         {
             _paiementService = paiementService;
             _formationService = formationService;
+            _inscriptionService = inscriptionService;
         }
-        public IActionResult Index(int formation_id, int participant_id)
+
+        public IActionResult Index(int formation_id)
         {
-            // Vérifiez si les IDs sont correctement reçus
-            Console.WriteLine($"Formation ID : {formation_id}, Participant ID : {participant_id}");
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            var userRole = HttpContext.Session.GetString("UserRole");
+
+            if (string.IsNullOrEmpty(userEmail) || string.IsNullOrEmpty(userRole))
+            {
+                // Stocker l'URL actuelle avant de rediriger vers l'authentification
+                TempData["ReturnUrl"] = Url.Action("Index", "Paiement", new { formation_id });
+                return RedirectToAction("Index", "Auth", new { role = "participant" });
+            }
+
+            if (userRole != "participant")
+            {
+                TempData["ErrorMessage"] = "Vous devez être authentifié en tant que participant pour effectuer cette action.";
+                return RedirectToAction("Index", "Auth", new { role = "participant" });
+            }
+
+            // Récupérer l'ID du participant depuis la session
+            var participantId = HttpContext.Session.GetString("UserId");
 
             ViewData["formation_id"] = formation_id;
-            ViewData["participant_id"] = participant_id;
+            ViewData["participant_id"] = participantId; // Passer l'ID du participant à la vue
 
             return View();
         }
+
         [HttpPost]
-        public async Task<IActionResult> Create(int formation_id = 1, int participant_id = 1)
+        public async Task<IActionResult> Create(int formation_id)
         {
-            Console.WriteLine($"Début de la création du paiement : formation_id={formation_id}, participant_id={participant_id}");
-            Payment payment = new Payment();
-            payment.FormationId = formation_id;
-            payment.ParticipantId = participant_id;
-            payment.Date = DateTime.Now;
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            var userRole = HttpContext.Session.GetString("UserRole");
+
+            if (string.IsNullOrEmpty(userEmail) || string.IsNullOrEmpty(userRole))
+            {
+                return RedirectToAction("Index", "Auth", new { role = "participant" });
+            }
+
+            if (userRole != "participant")
+            {
+                TempData["ErrorMessage"] = "Vous devez être authentifié en tant que participant pour effectuer cette action.";
+                return RedirectToAction("Index", "Paiement", new { formation_id });
+            }
+
             try
             {
-                Console.WriteLine("Vérification de l'existence de la formation...");
+                // Récupérer l'ID du participant depuis la session
+                var participantIdString = HttpContext.Session.GetString("UserId");
+                if (string.IsNullOrEmpty(participantIdString))
+                {
+                    TempData["ErrorMessage"] = "ID du participant introuvable dans la session.";
+                    return RedirectToAction("Index", "Paiement", new { formation_id });
+                }
+
+                int participantId = int.Parse(participantIdString);
+
+                // Récupérer la formation par son ID
                 Formation formation = await _formationService.GetFormationsbyid(formation_id);
                 if (formation == null)
                 {
-                    Console.WriteLine("Formation introuvable.");
                     TempData["ErrorMessage"] = "Formation introuvable.";
-                    return RedirectToAction("Index", "Paiement", new { formation_id, participant_id });
+                    return RedirectToAction("Index", "Paiement", new { formation_id });
                 }
 
-                payment.Amount = formation.Prix;
+                // Créer le paiement
+                Payment payment = new Payment
+                {
+                    FormationId = formation_id,
+                    ParticipantId = participantId, // Utiliser l'ID du participant depuis la session
+                    Date = DateTime.Now,
+                    Amount = formation.Prix
+                };
 
                 if (!ModelState.IsValid)
                 {
-                    Console.WriteLine("Données invalides.");
                     TempData["ErrorMessage"] = "Données invalides.";
-                    return RedirectToAction("Index", "Paiement", new { formation_id, participant_id });
+                    return RedirectToAction("Index", "Paiement", new { formation_id });
                 }
 
-                Console.WriteLine("Création du paiement...");
                 await _paiementService.CreatePayment(payment);
-                Console.WriteLine("Paiement créé avec succès.");
+
+                // Créer l'inscription
+                Inscription inscription = new Inscription
+                {
+                    FormationId = formation_id,
+                    ParticipaantId = participantId, // Utiliser l'ID du participant depuis la session
+                    DateInscription = DateTime.Now,
+                    Statut = Statut.InProgress
+                };
+                await _inscriptionService.CreateInscription(inscription);
 
                 TempData["SuccessMessage"] = "Paiement créé avec succès.";
                 return RedirectToAction("Index", "FormationController1", new { id = formation_id });
@@ -63,103 +116,9 @@ namespace Partie_Consumation_API_Frontend.Controllers
             {
                 Console.WriteLine($"Erreur : {ex.Message}");
                 TempData["ErrorMessage"] = "Une erreur inattendue est survenue : " + ex.Message;
-                return RedirectToAction("Index", "Paiement", new { formation_id, participant_id });
+                return RedirectToAction("Index", "Paiement", new { formation_id });
             }
         }
 
-        //public async Task<IActionResult> Create(int formation_id = 1, int participant_id = 1)
-        //{
-        //    Payment payment = new Payment
-        //    {
-        //        FormationId = formation_id,
-        //        ParticipantId = participant_id
-        //    };
-
-        //    try
-        //    {
-        //        // Vérification si la formation existe
-        //        Formation formation = await _formationService.GetFormationsbyid(formation_id);
-        //        if (formation == null)
-        //        {
-        //            TempData["ErrorMessage"] = "Formation introuvable.";
-        //            return RedirectToAction("Index", "Paiement", new { formation_id, participant_id });
-        //        }
-
-        //        payment.Amount = formation.Prix;
-
-        //        if (!ModelState.IsValid)
-        //        {
-        //            TempData["ErrorMessage"] = "Données invalides.";
-        //            return RedirectToAction("Index", "Paiement", new { formation_id, participant_id });
-        //        }
-
-        //        // Création du paiement
-        //        await _paiementService.CreatePayment(payment);
-
-        //        TempData["SuccessMessage"] = "Paiement créé avec succès.";
-        //        // Redirection vers la page de formation en cas de succès
-        //        return RedirectToAction("Index", "Paiement", new { formation_id, participant_id });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Gestion des erreurs et redirection vers la page de paiement
-        //        TempData["ErrorMessage"] = "Une erreur inattendue est survenue : " + ex.Message;
-        //        return RedirectToAction("Index", "Paiement", new { formation_id, participant_id });
-        //    }
-        //}
-
-        //public async Task<IActionResult> Create(int formation_id = 1, int participant_id = 1)
-        //{
-        //    Payment payment = new Payment();
-        //    payment.FormationId = formation_id;
-        //    payment.ParticipantId = participant_id;
-        //    Formation formation = await _formateurService.GetFormateurById(formation_id);
-        //    if (formation == null)
-        //    {
-        //        ViewBag.ErrorMessage = "Formation introuvable.";
-        //        return View(payment);
-        //    }
-        //    payment.Amount = formation.Prix;
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(payment);
-        //    }
-
-        //    try
-        //    {
-        //        var createdPayment = await _paiementService.CreatePayment(payment);
-        //        return RedirectToAction("Index", "Paiement"); // Rediriger après la création
-        //    }
-        //    catch (HttpRequestException ex)
-        //    {
-        //        ViewBag.ErrorMessage = "Erreur lors de la création du paiement.";
-        //        Console.WriteLine($"Error: {ex.Message}");
-        //        return View(payment);
-        //    }
-        //}
-        //public async Task<IActionResult> AddPayment(int id, int participant_id = 1)
-        //{
-        //    try
-        //    {
-        //        Payment payment = await _paiementService.GetPayementBy2Ids(id, participant_id);
-
-        //        if (payment == null)
-        //        {
-        //            // Return a view for no payment found
-        //            ViewBag.Message = "No payment details found for the specified IDs.";
-        //            return View("NoPayment");
-        //        }
-
-        //        // Pass the payment details to the view
-        //        return View(payment);
-        //    }
-        //    catch (HttpRequestException ex)
-        //    {
-        //        // Log the error and return an error view
-        //        Console.WriteLine($"Error fetching payment: {ex.Message}");
-        //        ViewBag.Message = "An error occurred while fetching payment details.";
-        //        return View("Error");
-        //    }
-        //}
     }
 }

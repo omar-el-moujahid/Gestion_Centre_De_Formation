@@ -58,7 +58,7 @@ namespace Partie_Consumation_API_Frontend.Service
                 {
                     // Read and deserialize the response content into a Participant object
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    var participant = JsonConvert.DeserializeObject<Participant>(jsonResponse);
+                    Participant participant = JsonConvert.DeserializeObject<Participant>(jsonResponse);
 
                     // Return the participant object
                     return participant;
@@ -117,6 +117,11 @@ namespace Partie_Consumation_API_Frontend.Service
                 throw new Exception("An error occurred while authenticating the participant.", ex);
             }
         }
+
+
+
+
+
         public async Task<Formateur> authformateur(string mail, string password)
         {
             try
