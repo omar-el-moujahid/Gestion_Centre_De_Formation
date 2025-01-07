@@ -146,6 +146,39 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
 
             return Ok(formations); // Retourne la liste des formations
         }
+        [HttpGet]
+        [Route("api/Formations/{id}/Media")]
+        public IHttpActionResult GetFormationWithMedia(int id)
+        {
+            var formation = db.Formations
+                .Where(f => f.Id == id)
+                .Select(f => new
+                {
+                    f.Id,
+                    f.Titre,
+                    f.url_image,
+                    f.Description,
+                    f.Prix,
+                    f.EstimationDeDuree,
+                    Media = f.Media.Select(m => new
+                    {
+                        m.Id,
+                        m.Title,
+                        m.Type,
+                        m.nombredesequence,
+                        m.Url
+                    })
+                })
+                .FirstOrDefault();
+
+            if (formation == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(formation);
+        }
+
 
     }
 }

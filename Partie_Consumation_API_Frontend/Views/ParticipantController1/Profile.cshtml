@@ -231,11 +231,14 @@
                                                             <img src="@formation.url" alt="Image de la formation" class="img-fluid mb-3" style="max-height: 150px;">
                                                             <p><strong>@formation.Description</strong></p>
                                                         </div>
-                                                        <form method="post" action="/EvaluateFormation">
+                                                   
+                                                        <form id="evaluationForm" onsubmit="submitEvaluation(event)" class="form-container">
                                                             <input type="hidden" name="formationId" value="@formation.FormationId" />
+                                                            <input type="hidden" name="participantId" value="@Model.Id" />
+
                                                             <div class="mb-3">
                                                                 <label for="rating" class="form-label">Votre note</label>
-                                                                <select class="form-select" id="rating" name="rating">
+                                                                <select class="form-select" id="rating" name="rating" required>
                                                                     <option value="1">1 étoile</option>
                                                                     <option value="2">2 étoiles</option>
                                                                     <option value="3">3 étoiles</option>
@@ -243,12 +246,19 @@
                                                                     <option value="5">5 étoiles</option>
                                                                 </select>
                                                             </div>
+
                                                             <div class="mb-3">
                                                                 <label for="review" class="form-label">Votre avis (optionnel)</label>
                                                                 <textarea class="form-control" id="review" name="review" rows="3" placeholder="Partagez votre expérience"></textarea>
                                                             </div>
+
                                                             <button type="submit" class="btn btn-primary">Soumettre</button>
                                                         </form>
+
+
+                                                        <!-- Zone pour afficher la réponse -->
+                                                        <div id="responseMessage" class="mt-3"></div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -319,6 +329,49 @@
                 console.error(`Tab with ID ${tabId} not found.`);
             }
         }
+    </script>
+    <script>
+                   function submitEvaluation(event) {
+            event.preventDefault();
+
+            // Collect form data
+            const formData = new FormData(document.getElementById("evaluationForm"));
+            const data = Object.fromEntries(formData.entries());
+
+            // Ensure JSON matches Evaluation model structure
+            const evaluation = {
+                Id: 0, // Assuming 0 for a new evaluation; update as necessary
+                Feedback: data.review || "", // Map review to Feedback
+                ParticipantId: parseInt(data.participantId, 10),
+                FormationId: parseInt(data.formationId, 10),
+                Rating: parseInt(data.rating, 10),
+            };
+
+            // Debugging: Log the JSON payload
+            console.log("Submitting evaluation:", JSON.stringify(evaluation));
+
+            fetch('/Evaluation/EvaluateAjax', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(evaluation), // Send the JSON object
+            })
+            .then(response => response.json())
+            .then(result => {
+                const messageDiv = document.getElementById("responseMessage");
+                if (result.success) {
+                    messageDiv.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
+                } else {
+                    messageDiv.innerHTML = `<div class="alert alert-danger">${result.message}</div>`;
+                }
+            })
+            .catch(error => {
+                const messageDiv = document.getElementById("responseMessage");
+                messageDiv.innerHTML = `<div class="alert alert-danger">Une erreur s'est produite : ${error.message}</div>`;
+            });
+        }
+
     </script>
 </body>
 </html>

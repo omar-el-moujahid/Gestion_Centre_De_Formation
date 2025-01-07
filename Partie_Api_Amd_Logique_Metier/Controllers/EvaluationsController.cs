@@ -34,6 +34,18 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
 
             return Ok(evaluation);
         }
+        // GET: api/Evaluations/byformationid & participantid
+        [ResponseType(typeof(Evaluation))]
+        public IHttpActionResult GetEvaluationby2id(int formationId , int participantId)
+        {
+            Evaluation evaluation = db.Evaluations.FirstOrDefault(e=>e.FormationId==formationId && e.ParticipantId==participantId );
+            if (evaluation == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(evaluation);
+        }
 
         // PUT: api/Evaluations/5
         [ResponseType(typeof(void))]
