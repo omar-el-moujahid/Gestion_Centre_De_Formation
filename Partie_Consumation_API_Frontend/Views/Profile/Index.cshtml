@@ -3,7 +3,7 @@
 
 @{
     Layout = "_Layout";
-    ViewData["Title"] = "Formateur";
+    ViewData["Title"] = "Profile";
 }
 
 <!DOCTYPE html>
@@ -252,12 +252,19 @@
                                     @* } *@
 
                                     <div>
-                                        <ul>
-                                            @foreach (var category in Model.Categories)
+                                        <select name="CategoryId" id="CategoryId" class="form-control">
+                                            @if (Model.Categories != null && Model.Categories.Any())
                                             {
-                                                <li>@category.Name</li>
+                                                @foreach (var category in Model.Categories)
+                                                {
+                                                    <option value="@category.Id">@category.Name</option>
+                                                }
                                             }
-                                        </ul>
+                                            else
+                                            {
+                                                <option disabled>Aucune catégorie disponible</option>
+                                            }
+                                        </select>
                                     </div>
 
                                     <div class="mb-3">
@@ -336,13 +343,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.Inscriptions)
-                                    {
-                                        <tr>
-                                            <td>@item.Formation.Titre</td>
-                                            @* <td>@item.InscriptionCount</td> *@
-                                        </tr>
-                                    }
+                                    @* @foreach (var item in Model.Inscriptions) *@
+                                    @* { *@
+                                    @*     <tr> *@
+                                    @*         <td>@item.Formation.Titre</td> *@
+                                    @*         @* <td>@item.InscriptionCount</td> *@ 
+                                    @*     </tr> *@
+                                    @* } *@
                                 </tbody>
                             </table>
                         </div>

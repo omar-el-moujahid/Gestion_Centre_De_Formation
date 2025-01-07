@@ -42,5 +42,7 @@ namespace Partie_Consumation_API_Frontend.Service
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Formation>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
+
+        
     }
 }

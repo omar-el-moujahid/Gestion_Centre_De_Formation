@@ -1,38 +1,45 @@
-<<<<<<< HEAD
-﻿using Microsoft.AspNetCore.Mvc;
-using Partie_Api_Amd_Logique_Metier.Models;
-
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-=======
 using Microsoft.AspNetCore.Mvc;
 using Partie_Api_Amd_Logique_Metier.Models;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
->>>>>>> 383340a622ee1a5ca22c3d52e1cea39f470af165
 using Partie_Consumation_API_Frontend.Service;
 using System.Security.Claims;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+using Partie_Consumation_API_Frontend.Models;
 
 namespace Partie_Consumation_API_Frontend.Controllers
 {
     public class FormateurController : Controller
     {
         private readonly FormateurService _formateurService;
+        private readonly HttpClient _httpClient;
 
-        public FormateurController(FormateurService formateurService)
+        public FormateurController(FormateurService formateurService, HttpClient httpClient)
         {
             _formateurService = formateurService;
+            _httpClient = httpClient;
         }
 
+        private int GetCurrentFormateurId()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                throw new UnauthorizedAccessException("Utilisateur non authentifié");
+            }
+            return int.Parse(userIdClaim.Value);
+        }
+
+        [Authorize(Roles = "Formateur")]
         public async Task<IActionResult> Profile()
         {
-
-            int formateurId = 1; // Hardcoded ID for now
-
             try
             {
-
+                int formateurId = GetCurrentFormateurId();
                 var formateur = await _formateurService.GetFormateurById(formateurId);
 
                 if (formateur == null)
@@ -40,26 +47,28 @@ namespace Partie_Consumation_API_Frontend.Controllers
                     return NotFound($"Formateur with ID {formateurId} not found.");
                 }
 
-                // Stocker les formations comme dynamic dans ViewBag
                 ViewBag.Formations = await _formateurService.GetFormationsByFormateurId(formateurId);
-
                 return View(formateur);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return RedirectToAction("Login", "Account");
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMessage = $"An error occurred while fetching the profile: {ex.Message}";
+                ViewBag.ErrorMessage = $"An error occurred: {ex.Message}";
                 return View("Error");
             }
         }
 
+        [Authorize(Roles = "Formateur")]
         [HttpPost]
         public async Task<IActionResult> UpdateProfile(IFormCollection form)
         {
             try
             {
-                int formateurId = 3; // Votre ID fixe
+                int formateurId = GetCurrentFormateurId();
 
-                // Créer un objet dynamique avec les données du formulaire
                 dynamic updatedFormateur = new
                 {
                     Name = form["Name"].ToString(),
@@ -74,13 +83,9 @@ namespace Partie_Consumation_API_Frontend.Controllers
 
                 if (result)
                 {
-                    // Mettre à jour le message de succès
                     ViewBag.SuccessMessage = "Profil mis à jour avec succès !";
-
-                    // Recharger les données du formateur
                     var updatedProfile = await _formateurService.GetFormateurById(formateurId);
                     ViewBag.Formations = await _formateurService.GetFormationsByFormateurId(formateurId);
-
                     return View("Profile", updatedProfile);
                 }
                 else
@@ -91,71 +96,98 @@ namespace Partie_Consumation_API_Frontend.Controllers
                     return View("Profile", currentProfile);
                 }
             }
+            catch (UnauthorizedAccessException)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = $"Une erreur est survenue : {ex.Message}";
-                var currentProfile = await _formateurService.GetFormateurById(3);
-                ViewBag.Formations = await _formateurService.GetFormationsByFormateurId(3);
-                return View("Profile", currentProfile);
+                return RedirectToAction("Profile");
             }
         }
 
 
-
-        [HttpGet]
-        public IActionResult AddFormation()
-        {
-            return PartialView("_AddFormationPartial");
-        }
 
         [HttpPost]
-        public async Task<IActionResult> AddFormation([FromForm] dynamic formation)
+        public async Task<IActionResult> AddFormation(IFormCollection form, List<IFormFile> UrlImage)
         {
-            try
+            // Préparer les données pour l'API
+            var formationData = new Dictionary<string, object>
+    {
+        { "Titre", form["Titre"] },
+        { "CategoryId", int.Parse(form["CategoryId"]) },
+        { "Description", form["Description"] },
+        { "Prix", decimal.Parse(form["Prix"]) },
+        { "EstimationDeDuree", int.Parse(form["EstimationDeDuree"]) },
+    };
+
+            // Gérer l'upload de l'image
+            if (UrlImage.Count > 0)
             {
-                var result = await _formateurService.AddFormation(formation);
-                if (result)
+                var imageUrl = await _formateurService.UploadImage(UrlImage[0]);
+                if (imageUrl != null)
                 {
-                    return RedirectToAction(nameof(Profile));
+                    formationData.Add("UrlImage", imageUrl);
                 }
-                return BadRequest("Échec de l'ajout de la formation");
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
 
-        [HttpGet]
-        public async Task<IActionResult> EditFormation(int id)
+            // Ajouter les médias
+            var mediaList = new List<Dictionary<string, object>>();
+            for (int i = 0; i < form["MediaTitre[]"].Count(); i++)
+            {
+                mediaList.Add(new Dictionary<string, object>
         {
-            var formation = await _formateurService.GetFormationById(id);
-            return PartialView("_EditFormationPartial", formation);
+            { "Titre", form["MediaTitre[]"][i] },
+            { "Type", form["MediaType[]"][i] },
+            { "Url", form["MediaUrl[]"][i] },
+            { "NombreDeSequence", int.Parse(form["NombreDeSequence[]"][i]) }
+        });
+            }
+
+            formationData.Add("Medias", mediaList);
+
+            // Envoyer les données à l'API
+            var result = await _formateurService.AddFormation(formationData);
+
+            if (result)
+            {
+                TempData["Success"] = "Formation ajoutée avec succès.";
+                return RedirectToAction("Index");
+            }
+
+            TempData["Error"] = "Une erreur est survenue lors de l'ajout de la formation.";
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> EditFormation(int id, [FromForm] dynamic formation)
+        // Ajoutez ce log
+        public async Task<ViewResult> AddFormation()
         {
-            try
-            {
-                var result = await _formateurService.UpdateFormation(id, formation);
-                if (result)
-                {
-                    return RedirectToAction(nameof(Profile));
-                }
-                return BadRequest("Échec de la modification de la formation");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var categories = await _formateurService.GetCategories();
+            Console.WriteLine($"Categories received: {JsonSerializer.Serialize(categories)}");
+            ViewBag.Categories = categories;
+            return View();
         }
 
+
+
+
+
+        [Authorize(Roles = "Formateur")]
         [HttpPost]
         public async Task<IActionResult> DeleteFormation(int id)
         {
             try
             {
+                int formateurId = GetCurrentFormateurId();
+
+                // Vérifier que la formation appartient bien au formateur connecté
+                var formation = await _formateurService.GetFormationById(id);
+                if (formation == null || formation.FormateurId != formateurId)
+                {
+                    return Unauthorized();
+                }
+
                 var result = await _formateurService.DeleteFormation(id);
                 if (result)
                 {
@@ -163,12 +195,19 @@ namespace Partie_Consumation_API_Frontend.Controllers
                 }
                 return BadRequest("Échec de la suppression de la formation");
             }
+            catch (UnauthorizedAccessException)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
+
+        
+
+
     }
-
-
 }

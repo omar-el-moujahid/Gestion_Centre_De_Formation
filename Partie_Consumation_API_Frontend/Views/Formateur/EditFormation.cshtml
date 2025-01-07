@@ -1,0 +1,41 @@
+﻿@model List<Partie_Api_Amd_Logique_Metier.Models.Formation>
+
+@{
+    ViewData["Title"] = "Modifier Formation";
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <h1>@ViewData["Title"]</h1>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <form method="post" action="@Url.Action("UpdateFormation", "Formateur")">
+            <input type="hidden" name="Id" value="@Model.FirstOrDefault()?.Id" />
+            <label for="Titre">Titre de la formation:</label>
+            <input type="text" id="Titre" name="Titre" value="@Model.FirstOrDefault()?.Titre" required />
+
+            <label for="Description">Description:</label>
+            <textarea id="Description" name="Description" required>@Model.FirstOrDefault()?.Description</textarea>
+
+            <label for="EstimationDeDuree">Durée estimée (en heures):</label>
+            <input type="number" id="EstimationDeDuree" name="EstimationDeDuree" value="@Model.FirstOrDefault()?.EstimationDeDuree" required />
+
+            <label for="Prix">Prix (€):</label>
+            <input type="number" id="Prix" name="Prix" value="@Model.FirstOrDefault()?.Prix" required />
+
+            <button type="submit">Enregistrer</button>
+        </form>
+    }
+    else
+    {
+        <div>Aucune formation trouvée à modifier.</div>
+    }
+</body>
+</html>

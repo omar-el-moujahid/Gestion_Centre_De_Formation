@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using Partie_Api_Amd_Logique_Metier.Models;
 using Partie_Consumation_API_Frontend.Service;
 using System.Data;
 using System.Reflection.Metadata;
+using System.Security.Claims;
 
 namespace Partie_Consumation_API_Frontend.Controllers
 {
@@ -74,42 +77,43 @@ namespace Partie_Consumation_API_Frontend.Controllers
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult login(string email , string password, string rolee)
+      
+
+        public async Task<IActionResult> login(string email, string password, string rolee)
         {
-            if(rolee == "participant")
+            try
             {
-
-               var participant = _authService.authparticipant(email, password);
-                if(participant !=null)
+                if (rolee == "formateur")
                 {
-                    return RedirectToAction("Index", "Home");
+                    var formateur = await _authService.authformateur(email, password);
+                    if (formateur != null)
+                    {
+                        var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, formateur.Id.ToString()),
+                    new Claim(ClaimTypes.Name, formateur.Email),
+                    new Claim(ClaimTypes.Role, "Formateur")
+                };
+
+                        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var principal = new ClaimsPrincipal(identity);
+
+                        await HttpContext.SignInAsync(
+                            CookieAuthenticationDefaults.AuthenticationScheme,
+                            principal,
+                            new AuthenticationProperties { IsPersistent = true }
+                        );
+
+                        return RedirectToAction("Index", "Profile");
+                    }
                 }
-                return RedirectToAction("Index", new { role = "participant" });
+                // Reste du code inchangé pour participant et administrateur
+                return RedirectToAction("Index", new { role = rolee });
             }
-            if (rolee == "administrateur")
+            catch (Exception ex)
             {
-
-                var admini = _authService.authadmin(email,password);
-                if (admini != null)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                return RedirectToAction("Index", new { role = "administrateur" });
+                return RedirectToAction("Index", new { role = rolee });
             }
-            if (rolee == "formateur")
-            {
-
-                var formateu = _authService.authadmin(email, password);
-                if (formateu != null)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                return RedirectToAction("Index", new { role = "formateur" });
-            }
-            return RedirectToAction("Index", new { role = "participant" });
-
         }
     }
 

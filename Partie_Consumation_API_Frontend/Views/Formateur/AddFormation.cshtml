@@ -1,0 +1,107 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="modal-content">
+    <form action="/Formateur/AddFormation" method="post" enctype="multipart/form-data">
+        <div class="modal-header">
+            <h5 class="modal-title">Ajouter une Formation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label class="form-label" for="Titre">Titre</label>
+                <input type="text" class="form-control" id="Titre" name="Titre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="CategoryId">Catégorie</label>
+                <select class="form-control" id="CategoryId" name="CategoryId" required>
+                    @if (ViewBag.Categories != null && ViewBag.Categories.Any())
+                    {
+                        @foreach (var category in ViewBag.Categories)
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="">Aucune catégorie disponible</option>
+                    }
+                </select>
+                @if (ViewBag.Error != null)
+                {
+                    <small class="text-danger">@ViewBag.Error</small>
+                }
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label" for="Description">Description</label>
+                <textarea class="form-control" id="Description" name="Description" rows="4" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="Prix">Prix</label>
+                <input type="number" class="form-control" id="Prix" name="Prix" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="EstimationDeDuree">Durée estimée (heures)</label>
+                <input type="number" class="form-control" id="EstimationDeDuree" name="EstimationDeDuree" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="UrlImage">Image de la Formation</label>
+                <input type="file" class="form-control" id="UrlImage" name="UrlImage" required>
+            </div>
+
+            <h5>Ajouter des Médias</h5>
+            <div id="media-container">
+                <div class="media-group">
+                    <div class="mb-3">
+                        <label class="form-label" for="MediaTitre">Titre du Média</label>
+                        <input type="text" class="form-control" name="MediaTitre[]" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="MediaType">Type</label>
+                        <select class="form-control" name="MediaType[]">
+                            <option value="Video">Vidéo</option>
+                            <option value="Document">Document</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="MediaUrl">URL</label>
+                        <input type="text" class="form-control" name="MediaUrl[]" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="NombreDeSequence">Nombre de Séquences</label>
+                        <input type="number" class="form-control" name="NombreDeSequence[]" required>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="add-media" class="btn btn-outline-secondary mt-2">Ajouter un autre média</button>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('add-media').addEventListener('click', function () {
+        const mediaContainer = document.getElementById('media-container');
+        const mediaGroup = document.querySelector('.media-group');
+        const clone = mediaGroup.cloneNode(true);
+        // Efface les valeurs des champs du clone
+        clone.querySelectorAll('input, select').forEach(input => input.value = '');
+        mediaContainer.appendChild(clone);
+    });
+</script>
+

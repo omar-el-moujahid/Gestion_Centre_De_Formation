@@ -40,7 +40,7 @@
     @RenderSection("PageStyles", required: false)
 </head>
 <body>
-
+    @if (ViewBag.title != "Profile"){
     @if (ViewBag.title != "Participant")
     {
         @if (ViewBag.title != "Formateur"){
@@ -362,7 +362,7 @@
                 }
             }
         }
-    }
+    }}
 
     @if (ViewBag.title == "Participant")
     {
