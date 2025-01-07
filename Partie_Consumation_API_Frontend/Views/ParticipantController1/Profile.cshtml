@@ -206,7 +206,13 @@
                                                         </div>
                                                         @if (@formation.Status == 0)
                                                         {
-                                                            <a href="@formation.url" class="btn btn-primary mt-3" style="border-radius: 20px; padding: 0.5rem 1.5rem;">Accéder à la formation</a>
+                                                            @* <a href="@formation.url" class="btn btn-primary mt-3" style="border-radius: 20px; padding: 0.5rem 1.5rem;">Accéder à la formation</a> *@
+                                                            @* <button type="button" class="btn btn-primary mt-3" style="border-radius: 20px; padding: 0.5rem 1.5rem;" data-bs-toggle="modal" data-bs-target="#evaluateModal-@formation.FormationId">Évaluer la formation</button> *@
+                                                            <a asp-controller="FormationController1" asp-action="ConsulterFormation" asp-route-id="@formation.FormationId" class="btn btn-primary">
+                                                                Accéder à cette formation
+                                                            </a>
+
+
                                                         }
                                                         @if (@formation.Status == 1)
                                                         {
