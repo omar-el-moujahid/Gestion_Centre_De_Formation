@@ -13,10 +13,17 @@ builder.Services.AddHttpClient<FormateurService>();
 builder.Services.AddHttpClient<AuthService>();
 builder.Services.AddHttpClient<PaiementService>();
 
+/**********************************************************/
+
+
+builder.Services.AddSession(o =>
+{
+    o.IdleTimeout = TimeSpan.FromDays(1);
+});
 
 
 
-
+/***********************************************************/
 
 var app = builder.Build();
 
@@ -25,6 +32,9 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 }
+
+app.UseSession();
+
 app.UseStaticFiles();
 
 app.UseRouting();

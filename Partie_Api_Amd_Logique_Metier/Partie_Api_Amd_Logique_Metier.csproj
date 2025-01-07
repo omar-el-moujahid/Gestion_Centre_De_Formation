@@ -196,6 +196,7 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\CompteBancaire.cs" />
+    <Compile Include="Models\CoursesViewModel.cs" />
     <Compile Include="Models\Evaluation.cs" />
     <Compile Include="Models\Formateur.cs" />
     <Compile Include="Models\Formation.cs" />

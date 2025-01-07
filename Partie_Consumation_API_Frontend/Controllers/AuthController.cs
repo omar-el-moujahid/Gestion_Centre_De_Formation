@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using Partie_Api_Amd_Logique_Metier.Models;
@@ -10,7 +11,11 @@ namespace Partie_Consumation_API_Frontend.Controllers
 {
     public class AuthController : Controller
     {
+       
+
+
         private readonly AuthService _authService;
+       
 
         [ActivatorUtilitiesConstructor]
         public AuthController(AuthService authService)
@@ -78,12 +83,17 @@ namespace Partie_Consumation_API_Frontend.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult login(string email , string password, string rolee)
         {
-            if(rolee == "participant")
+           
+            
+            if (rolee == "participant")
             {
+                
 
                var participant = _authService.authparticipant(email, password);
                 if(participant !=null)
                 {
+
+                    HttpContext.Session.SetString("Name",Newtonsoft.Json.JsonConvert.SerializeObject(participant));
                     return RedirectToAction("Index", "Home");
                 }
                 return RedirectToAction("Index", new { role = "participant" });
