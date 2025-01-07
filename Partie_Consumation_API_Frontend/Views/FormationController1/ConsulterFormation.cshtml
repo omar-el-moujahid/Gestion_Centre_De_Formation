@@ -30,11 +30,10 @@
                     @foreach (var media in week)
                     {
                         <div class="lesson-item @(media.Id == Model.Media.First().Id ? "active" : "")"
-                             data-media-id="@media.Id">
-                            <a href="javascript:playVideo('@media.Url', @media.Id)">
-                                <span class="lesson-status"></span>
-                                <span class="lesson-name">@media.Title</span>
-                            </a>
+                             data-media-id="@media.Id"
+                             onclick="changeVideo('@media.Url', @media.Id, '@media.Title')">
+                            <span class="lesson-status"></span>
+                            <span class="lesson-name">@media.Title</span>
                         </div>
                     }
                 </div>
@@ -174,24 +173,51 @@
 </style>
 
 <script>
-    function playVideo(url, mediaId) {
-        const video = document.getElementById('videoPlayer');
-        video.src = url;
-        video.play();
+    function changeVideo(url, mediaId, title) {
+        // Update video
+        const videoPlayer = document.getElementById('videoPlayer');
+        videoPlayer.src = url;
+        videoPlayer.load();
+        videoPlayer.play();
 
+        // Update UI
         document.querySelectorAll('.lesson-item').forEach(item => {
             item.classList.remove('active');
         });
         document.querySelector(`[data-media-id="${mediaId}"]`).classList.add('active');
+
+        // Update breadcrumb and title
+        const courseName = document.querySelector('.course-title').textContent;
+        document.querySelector('.navigation-breadcrumb').textContent = `${courseName} > ${title}`;
+        document.querySelector('h1').textContent = title;
     }
 
     function playNextLesson() {
         const currentLesson = document.querySelector('.lesson-item.active');
         const nextLesson = currentLesson.nextElementSibling;
-        if (nextLesson) {
+
+        if (nextLesson && nextLesson.classList.contains('lesson-item')) {
+            const url = nextLesson.getAttribute('onclick').split("'")[1];
             const mediaId = nextLesson.dataset.mediaId;
-            const videoUrl = nextLesson.querySelector('a').getAttribute('href').split("'")[1];
-            playVideo(videoUrl, mediaId);
+            const title = nextLesson.querySelector('.lesson-name').textContent;
+            changeVideo(url, mediaId, title);
         }
     }
 </script>
+
+<style>
+    .lesson-item {
+        padding: 10px 20px;
+        border-left: 3px solid transparent;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        .lesson-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .lesson-item.active:hover {
+            background-color: #f5f9fa;
+        }
+</style>
