@@ -10,12 +10,14 @@ namespace Partie_Consumation_API_Frontend.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly FormationService _formationService;
-
-        public HomeController(ILogger<HomeController> logger , FormationService formationService)
+        private readonly ParticipantService _participantService;
+        private readonly FormateurService _formateurService;
+        public HomeController(ILogger<HomeController> logger , FormationService formationService, ParticipantService participantService, FormateurService formateurService)
         {
             _logger = logger;
             _formationService = formationService;
-
+            _participantService = participantService;
+            _formateurService = formateurService;
         }
         //public HomeController(FormationService formationService)
         //{
@@ -23,8 +25,15 @@ namespace Partie_Consumation_API_Frontend.Controllers
 
         
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            int Nombreformations = await _formationService.GetCFormationCount();
+            int Nombreparticipants = await _participantService.GetCParticipantCount();
+            int Nombreformateurs = await _formateurService.GetCFormateurCount();
+
+            ViewBag.NombreFormations = Nombreformations;
+            ViewBag.Nombreparticipants = Nombreparticipants;
+            ViewBag.Nombreformateurs = Nombreformateurs;
             return View();
         }
         //public IActionResult Actualite()
@@ -51,6 +60,28 @@ namespace Partie_Consumation_API_Frontend.Controllers
         public IActionResult Services()
         {
             return View();
+        }
+        public async Task<IActionResult> Blog_Grid()
+        {
+            var formations = await _formationService.GetFormations();
+            var categories = await _formationService.GetCategories();
+            var lastFormations = await _formationService.GetLastThreeFormationsByIdAsync(); // Corrigé pour correspondre au nom correct
+
+            var viewModel = new CoursesViewModel
+            {
+                Formations = formations,
+                Categories = categories,
+                LastFormations = lastFormations // Utilisation du nom correct de la propriété
+            };
+
+            return View(viewModel);
+        }
+
+        public IActionResult Blog_Detail()
+        {
+             // Liste vide si aucune donnée
+            return View();
+   
         }
         public IActionResult Price()
         {

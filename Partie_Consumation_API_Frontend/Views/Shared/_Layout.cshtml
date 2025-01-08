@@ -121,6 +121,18 @@
                                     <a class="nav-item nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                     <a class="nav-item nav-link " asp-area="" asp-controller="Home" asp-action="About">About</a>
                                     <a class="nav-item nav-link " asp-area="" asp-controller="Home" asp-action="Services">Services</a>
+
+
+                                    <div class="nav-item dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Blog</a>
+                                        <div class="dropdown-menu m-0">
+                                            <a class="nav-item nav-link " asp-area="" asp-controller="Home" asp-action="Blog_Grid" style="color:black;">Blog Grid</a>
+                                            <a class="nav-item nav-link " asp-area="" asp-controller="Home" asp-action="Blog_Detail" style="color:black;">Blog Detail</a>
+                                        </div>
+                                    </div>
+
+
+
                                     <a class="nav-item nav-link " asp-area="" asp-controller="Home" asp-action="Courses">Courses</a>
                                     <div class="nav-item dropdown">
                                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -225,6 +237,45 @@
                                         <a href="" class="h5 text-white">Home</a>
                                         <i class="far fa-circle text-white px-2"></i>
                                         <a href="" class="h5 text-white">Services</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else if (action == "Create")
+                        {
+                            <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+                                <div class="row py-5">
+                                    <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                                        <h1 class="display-4 text-white animated zoomIn">Comment</h1>
+                                        <a href="" class="h5 text-white">Home</a>
+                                        <i class="far fa-circle text-white px-2"></i>
+                                        <a href="" class="h5 text-white">Comment</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else if (action == "Blog_Grid")
+                        {
+                            <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+                                <div class="row py-5">
+                                    <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                                        <h1 class="display-4 text-white animated zoomIn">Blog Grid</h1>
+                                        <a href="" class="h5 text-white">Home</a>
+                                        <i class="far fa-circle text-white px-2"></i>
+                                        <a href="" class="h5 text-white">Blog Grid</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else if (action == "Blog_Detail")
+                        {
+                            <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+                                <div class="row py-5">
+                                    <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                                        <h1 class="display-4 text-white animated zoomIn">Blog Detail</h1>
+                                        <a href="" class="h5 text-white">Home</a>
+                                        <i class="far fa-circle text-white px-2"></i>
+                                        <a href="" class="h5 text-white">Blog Detail</a>
                                     </div>
                                 </div>
                             </div>

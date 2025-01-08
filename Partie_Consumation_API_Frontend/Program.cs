@@ -1,6 +1,12 @@
-using Partie_Consumation_API_Frontend.Service;
+﻿using Partie_Consumation_API_Frontend.Service;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Partie_Consumation_API_Frontend.Model;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<Partie_Consumation_API_FrontendContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Partie_Consumation_API_FrontendContext") ?? throw new InvalidOperationException("Connection string 'Partie_Consumation_API_FrontendContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -22,6 +28,10 @@ builder.Services.AddSession(o =>
     o.IdleTimeout = TimeSpan.FromDays(1);
 });
 
+
+builder.Services.AddDbContext<Partie_Consumation_API_FrontendContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
 
 /***********************************************************/

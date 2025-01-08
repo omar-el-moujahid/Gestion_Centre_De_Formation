@@ -101,6 +101,18 @@ namespace Partie_Consumation_API_Frontend.Service
         }
 
 
+        public async Task<int> GetCFormateurCount()
+        {
+            var response = await _httpClient.GetAsync("http://localhost:62869/api/Formateurs");
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            var formateurs = JsonSerializer.Deserialize<List<Formateur>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return formateurs?.Count ?? 0; // Retourne 0 si la liste est nulle
+        }
+
+
     }
 
 }
