@@ -1,4 +1,6 @@
 
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
 
@@ -6,6 +8,8 @@ using Partie_Api_Amd_Logique_Metier.Models;
 using Partie_Consumation_API_Frontend.Service;
 using System.Data;
 using System.Reflection.Metadata;
+using System.Security.Claims;
+using System.Security.Principal;
 
 namespace Partie_Consumation_API_Frontend.Controllers
 {
@@ -138,14 +142,23 @@ namespace Partie_Consumation_API_Frontend.Controllers
                     Formateur formateur = await _authService.authformateur(email, password);
                     if (formateur != null)
                     {
-                        HttpContext.Session.SetString("UserEmail", formateur.Email);
-                        HttpContext.Session.SetString("UserId", formateur.Id.ToString());
-                        HttpContext.Session.SetString("UserNom", value: formateur.Name);
-                        HttpContext.Session.SetString("UserPrenom", value: formateur.Prenom);
-                        HttpContext.Session.SetString("UserRolefromclass", value: formateur.Role.Name);
-                        HttpContext.Session.SetString("UserRole", rolee);
+                        var claims = new List<Claim>
+{
+                                new Claim(ClaimTypes.NameIdentifier, formateur.Id.ToString()),
+                                        new Claim(ClaimTypes.Name, formateur.Email),
+                                new Claim(ClaimTypes.Role, "Formateur")
+                                    };
 
-                        return RedirectToAction("Index", "Home");
+                        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var principal = new ClaimsPrincipal(identity);
+
+                        await HttpContext.SignInAsync(
+                            CookieAuthenticationDefaults.AuthenticationScheme,
+                            principal,
+                                new AuthenticationProperties { IsPersistent = true }
+                        );
+
+                        return RedirectToAction("Index", "Profile");
                     }
                     break;
 
@@ -159,5 +172,4 @@ namespace Partie_Consumation_API_Frontend.Controllers
             return RedirectToAction("Index", "Auth", new { role = rolee });
         }
     }
-
 }

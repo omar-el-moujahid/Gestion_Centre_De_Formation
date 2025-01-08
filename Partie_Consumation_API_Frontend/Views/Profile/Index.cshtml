@@ -1,0 +1,353 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Partie_Consumation_API_Frontend.Models.ProfileViewModel
+
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Profile";
+}
+
+
+@section VendorStyles
+   {
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+}
+@section PageStyles
+{
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/Formateur/ProfielStyleSheet.css">
+}
+
+    <div class="container">
+        <div class="main-body">
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                                <div class="mt-3">
+                                    <h4>@Model.Formateur.Name @Model.Formateur.Prenom</h4>
+                                    <p class="text-secondary mb-1">@Model.Formateur.Specialite</p>
+                                    <p class="text-muted font-size-sm">@Model.Formateur.Biographie</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn" onclick="showTab('profile')">Profile</button>
+                        <button class="btn" onclick="showTab('courses')">Mes Cours</button>
+                        <button class="btn" onclick="showTab('dashboard')">Tableau de Bord</button>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="tab-content" id="myTabContent">
+                        <!-- Profile Section -->
+                        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="card mb-3">
+                                <div class="card-body form-container">
+                                    @if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+                                    {
+                                        <div class="alert alert-success">
+                                            @ViewBag.SuccessMessage
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                                    {
+                                        <div class="alert alert-danger">
+                                            @ViewBag.ErrorMessage
+                                        </div>
+                                    }
+
+                                    <form method="post" action="/Profile/UpdateProfile">
+                                        <div class="mb-3">
+                                            <label for="Name" class="form-label">Nom</label>
+                                            <input type="text" id="Name" name="Name" class="form-control" value="@Model.Formateur.Name" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="Prenom" class="form-label">Prénom</label>
+                                            <input type="text" id="Prenom" name="Prenom" class="form-control" value="@Model.Formateur.Prenom" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="Email" class="form-label">Email</label>
+                                            <input type="email" id="Email" name="Email" class="form-control" value="@Model.Formateur.Email" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="Specialite" class="form-label">Spécialité</label>
+                                            <input type="text" id="Specialite" name="Specialite" class="form-control" value="@Model.Formateur.Specialite" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="Biographie" class="form-label">Biographie</label>
+                                            <textarea id="Biographie" name="Biographie" class="form-control" rows="4">@Model.Formateur.Biographie</textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="LienLinkedIn" class="form-label">LinkedIn</label>
+                                            <input type="url" id="LienLinkedIn" name="LienLinkedIn" class="form-control" value="@Model.Formateur.LienLinkedIn">
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                    </form>
+
+                                    @if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+                                    {
+                                        <div class="alert alert-success">
+                                            @ViewBag.SuccessMessage
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                                    {
+                                        <div class="alert alert-danger">
+                                            @ViewBag.ErrorMessage
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mes Formations Section -->
+                        <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h1>Mes Formations</h1>
+                                <button type="button" class="btn btn-primary" onclick="showTab('add-formation')">
+                                    <i class="fas fa-plus"></i> Ajouter une formation
+                                </button>
+                            </div>
+
+                            <div class="formations-container">
+                                @if (ViewBag.Formations != null)
+                                {
+                                    @foreach (dynamic formation in ViewBag.Formations)
+                                    {
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between">
+                                                    <h5 class="card-title">@formation.Titre</h5>
+                                                    <div>
+                                                        <button type="button" class="btn btn-sm btn-primary"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#editFormationModal"
+                                                                data-formation-id="@formation.Id">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <form asp-action="DeleteFormation" method="post" style="display: inline;">
+                                                            <input type="hidden" name="id" value="@formation.Id" />
+                                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette formation ?')">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <p class="card-text">@formation.Description</p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="text-muted">Durée: @formation.EstimationDeDuree</span>
+                                                    <span class="text-muted">Prix: @formation.Prix €</span>
+                                                </div>
+                                                <hr />
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="alert alert-info">
+                                        Aucune formation disponible pour le moment.
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Add Formation Section -->
+                    <div  id="add-formation">
+                            <div class="back-button" onclick="showTab('courses')">
+                                <i class="fas fa-arrow-left"></i> Retour aux formations
+                            </div>
+
+                            @if (TempData["SuccessMessage"] != null)
+                            {
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    @TempData["SuccessMessage"]
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
+
+                            @if (TempData["ErrorMessage"] != null)
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    @TempData["ErrorMessage"]
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
+
+                            <form asp-controller="Profile" asp-action="AddFormation" method="post" enctype="multipart/form-data">
+                                <h3>Ajouter une Formation</h3>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="Titre">Titre</label>
+                                    <input type="text" class="form-control" id="Titre" name="Titre" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="CategoryId">Catégorie</label>
+                                    <select name="CategoryId" id="CategoryId" class="form-control" required>
+                                        @if (Model.Categories != null && Model.Categories.Any())
+                                        {
+                                            foreach (var category in Model.Categories)
+                                            {
+                                                <option value="@category.Id">@category.Name</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <option value="" disabled>Aucune catégorie disponible</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="Description">Description</label>
+                                    <textarea class="form-control" id="Description" name="Description" rows="4" required></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="Prix">Prix</label>
+                                    <input type="number" class="form-control" id="Prix" name="Prix" step="0.01" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="EstimationDeDuree">Durée estimée (heures)</label>
+                                    <input type="number" class="form-control" id="EstimationDeDuree" name="EstimationDeDuree" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="UrlImage">Image de la Formation</label>
+                                    <input type="file" class="form-control" id="UrlImage" name="UrlImage" accept="image/*">
+                                </div>
+
+                                <!-- Section des médias -->
+                                <h5>Ajouter des Médias</h5>
+                                <div id="media-container">
+                                    <div class="media-group border p-3 mb-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Titre du Média</label>
+                                            <input type="text" class="form-control" name="MediaTitre[]" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Type</label>
+                                            <select class="form-control" name="MediaType[]">
+                                                <option value="Video">Vidéo</option>
+                                                <option value="Document">Document</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">URL</label>
+                                            <input type="text" class="form-control" name="MediaUrl[]" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Nombre de Séquences</label>
+                                            <input type="number" class="form-control" name="NombreDeSequence[]" required min="1">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="button" id="add-media" class="btn btn-outline-secondary mb-3">
+                                    <i class="fas fa-plus"></i> Ajouter un autre média
+                                </button>
+
+                                <div class="mt-4">
+                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                    <button type="button" class="btn btn-secondary" onclick="showTab('courses')">Annuler</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal fade" id="editFormationModal" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div id="editFormationContent">
+                                    <!-- Le contenu sera chargé dynamiquement -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tableau de Bord Section -->
+                    <div class="tab-pane fade" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                        <div class="dashboard-container p-4">
+                            <h3 class="mb-4">Statistiques des Formations</h3>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Formation</th>
+                                            <th>Nombre d'inscriptions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model?.Formations != null && Model?.Inscriptions != null)
+                                        {
+                                            // Grouper les inscriptions par formation
+                                            var inscriptionsParFormation = Model.Formations.Select(f => new
+                                            {
+                                                Formation = f,
+                                                NombreInscriptions = Model.Inscriptions.Count(i => i.FormationId == f.Id)
+                                            });
+
+                                            @foreach (var item in inscriptionsParFormation)
+                                            {
+                                                <tr>
+                                                    <td>@item.Formation.Titre</td>
+                                                    <td>@item.NombreInscriptions</td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="2" class="text-center">Aucune donnée disponible</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+@section VendorScripts
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+}
+
+@section PageScripts
+{
+    <script src="~/js/Formateur/ProfielJavaScript.js"></script>
+
+}
