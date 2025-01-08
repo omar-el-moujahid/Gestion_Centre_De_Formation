@@ -1,4 +1,5 @@
-﻿using Partie_Api_Amd_Logique_Metier.Models;
+﻿using Partie_Api_Amd_Logique_Metier;
+using Partie_Api_Amd_Logique_Metier.Models;
 using Partie_Consumation_API_Frontend.Models;
 using System.Text;
 using System.Text.Json;
@@ -75,6 +76,46 @@ namespace Partie_Consumation_API_Frontend.Service
                 return new List<InscriptionViewModel>();
             }
         }
-        
+
+        public async Task<bool> UpdateInscriptionStatus(int formationId, int participantId)
+        {
+            try
+            {
+                // Get the current inscription
+                var inscription = await GetInscriptiony2Ids(formationId, participantId);
+                if (inscription == null)
+                {
+                    Console.WriteLine($"No inscription found for Formation {formationId} and Participant {participantId}");
+                    return false;
+                }
+
+                // Update status
+                inscription.Statut = Statut.Completed;
+
+                // Serialize and send update request
+                var inscriptionJson = JsonSerializer.Serialize(inscription);
+                var content = new StringContent(inscriptionJson, Encoding.UTF8, "application/json");
+
+                // Send PUT request
+                var response = await _httpClient.PutAsync(
+                    $"http://localhost:62869/api/Inscriptions/{inscription.Id}",
+                    content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Failed to update inscription status: {errorMessage}");
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating inscription status: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                return false;
+            }
+        }
     }
 }

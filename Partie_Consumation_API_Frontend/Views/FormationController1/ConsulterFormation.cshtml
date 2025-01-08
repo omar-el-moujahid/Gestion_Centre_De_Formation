@@ -1,9 +1,6 @@
-﻿
-@*
+﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-}
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Participant";
@@ -19,23 +16,13 @@
         </div>
 
         <div class="lesson-list">
-            @{
-                var weeksGrouped = Model.Media.GroupBy(m => (m.nombredesequence - 1) / 7 + 1);
-            }
-
-            @foreach (var week in weeksGrouped)
+            @foreach (var media in Model.Media)
             {
-                <div class="week-section">
-                    <h3>Week @week.Key</h3>
-                    @foreach (var media in week)
-                    {
-                        <div class="lesson-item @(media.Id == Model.Media.First().Id ? "active" : "")"
-                             data-media-id="@media.Id"
-                             onclick="changeVideo('@media.Url', @media.Id, '@media.Title')">
-                            <span class="lesson-status"></span>
-                            <span class="lesson-name">@media.Title</span>
-                        </div>
-                    }
+                <div class="lesson-item @(media.Id == Model.Media.First().Id ? "active" : "")"
+                     data-media-id="@media.Id"
+                     onclick="changeVideo('@Uri.EscapeDataString(media.Url)', @media.Id, '@media.Title')">
+                    <span class="lesson-status"></span>
+                    <span class="lesson-name">@media.Title</span>
                 </div>
             }
         </div>
@@ -63,7 +50,7 @@
 
 <style>
     .course-wrapper {
-        margin-top:6rem;
+        margin-top: 6rem;
         display: flex;
         min-height: 100vh;
     }
@@ -92,16 +79,11 @@
         padding: 20px 0;
     }
 
-    .week-section h3 {
-        color: #666;
-        padding: 10px 20px;
-        margin: 0;
-        font-size: 14px;
-    }
-
     .lesson-item {
         padding: 10px 20px;
         border-left: 3px solid transparent;
+        cursor: pointer;
+        transition: background-color 0.2s;
     }
 
         .lesson-item.active {
@@ -109,12 +91,8 @@
             background: #f5f9fa;
         }
 
-        .lesson-item a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #333;
-            text-decoration: none;
+        .lesson-item:hover {
+            background-color: #f0f0f0;
         }
 
     .lesson-status {
@@ -174,11 +152,21 @@
 
 <script>
     function changeVideo(url, mediaId, title) {
-        // Update video
+        console.log('changeVideo called with:', url, mediaId, title);
+
+        const decodedUrl = decodeURIComponent(url);
+        console.log('Decoded URL:', decodedUrl);
+
         const videoPlayer = document.getElementById('videoPlayer');
-        videoPlayer.src = url;
-        videoPlayer.load();
-        videoPlayer.play();
+        if (videoPlayer) {
+            videoPlayer.src = decodedUrl;
+            videoPlayer.load();
+            videoPlayer.play().catch(error => {
+                console.error('Error playing video:', error);
+            });
+        } else {
+            console.error('Video player not found');
+        }
 
         // Update UI
         document.querySelectorAll('.lesson-item').forEach(item => {
@@ -194,30 +182,20 @@
 
     function playNextLesson() {
         const currentLesson = document.querySelector('.lesson-item.active');
-        const nextLesson = currentLesson.nextElementSibling;
+        if (!currentLesson) {
+            console.error('No active lesson found');
+            return;
+        }
 
+        const nextLesson = currentLesson.nextElementSibling;
         if (nextLesson && nextLesson.classList.contains('lesson-item')) {
             const url = nextLesson.getAttribute('onclick').split("'")[1];
             const mediaId = nextLesson.dataset.mediaId;
             const title = nextLesson.querySelector('.lesson-name').textContent;
+            console.log('Playing next lesson:', url, mediaId, title);
             changeVideo(url, mediaId, title);
+        } else {
+            console.log('No next lesson found');
         }
     }
 </script>
-
-<style>
-    .lesson-item {
-        padding: 10px 20px;
-        border-left: 3px solid transparent;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-
-        .lesson-item:hover {
-            background-color: #f0f0f0;
-        }
-
-        .lesson-item.active:hover {
-            background-color: #f5f9fa;
-        }
-</style>
