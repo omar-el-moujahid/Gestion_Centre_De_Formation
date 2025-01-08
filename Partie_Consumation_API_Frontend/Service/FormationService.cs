@@ -58,6 +58,7 @@ namespace Partie_Consumation_API_Frontend.Service
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<FromationForMedia>(content,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
 
 
         public async Task<List<Category>> GetCategories()
