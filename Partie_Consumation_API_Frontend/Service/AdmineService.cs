@@ -618,7 +618,7 @@ namespace Partie_Consumation_API_Frontend.Service
         {
 
             // Construire l'URL de l'API
-            string url = $"http://localhost:62869/api/Formations{id}";
+            string url = $"http://localhost:62869/api/Formations/{id}";
 
             // Envoyer une requête GET à l'API
             HttpResponseMessage response = await _httpClient.GetAsync(url);
@@ -638,6 +638,12 @@ namespace Partie_Consumation_API_Frontend.Service
             }
 
         }
+
+
+
+
+
+
 
 
         public async Task<List<Inscription>> GetInscriptionByFormationAsync(int FormationId)
@@ -670,14 +676,16 @@ namespace Partie_Consumation_API_Frontend.Service
 
 
 
+
+
+
         public async Task<bool> DeleteFormationAsync(int id)
         {
 
 
-            try
-            {
+           
 
-                HttpResponseMessage response = await _httpClient.DeleteAsync($"http://localhost:62869/api/Inscriptions/{id}");
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"http://localhost:62869/api/Formations/{id}");
 
 
                 if (response.IsSuccessStatusCode)
@@ -690,16 +698,104 @@ namespace Partie_Consumation_API_Frontend.Service
                 }
 
 
-            }
-            catch (Exception ex)
-            {
-                // Gérer les exceptions
-                Console.WriteLine($"Exception: {ex.Message}");
-                return false;
-            }
 
 
         }
+
+
+
+        public async Task<List<Participant>> GetAllStudentsAsync()
+        {
+            try
+            {
+                // Envoi d'une requête GET à l'API
+                HttpResponseMessage response = await _httpClient.GetAsync("http://localhost:62869/api/Participants");
+
+                // Vérification du succès de la réponse
+                if (response.IsSuccessStatusCode)
+                {
+                    // Lecture et désérialisation du contenu JSON
+                    string jsonResponse = await response.Content.ReadAsStringAsync();
+                    var participant = JsonConvert.DeserializeObject<List<Participant>>(jsonResponse);
+
+                    return participant;
+                }
+                else
+                {
+                    // Gestion des erreurs HTTP
+                    throw new HttpRequestException($"Error: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Gestion des exceptions
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                throw;
+            }
+        }
+
+
+
+
+        public async Task<Participant> GetStudentsByIdAsync(int id)
+        {
+
+            // Construire l'URL de l'API
+            string url = $"http://localhost:62869/api/Participants/{id}";
+
+            // Envoyer une requête GET à l'API
+            HttpResponseMessage response = await _httpClient.GetAsync(url);
+
+            // Vérifier si la réponse est un succès
+            if (response.IsSuccessStatusCode)
+            {
+                // Lire et désérialiser la réponse JSON en un objet Formateur
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                Participant students = JsonConvert.DeserializeObject<Participant>(jsonResponse);
+
+                return students; // Retourner le formateur récupéré
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+
+
+        public async Task<List<Inscription>> GetAllInscriptionsAsync()
+        {
+            try
+            {
+                // Envoi d'une requête GET à l'API
+                HttpResponseMessage response = await _httpClient.GetAsync("http://localhost:62869/api/Inscriptions");
+
+                // Vérification du succès de la réponse
+                if (response.IsSuccessStatusCode)
+                {
+                    // Lecture et désérialisation du contenu JSON
+                    string jsonResponse = await response.Content.ReadAsStringAsync();
+                    var inscription = JsonConvert.DeserializeObject<List<Inscription>>(jsonResponse);
+
+                    return inscription;
+                }
+                else
+                {
+                    // Gestion des erreurs HTTP
+                    throw new HttpRequestException($"Error: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Gestion des exceptions
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                throw;
+            }
+        }
+
+
+
     }
 }
 

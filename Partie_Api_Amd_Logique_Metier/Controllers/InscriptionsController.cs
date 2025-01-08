@@ -11,6 +11,10 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Mvc;
 using Partie_Api_Amd_Logique_Metier.Models;
+using HttpGetAttribute = System.Web.Mvc.HttpGetAttribute;
+using RouteAttribute = System.Web.Mvc.RouteAttribute;
+
+
 
 namespace Partie_Api_Amd_Logique_Metier.Controllers
 {
@@ -156,8 +160,8 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
             return Ok(inscriptions); // Retourner la liste des inscriptions enrichies
         }
 
-        [ResponseType(typeof(IEnumerable<Formation>))]
-        public IQueryable<Inscription> GetFormationsByIdCategory(int FormationId)
+        [ResponseType(typeof(IEnumerable<object>))]
+        public IQueryable<Inscription> GetInscriptionByIdFormation(int FormationId )
         {
             return db.Inscriptions
                .Where(f => f.FormationId == FormationId);
