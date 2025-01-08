@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Partie_Consumation_API_Frontend.Model;
 using System.Configuration;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Partie_Consumation_API_FrontendContext>(options =>
@@ -19,6 +20,29 @@ builder.Services.AddHttpClient<FormateurService>();
 builder.Services.AddHttpClient<AuthService>();
 builder.Services.AddHttpClient<PaiementService>();
 builder.Services.AddHttpClient<AdmineService>();
+
+builder.Services.AddSingleton<ProfileService>();
+
+builder.Services.AddHttpClient<AuthService>();
+builder.Services.AddHttpClient<PaiementService>();
+
+builder.Services.AddTransient<ProfileService>();
+builder.Services.AddHttpClient<ProfileService>();
+
+builder.Services.AddHttpClient<ProfileService>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Auth/login";
+        options.AccessDeniedPath = "/Auth/login";
+    });
+
+builder.Services.AddControllersWithViews();
+
+
+
+
 
 /**********************************************************/
 

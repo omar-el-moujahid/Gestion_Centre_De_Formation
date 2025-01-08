@@ -121,7 +121,6 @@ namespace Partie_Consumation_API_Frontend.Service
 
 
 
-
         public async Task<Formateur> authformateur(string mail, string password)
         {
             try
