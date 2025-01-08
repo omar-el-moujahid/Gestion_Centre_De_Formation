@@ -89,6 +89,17 @@ namespace Partie_Consumation_API_Frontend.Service
             }
         }
 
+        public async Task<int> GetCParticipantCount()
+        {
+            var response = await _httpClient.GetAsync("http://localhost:62869/api/Participants");
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            var participants = JsonSerializer.Deserialize<List<Participant>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return participants?.Count ?? 0; // Retourne 0 si la liste est nulle
+        }
+
 
     }
 }

@@ -1,0 +1,144 @@
+﻿
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Blog Detail";
+}
+
+<!-- Blog Start -->
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-8">
+                <!-- Blog Detail Start -->
+                <div class="mb-5">
+                    <img class="img-fluid w-100 rounded mb-5" src="img/blog-1.jpg" alt="">
+                    <h1 class="mb-4">Discover the Perfect Course to Achieve Your Goals and Leave a Comments</h1>
+                    <p>
+                        Discover the course that’s right for you! This detailed program is designed to provide you with the knowledge and skills you need to succeed. With expert-led video lessons, interactive assignments, and practical projects, you’ll gain hands-on experience and confidence in your chosen field. Whether you’re looking to advance your career, learn a new skill, or explore a passion, this course offers flexible learning options to fit your schedule. Enroll today and take the next step toward achieving your goals
+                    </p>
+                    
+                </div>
+                <!-- Blog Detail End -->
+                <!-- Comment List Start -->
+                <div class="mb-5" id="ajout">
+                    <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                        <h3 class="mb-0">Comments</h3>
+                    </div>
+                    <div class="d-flex mb-4">
+                        
+                        <div class="ps-3">
+                            <h6><a >John Doe</a></h6>
+                            <p>
+                                This platform has completely transformed the way I learn. The video lessons are engaging, and the practical assignments helped me apply what I learned in real-life scenarios. Highly recommended
+                            </p>
+                            
+                        </div>
+                    </div>
+                    <div class="d-flex mb-4">
+                        
+                        <div class="ps-3">
+                            <h6><a>John Doe</a></h6>
+                            <p>
+                                I was skeptical about online learning, but this course exceeded all my expectations. The instructors are knowledgeable, and the content is well-structured and easy to follow. I feel much more confident in my skills now.
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="d-flex mb-4">
+                        
+                        <div class="ps-3">
+                            <h6><a>John Doe</a></h6>
+                            <p>
+                                The flexibility of this program is amazing! I could balance my studies with my job and family responsibilities. The projects were challenging but incredibly rewarding. Thank you for such a great experience
+                            </p>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            @* @if (Model != null && Model.Any()) *@
+            @* { *@
+            @*     @foreach (var comment in Model) *@
+            @*     { *@
+            @*         <div class="d-flex mb-4"> *@
+            @*             <div class="ps-3"> *@
+            @*                 <h6><a>@comment.Name</a></h6> *@
+            @*                 <p>@comment.comment</p> *@
+            @*             </div> *@
+            @*         </div> *@
+            @*     } *@
+            @* } *@
+            @* else *@
+            @* { *@
+            @*     <p>No comments available.</p> *@
+            @* } *@
+
+                <!-- Comment List End -->
+                <!-- Comment Form Start -->
+            <div class="bg-light rounded p-5">
+                <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                    <h3 class="mb-0">Leave A Comment</h3>
+                </div>
+
+                @* <a asp-area="" asp-controller="Comments" asp-action="Create" class="btn btn-primary">Comment</a> *@
+
+                <form id="commentForm">
+                    <div class="row g-3">
+                        <div class="col-12 col-sm-6">
+                            <input type="text" id="name" class="form-control bg-white border-0" placeholder="Your Name" style="height: 55px;">
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <input type="email" id="email" class="form-control bg-white border-0" placeholder="Your Email" style="height: 55px;">
+                        </div>
+                        <div class="col-12">
+                            <textarea class="form-control bg-white border-0" id="comment" rows="5" placeholder="Comment"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button type="button" onclick="ajouter()" class="btn btn-primary w-100 py-3">Leave Your Comment</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <script>
+                function ajouter() {
+                    // Récupérer les valeurs des champs du formulaire
+                    var name = document.getElementById('name').value;
+                    var comment = document.getElementById('comment').value;
+
+                    // Vérifier si tous les champs sont remplis
+                    if (name && comment) {
+                        // Créer un nouveau div pour le commentaire
+                        var commentDiv = document.getElementById('ajout');
+
+                        // Sanitize the comment to prevent XSS attacks
+                        var sanitizedComment = comment.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                        var sanitizedName = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+                        // Ajouter le contenu au div
+                        commentDiv.innerHTML += `
+                            <div class="d-flex mb-4">
+                                <div class="ps-3">
+                                    <h6><a>${sanitizedName}</a></h6>
+                                    <p>${sanitizedComment}</p>
+                                </div>
+                            </div>
+                        `;
+
+                        // Clear the form fields
+                        document.getElementById('commentForm').reset();
+                    } else {
+                        alert("Please fill in all the required fields.");
+                    }
+                }
+            </script>
+
+
+            <!-- Sidebar End -->
+        </div>
+    </div>
+</div>
+<!-- Blog End -->

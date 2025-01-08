@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Microsoft.AspNetCore.Http.Features;
+using Microsoft.VisualBasic;
 using Partie_Api_Amd_Logique_Metier.Models;
 using Partie_Consumation_API_Frontend.Models;
 using System.Text.Json;
@@ -59,6 +60,18 @@ namespace Partie_Consumation_API_Frontend.Service
             return JsonSerializer.Deserialize<FromationForMedia>(content,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
+        public async Task<int> GetCFormationCount()
+        {
+            var response = await _httpClient.GetAsync("http://localhost:62869/api/Formations");
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            var formations = JsonSerializer.Deserialize<List<Formation>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return formations?.Count ?? 0; // Retourne 0 si la liste est nulle
+        }
+
+
 
         public async Task<List<Category>> GetCategories()
         {
@@ -68,5 +81,25 @@ namespace Partie_Consumation_API_Frontend.Service
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Category>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
+
+
+        public async Task<List<Formation>> GetLastThreeFormationsByIdAsync()
+        {
+            var response = await _httpClient.GetAsync("http://localhost:62869/api/Formations");
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            var formations = JsonSerializer.Deserialize<List<Formation>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            // Trie par Id décroissant et retourne les 3 premiers
+            return formations?
+                .OrderByDescending(f => f.Id) // Trie les formations par Id décroissant
+                .Take(5) // Prend les 3 premiers résultats
+                .ToList() ?? new List<Formation>(); // Retourne une liste vide si null
+        }
+
+       
+
+
     }
 }

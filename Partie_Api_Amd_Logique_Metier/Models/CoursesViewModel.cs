@@ -9,5 +9,7 @@ namespace Partie_Api_Amd_Logique_Metier.Models
     {
         public IEnumerable<Formation> Formations { get; set; }
         public IEnumerable<Category> Categories { get; set; }
+
+        public IEnumerable<Formation> LastFormations { get; set; }
     }
 }
