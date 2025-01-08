@@ -99,6 +99,13 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
             return CreatedAtRoute("DefaultApi", new { id = formation.Id }, formation);
         }
 
+
+
+
+
+
+
+        
         // DELETE: api/Formations/5
         [ResponseType(typeof(Formation))]
         public IHttpActionResult DeleteFormation(int id)
@@ -178,6 +185,38 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
 
             return Ok(formation);
         }
+
+
+
+
+
+        [HttpGet]
+        [Route("api/Formations/ByIdFormateur/{formateurId}")]
+        public IQueryable<Formation> GetFormationsByListFormateur(int formateurId)
+        {
+             return db.Formations
+                .Where(f => f.FormateurId == formateurId);
+
+           
+        }
+
+        [Route("api/Formations/ByIdCategory/{categoryId}")]
+        public IQueryable<Formation> GetFormationsByIdCategory(int categoryId)
+        {
+            return db.Formations
+               .Where(f => f.CategoryId == categoryId);
+
+
+        }
+
+
+
+
+
+
+
+
+
 
 
     }

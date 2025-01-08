@@ -9,5 +9,12 @@ namespace Partie_Consumation_API_Frontend.Models
         public List<Formateur> Formateurs { get; set; }
 
         public int countFormateur { get; set; }
+
+        public List<Category> Categorys { get; set; }
+
+        public int countCategory { get; set; }
+
+        public List<Formation> formations { get; set; }
+        public int countFormatons { get; set; }
     }
 }
