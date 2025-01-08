@@ -24,6 +24,7 @@ namespace Partie_Api_Amd_Logique_Metier.Models
         public DbSet<Media> Media { get; set; }
         public DbSet<Payment> Payments { get; set; }
 
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // User and Role: Many-to-One

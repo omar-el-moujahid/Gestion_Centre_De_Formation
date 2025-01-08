@@ -1,0 +1,173 @@
+﻿@model Partie_Api_Amd_Logique_Metier.Models.CoursesViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Blog Grid";
+}
+
+<!-- Blog Start -->
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <!-- Blog list Start -->
+            <div class="col-lg-8">
+                <div class="row g-5">
+                   
+                    @* <div class="col-md-6 wow slideInUp" data-wow-delay="0.6s"> *@
+                    @*     <div class="blog-item bg-light rounded overflow-hidden"> *@
+                    @*         <div class="blog-img position-relative overflow-hidden"> *@
+                                
+                    @*             <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">Web Design</a> *@
+                    @*         </div> *@
+                    @*         <div class="p-4"> *@
+                                
+                    @*             <h4 class="mb-3">How to build a website</h4> *@
+                    @*             <p>Dolor et eos labore stet justo sed est sed sed sed dolor stet amet</p> *@
+                    @*             <a class="text-uppercase" asp-area="" asp-controller="Home" asp-action="Courses">Read More <i class="bi bi-arrow-right"></i></a> *@
+                    @*         </div> *@
+                    @*     </div> *@
+                    @* </div> *@
+
+                  
+                    <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+                        <div class="blog-item bg-light rounded overflow-hidden">
+                            <div class="blog-img position-relative overflow-hidden">
+                                
+                                <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">HTML & CSS</a>
+                            </div>
+                            <div class="p-4">
+                                
+                                <h4 class="mb-3">How to build a website with HTML and CSS</h4>
+                                <p>
+                                    Building a website involves several key steps. First, choose a platform, such as WordPress, Wix, or custom HTML/CSS for more control. Next, select a domain name and hosting provider to make your site accessible online. Then, design the layout, ensuring it’s user-friendly and responsive across devices. Afterward, create content such as text, images, and videos that align with your website’s purpose. Finally, optimize for search engines (SEO) and test your website across different browsers and devices before launching it live. Regular maintenance is essential to keep the site up-to-date and secure.
+                                </p>
+                                <a class="text-uppercase" asp-area="" asp-controller="Home" asp-action="Courses">Read More <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
+                        <div class="blog-item bg-light rounded overflow-hidden">
+                            <div class="blog-img position-relative overflow-hidden">
+                                
+                                <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">JavaScript</a>
+                            </div>
+                            <div class="p-4">
+                               
+                                <h4 class="mb-3">How to build a website with JvaScript</h4>
+                                <p>
+                                    To build a website with JavaScript, start by creating an HTML structure for the content and layout. Use JavaScript to add interactivity and dynamic features, such as form validation, content updates, or interactive animations. Link your JavaScript file to the HTML using the tag, and write functions to respond to user actions like clicks or key presses. JavaScript allows you to manipulate the DOM (Document Object Model) to change the content and behavior of the website in real-time, making it more engaging and user-friendly.
+                                </p>
+                                <a class="text-uppercase" asp-area="" asp-controller="Home" asp-action="Courses">Read More <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
+                        <div class="blog-item bg-light rounded overflow-hidden">
+                            
+                            <div class="p-4">
+                                
+                                <h4 class="mb-3">How to build a website with C#</h4>
+                                <p>
+                                    To build a website with C#, use ASP.NET, a powerful framework for creating dynamic web applications. Start by setting up an ASP.NET project in Visual Studio, where you can design the front-end with HTML, CSS, and JavaScript, while using C# for the back-end logic. C# handles server-side tasks such as database connections, form processing, and user authentication. By writing C# code in controllers and models, you can manage data and implement business logic, making the website interactive and functional. The ASP.NET framework simplifies routing, security, and database integration, making it a robust choice for web development.
+                                </p>
+                                <a class="text-uppercase" asp-area="" asp-controller="Home" asp-action="Courses">Read More <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
+                        <div class="blog-item bg-light rounded overflow-hidden">
+                            
+                            <div class="p-4">
+                                
+                                <h4 class="mb-3">Python Courses</h4>
+                                <p>
+                                    Python is ideal for developing eLearning platforms by using frameworks like Django or Flask for interactive features and content management. Libraries like TensorFlow and scikit-learn can add personalized learning through machine learning. Python's simplicity allows for fast development and customization of scalable eLearning applications.
+                                </p>
+                                <a class="text-uppercase" asp-area="" asp-controller="Home" asp-action="Courses">Read More <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                   </div>
+            </div>
+            <!-- Blog list End -->
+            <!-- Sidebar Start -->
+            <div class="col-lg-4">
+                <!-- Category Start -->
+                <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
+                    <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                        <h3 class="mb-0">Categories</h3>
+                    </div>
+                    <div class="link-animated d-flex flex-column justify-content-start">
+                        @foreach (var catégories in Model.Categories)
+                        {
+                            <a class="h5 fw-semi-bold bg-light rounded py-2 px-3 mb-2">@catégories.Name</a>
+                            
+                        }
+                       
+                    </div>
+                </div>
+                <!-- Category End -->
+                <!-- Recent Post Start -->
+                <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
+                    <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                        <h3 class="mb-0">Recent Post</h3>
+                    </div>
+                    @foreach (var formation in Model.LastFormations)
+                    {
+                        <div class="d-flex rounded overflow-hidden mb-3">
+                            <img class="img-fluid" src="@formation.url_image" style="width: 100px; height: 100px; object-fit: cover;" alt="">
+                            <a href="" class="h5 fw-semi-bold d-flex align-items-center bg-light px-3 mb-0">
+                               @formation.Description
+                            </a>
+                        </div>
+
+                    }
+                   
+                </div>
+                <!-- Recent Post End -->
+                <!-- Image Start -->
+                <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
+                    <img src="/img/blog-1.jpg" alt="" class="img-fluid rounded">
+                </div>
+                <!-- Image End -->
+                <!-- Tags Start -->
+                <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
+                    <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                        <h3 class="mb-0">Tag Cloud</h3>
+                    </div>
+                    <div class="d-flex flex-wrap m-n1">
+                        <a  class="btn btn-light m-1">Design</a>
+                        <a  class="btn btn-light m-1">Development</a>
+                        <a  class="btn btn-light m-1">Marketing</a>
+                        <a  class="btn btn-light m-1">SEO</a>
+                        <a  class="btn btn-light m-1">Writing</a>
+                        <a  class="btn btn-light m-1">Consulting</a>
+                        <a  class="btn btn-light m-1">Design</a>
+                        <a  class="btn btn-light m-1">Development</a>
+                        <a  class="btn btn-light m-1">Marketing</a>
+                        <a  class="btn btn-light m-1">SEO</a>
+                        <a  class="btn btn-light m-1">Writing</a>
+                        <a  class="btn btn-light m-1">Consulting</a>
+                    </div>
+                </div>
+                <!-- Tags End -->
+                <!-- Plain Text Start -->
+                <div class="wow slideInUp" data-wow-delay="0.1s">
+                    <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                        <h3 class="mb-0">Plain Text</h3>
+                    </div>
+                    <div class="bg-light text-center" style="padding: 30px;">
+                        <p>Start your learning journey today with our easy-to-use e-learning platform. Access a variety of courses, learn at your own pace, and gain valuable skills to advance your career. Join us now and take the first step toward achieving your goals</p>
+                        
+                    </div>
+                </div>
+                <!-- Plain Text End -->
+            </div>
+            <!-- Sidebar End -->
+        </div>
+    </div>
+</div>
+<!-- Blog End -->

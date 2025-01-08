@@ -16,5 +16,10 @@ namespace Partie_Consumation_API_Frontend.Models
 
         public List<Formation> formations { get; set; }
         public int countFormatons { get; set; }
+
+        public List<Participant> participant {  get; set; }
+        public int countStudents { get; set; }
+
+        public int countInscriptions { get; set; }
     }
 }
