@@ -61,6 +61,7 @@ namespace Partie_Consumation_API_Frontend.Service
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
+
         public async Task<int> GetCFormationCount()
         {
             var response = await _httpClient.GetAsync("http://localhost:62869/api/Formations");
