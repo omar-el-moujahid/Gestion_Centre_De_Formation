@@ -2,6 +2,7 @@
 using Partie_Consumation_API_Frontend.Service;
 using Partie_Api_Amd_Logique_Metier.Models;
 using Microsoft.IdentityModel.Tokens;
+using Partie_Consumation_API_Frontend.Models;
 
 namespace Partie_Consumation_API_Frontend.Controllers
 {
@@ -57,6 +58,34 @@ namespace Partie_Consumation_API_Frontend.Controllers
             return View(formation);
         }
 
+        //public async Task<IActionResult> ConsulterFormation(int id=1)
+        //{
+        //    var formation = await _formationService.GetFormationsbyid(id);
+        //    if (formation == null)
+        //    {
+        //        TempData["ErrorMessage"] = "Formation introuvable.";
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(formation);
+        //}
 
-    }
+        public async Task<IActionResult> ConsulterFormation(int id = 1)
+        {
+            try
+            {
+                var formation = await _formationService.GetFormationWithMedia(id);
+                if (formation == null)
+                {
+                    TempData["ErrorMessage"] = "Formation introuvable.";
+                    return RedirectToAction("Index");
+                }
+                return View(formation);
+            }
+            catch (HttpRequestException)
+            {
+                TempData["ErrorMessage"] = "Erreur lors de la récupération de la formation.";
+                return RedirectToAction("Index");
+            }
+        }
+        }
 }

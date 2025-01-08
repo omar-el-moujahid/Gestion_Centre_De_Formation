@@ -99,6 +99,13 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
             return CreatedAtRoute("DefaultApi", new { id = formation.Id }, formation);
         }
 
+
+
+
+
+
+
+        
         // DELETE: api/Formations/5
         [ResponseType(typeof(Formation))]
         public IHttpActionResult DeleteFormation(int id)
@@ -146,6 +153,71 @@ namespace Partie_Api_Amd_Logique_Metier.Controllers
 
             return Ok(formations); // Retourne la liste des formations
         }
+        [HttpGet]
+        [Route("api/Formations/{id}/Media")]
+        public IHttpActionResult GetFormationWithMedia(int id)
+        {
+            var formation = db.Formations
+                .Where(f => f.Id == id)
+                .Select(f => new
+                {
+                    f.Id,
+                    f.Titre,
+                    f.url_image,
+                    f.Description,
+                    f.Prix,
+                    f.EstimationDeDuree,
+                    Media = f.Media.Select(m => new
+                    {
+                        m.Id,
+                        m.Title,
+                        m.Type,
+                        m.nombredesequence,
+                        m.Url
+                    })
+                })
+                .FirstOrDefault();
+
+            if (formation == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(formation);
+        }
+
+
+
+
+
+        [HttpGet]
+        [Route("api/Formations/ByIdFormateur/{formateurId}")]
+        public IQueryable<Formation> GetFormationsByListFormateur(int formateurId)
+        {
+             return db.Formations
+                .Where(f => f.FormateurId == formateurId);
+
+           
+        }
+
+        [Route("api/Formations/ByIdCategory/{categoryId}")]
+        public IQueryable<Formation> GetFormationsByIdCategory(int categoryId)
+        {
+            return db.Formations
+               .Where(f => f.CategoryId == categoryId);
+
+
+        }
+
+
+
+
+
+
+
+
+
+
 
     }
 }

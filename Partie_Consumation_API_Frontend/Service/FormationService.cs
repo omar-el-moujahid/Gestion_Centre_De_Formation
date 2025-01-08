@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
 using Microsoft.VisualBasic;
 using Partie_Api_Amd_Logique_Metier.Models;
+using Partie_Consumation_API_Frontend.Models;
 using System.Text.Json;
 namespace Partie_Consumation_API_Frontend.Service
 {
@@ -43,7 +44,21 @@ namespace Partie_Consumation_API_Frontend.Service
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Formation>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
-        /**********************************************************************************/
+        //public async Task<List<FromationForMedia>> GetFormationMedias(int formationid)
+        //{
+        //    var response = await _httpClient.GetAsync($"http://localhost:62869/api/Formations/{formationid}/Media");
+        //    response.EnsureSuccessStatusCode();
+
+        //    var content = await response.Content.ReadAsStringAsync();
+        //    return JsonSerializer.Deserialize<List<FromationForMedia>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        //}
+        public async Task<FromationForMedia> GetFormationWithMedia(int formationId)
+        {
+            var response = await _httpClient.GetAsync($"http://localhost:62869/api/Formations/{formationId}/Media");
+            response.EnsureSuccessStatusCode();
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<FromationForMedia>(content,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
         public async Task<int> GetCFormationCount()
         {

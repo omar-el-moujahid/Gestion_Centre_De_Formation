@@ -1,0 +1,475 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Admin";
+}
+
+@section VendorStyles
+{
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+}
+
+@section PageStyles
+{
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/Admin/infocategorirStyleSheet.css">
+}
+
+<div class="grid-container">
+
+    <header class="header">
+
+        <div>
+            <a href="/Home/Index">
+                <svg width="145" height="60" xmlns="http://www.w3.org/2000/svg">
+
+                    <rect x="10" y="15" width="30" height="30" rx="5" ry="5" stroke="black" stroke-width="3" fill="#6930c3" />
+                    <text x="26" y="37" font-size="20" font-family="Arial" text-anchor="middle" fill="white">C</text>
+
+
+                    <text x="50" y="37" font-size="25" font-family="Arial" fill="#64dfdf">Codem</text>
+                </svg>
+            </a>
+        </div>
+
+
+
+
+    </header>
+    <div class="mainContent">
+        <div class="main-title">
+            <a href="/Admine/Index" class="link_spp  button_DASHBOARD" style="background:none;border:none;">
+                <img width="30" height="30" src="~/images/dashbord_img.png" alt="courses" style="color:#e0e1dd; margin-right:5px;" />
+                <h2 style="color:#141414;">DASHBOARD</h2>
+            </a>
+
+        </div>
+
+
+
+        <div class="subMainContent">
+            <aside class="col-lg-4" style="height: 90%;">
+                <div class="card" style="height:100%;padding: 30px;">
+                    <img width="50" height="50" src="~/images/categories_img.png" alt="Alternate Text" />
+                    <p class="cookieHeading">@Model.categrys.Name </p>
+                    <p class="cookieDescription" style="font-size: 20px;">@Model.categrys.Description</p>
+
+                    <div class="buttonContainer">
+                        <a href="/Admine/Index" class="acceptButton">
+                            back
+                        </a>
+
+                    </div>
+
+
+                </div>
+            </aside>
+            <main class="card main-container" style="height: 90%; width: 100%;">
+                <h4 class="font-weight-bold mt-0" style="margin: 20px; padding-top: 50px;">Past Orders</h4>
+                <div  style="width: 95%; max-height:300px">
+                    <div class="card2 mb-4">
+                        <div class="card-body p-4">
+                            <div class="row pb-3">
+                                <div class="col">
+                                    <div class="card-title fs-4 fw-semibold" data-coreui-i18n="Courses" style="color:black;">
+                                        <img width="50" height="50" class="icon" style="padding-right:10px;padding-bottom:10px;" src="~/images/book.png" />
+                                        Courses
+                                    </div>
+
+
+
+                                    @if (ViewData["listFormationsexist"] == "exist"){
+                                        <div class="card-subtitle text-body-secondary mb-4" data-coreui-i18n="registeredFormationCounter">@Model.countFormation registered Courses</div>
+
+                                    }else{
+                                        <div class="card-subtitle text-body-secondary mb-4" data-coreui-i18n="registeredFormationCounter">0 registered Courses</div>
+
+                                    }
+                                    <div class="input-group-Courses input-group">
+                                        <input type="search" placeholder="Search...">
+                                        <img width="30" height="30" src="~/images/search_img.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="table-responsive    has-scrollbar">
+                                <table class="table mb-0">
+                                    <thead class="fw-semibold text-body-secondary">
+                                        <tr class="align-middle">
+
+                                            <th data-coreui-i18n="Courses">
+                                                Courses
+                                            </th>
+                                            <th data-coreui-i18n="Prix">Prix $</th>
+                                            <th data-coreui-i18n="Duration">Duration</th>
+
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody class="tbody-Courses">
+
+
+                                        @if (ViewData["listFormationsexist"] == "exist"){
+                                            @foreach (var subFormation in Model.formationsCategory){
+                                                <tr class="align-middle">
+
+                                                    <td>
+                                                        <div class="text-nowrap">@subFormation.Titre</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Prix">@subFormation.Prix $</span></div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Duration">@subFormation.EstimationDeDuree h</span></div>
+
+                                                    </td>
+
+                                                    
+                                                </tr>
+                                            }
+                                        }
+                                        else{
+                                            <tr>
+                                                <td colspan="3" class="text-center">No administrator found.</td>
+                                            </tr>
+                                        }
+                                        <!--
+                                        <tr class="align-middle">
+
+                                            <td>
+                                                <div class="text-nowrap">Html</div>
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Prix">50$</span></div>
+
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Duration">5h</span></div>
+
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+
+                                                    <button class="btn btn-link nav-link"
+                                                            type="button"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <img width="50" height="50" src="~/images/option_img.png" class="icon" />
+                                                    </button>
+
+
+                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                        style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                        data-popper-placement="bottom-end">
+                                                        <li>
+                                                            <a class="dropdown-item" href="/Admine/infocours" data-coreui-i18n="info">Info</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="align-middle">
+
+                                            <td>
+                                                <div class="text-nowrap">Html</div>
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Prix">50$</span></div>
+
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Duration">5h</span></div>
+
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+
+                                                    <button class="btn btn-link nav-link"
+                                                            type="button"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <img width="50" height="50" src="~/images/option_img.png" class="icon" />
+                                                    </button>
+
+
+                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                        style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                        data-popper-placement="bottom-end">
+                                                        <li>
+                                                            <a class="dropdown-item" href="/Admine/infocours" data-coreui-i18n="info">Info</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+                                        <tr class="align-middle">
+
+                                            <td>
+                                                <div class="text-nowrap">Html</div>
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Prix">50$</span></div>
+
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Duration">5h</span></div>
+
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+
+                                                    <button class="btn btn-link nav-link"
+                                                            type="button"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <img width="50" height="50" src="~/images/option_img.png" class="icon" />
+                                                    </button>
+
+
+                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                        style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                        data-popper-placement="bottom-end">
+                                                        <li>
+                                                            <a class="dropdown-item" href="/Admine/infocours" data-coreui-i18n="info">Info</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        -->
+                                        <!--
+                                        <tr class="align-middle">
+
+                                            <td>
+                                                <div class="text-nowrap">Html</div>
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Prix">50$</span></div>
+
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Duration">5h</span></div>
+
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+
+                                                    <button class="btn btn-link nav-link"
+                                                            type="button"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <img width="50" height="50" src="~/images/option_img.png" class="icon" />
+                                                    </button>
+
+
+                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                        style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                        data-popper-placement="bottom-end">
+                                                        <li>
+                                                            <a class="dropdown-item" href="/Admine/infocours" data-coreui-i18n="info">Info</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+                                        <tr class="align-middle">
+
+                                            <td>
+                                                <div class="text-nowrap">Java Script</div>
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Prix">60$</span></div>
+
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Duration">8h</span></div>
+
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+
+                                                    <button class="btn btn-link nav-link"
+                                                            type="button"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <img width="50" height="50" src="~/images/option_img.png" class="icon" />
+                                                    </button>
+
+
+                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                        style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                        data-popper-placement="bottom-end">
+                                                        <li>
+                                                            <a class="dropdown-item" href="/Admine/infocours" data-coreui-i18n="info">Info</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="align-middle">
+
+                                            <td>
+                                                <div class="text-nowrap">Java Script</div>
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Prix">60$</span></div>
+
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Duration">8h</span></div>
+
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+
+                                                    <button class="btn btn-link nav-link"
+                                                            type="button"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <img width="50" height="50" src="~/images/option_img.png" class="icon" />
+                                                    </button>
+
+
+                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                        style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                        data-popper-placement="bottom-end">
+                                                        <li>
+                                                            <a class="dropdown-item" href="/Admine/infocours" data-coreui-i18n="info">Info</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+                                        <tr class="align-middle">
+
+                                            <td>
+                                                <div class="text-nowrap">Java Script</div>
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Prix">60$</span></div>
+
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Duration">8h</span></div>
+
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+
+                                                    <button class="btn btn-link nav-link"
+                                                            type="button"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <img width="50" height="50" src="~/images/option_img.png" class="icon" />
+                                                    </button>
+
+
+                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                        style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                        data-popper-placement="bottom-end">
+                                                        <li>
+                                                            <a class="dropdown-item" href="/Admine/infocours" data-coreui-i18n="info">Info</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+                                        <tr class="align-middle">
+
+                                            <td>
+                                                <div class="text-nowrap">Java Script</div>
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Prix">60$</span></div>
+
+                                            </td>
+                                            <td>
+                                                <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="Duration">8h</span></div>
+
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+
+                                                    <button class="btn btn-link nav-link"
+                                                            type="button"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <img width="50" height="50" src="~/images/option_img.png" class="icon" />
+                                                    </button>
+
+
+                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                        style="--cui-dropdown-min-width: 8rem; position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 42px, 0px);"
+                                                        data-popper-placement="bottom-end">
+                                                        <li>
+                                                            <a class="dropdown-item" href="/Admine/infocours" data-coreui-i18n="info">Info</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+@section VendorScripts
+{
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+}
+@section PageScripts
+{
+
+    <script src="~/js/Admine/categoryJavaScript.js"></script>
+
+}
