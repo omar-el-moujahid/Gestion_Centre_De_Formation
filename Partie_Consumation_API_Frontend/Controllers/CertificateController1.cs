@@ -23,45 +23,7 @@ public class CertificateController1 : Controller
         this.participantService = participantService;
     }
 
-    //public async Task<IActionResult> CreateCertificate(int formationId, int participantId, string formationTitre)
-    //{
-    //    try
-    //    {
-    //        // 1. Create the certificate
-    //        bool isSuccess = await certificateService.CreateCertificate(formationId, participantId, formationTitre);
 
-    //        if (isSuccess)
-    //        {
-    //            // 2. Update inscription status
-    //            bool isSuccessUpdate = await inscriptionService.UpdateInscriptionStatus(formationId, participantId);
-
-    //            // 3. Generate PDF certificate
-    //            var participant = await participantService.GetParticipantById(participantId);
-    //            var certificatePdfPath = await GenerateCertificatePdf(participant, formationTitre);
-
-    //            // 4. Send email with certificate
-    //            await emailService.SendCertificateEmail(
-    //                participant.Email,
-    //                formationTitre,
-    //                certificatePdfPath
-    //            );
-
-    //            // 5. Store certificate path for download
-    //            TempData["CertificatePath"] = certificatePdfPath;
-
-    //            return RedirectToAction("CertificateSuccess");
-    //        }
-
-    //        TempData["ErrorMessage"] = "Failed to create the certificate.";
-    //        return RedirectToAction("CertificateError");
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Console.WriteLine($"An error occurred: {ex.Message}");
-    //        TempData["ErrorMessage"] = "An unexpected error occurred.";
-    //        return RedirectToAction("CertificateError");
-    //    }
-    //}
     public async Task<IActionResult> CreateCertificate(int formationId, int participantId, string formationTitre)
     {
         try
@@ -101,12 +63,7 @@ public class CertificateController1 : Controller
                     throw new Exception("Participant not found");
                 }
 
-                // Generate PDF certificate
-           
-
-                // Send email
-               
-                // Store certificate path
+            
                 TempData["SuccessMessage"] = "Certificate created and sent successfully!";
 
                 return RedirectToAction("CertificateSuccess");

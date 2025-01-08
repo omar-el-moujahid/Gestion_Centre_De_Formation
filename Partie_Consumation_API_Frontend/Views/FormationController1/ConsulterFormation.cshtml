@@ -25,6 +25,29 @@
                     <span class="lesson-name">@media.Title</span>
                 </div>
             }
+
+            <div>
+                <span class="lesson-status"></span>
+                @* <a asp-controller="CertificateController1" asp-action="CreateCertificate" *@
+                @*    asp-route-formationId="@Model.Id" *@
+                @*    asp-route-participantId="@ViewData["id_p"]" *@
+                @*    asp-route-formationTitre="@Model.Titre" *@
+                @*    class="btn btn-success"> *@
+                @*     Compléter le cours *@
+                @* </a> *@
+                <p>Formation ID: @Model.Id</p>
+                <p>Formation ID: @ViewData["id_p"]</p>
+                <p>Formation ID: @Model.Titre</p>
+                <a asp-controller="CertificateController1"
+                   asp-action="CreateCertificate"
+                   asp-route-formationId="@Model.Id"
+                   asp-route-participantId="@ViewData["id_p"]"
+                   asp-route-formationTitre="@Model.Titre"
+                   class="btn btn-success">
+                    Compléter le cours
+                </a>
+
+            </div>
         </div>
     </div>
 

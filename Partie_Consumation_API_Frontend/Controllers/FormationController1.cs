@@ -69,7 +69,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
         //    return View(formation);
         //}
 
-        public async Task<IActionResult> ConsulterFormation(int id = 1)
+        public async Task<IActionResult> ConsulterFormation(int id , int  id_p)
         {
             try
             {
@@ -79,6 +79,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
                     TempData["ErrorMessage"] = "Formation introuvable.";
                     return RedirectToAction("Index");
                 }
+                ViewData["id_p"] = id_p;
                 return View(formation);
             }
             catch (HttpRequestException)
