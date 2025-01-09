@@ -1,0 +1,192 @@
+﻿@model CertificateViewModel
+@{
+    ViewData["Title"] = "Certificat de Formation";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        @@import url("https://fonts.googleapis.com/css?family=Open+Sans|Pinyon+Script|Rochester");
+
+        body {
+            padding: 20px 0;
+            background: #f5f5f5;
+        }
+
+        @@media print {
+            .print-button {
+                display: none;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .pm-certificate-container {
+                box-shadow: none;
+            }
+        }
+
+        .pm-certificate-container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #fff;
+            padding: 30px;
+            color: #333;
+            font-family: 'Open Sans', sans-serif;
+            box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+            margin: 0 auto;
+        }
+
+        .pm-certificate-border {
+            position: relative;
+            width: 720px;
+            height: 520px;
+            padding: 0;
+            border: 2px solid #6930c3;
+            background-color: #fff;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px;
+            z-index: 2;
+        }
+
+        .certificate-header {
+            text-align: center;
+            padding: 70px 0 20px 0;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+            .certificate-header h1 {
+                color: #6930c3;
+                font-size: 36px;
+                font-family: 'Pinyon Script', cursive;
+                margin: 0;
+                padding: 0;
+            }
+
+        .certificate-body {
+            padding: 40px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+            .certificate-body h2 {
+                font-size: 28px;
+                color: #333;
+                margin: 20px 0;
+                font-family: 'Rochester', cursive;
+            }
+
+            .certificate-body h3 {
+                font-size: 24px;
+                color: #666;
+                margin: 20px 0;
+            }
+
+        .certificate-footer {
+            position: absolute;
+            bottom: 40px;
+            width: 100%;
+            padding: 0 40px;
+        }
+
+        .signature-line {
+            width: 200px;
+            border-top: 2px solid #6930c3;
+            margin: 10px auto;
+        }
+
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #6930c3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+            .print-button:hover {
+                background: #5a2ba3;
+            }
+
+        .seal {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #6930c3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Pinyon Script', cursive;
+            color: #6930c3;
+            font-size: 24px;
+            transform: rotate(-15deg);
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="window.print()" class="print-button">Imprimer le certificat</button>
+
+    <div class="pm-certificate-container">
+        <div class="pm-certificate-border">
+            <div class="logo-container">
+                <svg width="145" height="60" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="15" width="30" height="30" rx="5" ry="5" stroke="black" stroke-width="3" fill="#6930c3"></rect>
+                    <text x="26" y="37" font-size="20" font-family="Arial" text-anchor="middle" fill="white">C</text>
+                    <text x="50" y="37" font-size="25" font-family="Arial" fill="#64dfdf">Codem</text>
+                </svg>
+            </div>
+
+            <div class="certificate-header">
+                <h1>Certificat de Formation</h1>
+            </div>
+
+            <div class="certificate-body">
+                <p>Ce certificat est décerné à</p>
+                <h2>@Model.ParticipantName</h2>
+                <p>pour avoir complété avec succès la formation</p>
+                <h3>@Model.FormationTitle</h3>
+            </div>
+
+            <div class="certificate-footer">
+                <div class="row">
+                    <div class="col-xs-6 text-center">
+                        <div class="signature-line"></div>
+                        <p><strong>CODEM</strong></p>
+                        <p>Direction de la formation</p>
+                    </div>
+                    <div class="col-xs-6 text-center">
+                        <div class="signature-line"></div>
+                        <p><strong>Date de délivrance</strong></p>
+                        <p>@Model.DateDelivrance.ToString("dd MMMM yyyy")</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seal">
+                CODEM
+            </div>
+        </div>
+    </div>
+</body>
+</html>
