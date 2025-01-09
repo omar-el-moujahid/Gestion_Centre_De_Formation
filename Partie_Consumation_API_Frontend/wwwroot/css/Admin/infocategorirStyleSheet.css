@@ -9,8 +9,8 @@ body {
 }
 
     .has-scrollbar::-webkit-scrollbar {
-        width: 12px;
-        height: 12px;
+        width: 5px;
+        height: 5px;
     }
 
     .has-scrollbar::-webkit-scrollbar-thumb {
@@ -166,4 +166,5 @@ body {
         border: none;
         outline: none;
     }
+
 

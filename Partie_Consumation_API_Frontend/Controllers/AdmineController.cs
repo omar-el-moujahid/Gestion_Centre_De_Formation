@@ -43,6 +43,8 @@ namespace Partie_Consumation_API_Frontend.Controllers
             var formateurs = await _admineService.GetAllFormateurAsync();
             var category = await _admineService.GetAllCategoryAsync();
             var formation = await _admineService.GetAllFormationAsync();
+            var students = await _admineService.GetAllStudentsAsync();
+            var inscriptions = await _admineService.GetAllInscriptionsAsync();
             if (admins != null)
             {
                 ViewData["existAdmin"] = "exist";
@@ -80,6 +82,26 @@ namespace Partie_Consumation_API_Frontend.Controllers
                 ViewData["existFormatio"] = "notexist";
 
             }
+            if (students != null)
+            {
+                ViewData["existStudents"] = "exist";
+
+            }
+            else
+            {
+                ViewData["existStudents"] = "notexist";
+
+            }
+            if (inscriptions != null)
+            {
+                ViewData["existInscription"] = "exist";
+
+            }
+            else
+            {
+                ViewData["existInscription"] = "notexist";
+
+            }
 
 
 
@@ -93,7 +115,10 @@ namespace Partie_Consumation_API_Frontend.Controllers
                 Categorys = category,
                 countCategory = category?.Count ?? 0,
                 formations= formation,
-                countFormatons= formation?.Count ?? 0
+                countFormatons= formation?.Count ?? 0,
+                participant=students,
+                countStudents= students?.Count ?? 0,
+                countInscriptions= inscriptions?.Count ?? 0
 
             };
 
@@ -486,7 +511,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
 
             if (category == null)
             {
-                ViewData["Error"] = "category not found.";
+                ViewData["Error_category"] = "category not found.";
                 return RedirectToAction("Index");
             }
 
@@ -505,7 +530,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
 
                 if (!isDeleted)
                 {
-                    ViewData["Error"] = "Échec de la suppression du formateur.";
+                    ViewData["Error_category"] = "Échec de la suppression du categorie.";
                     return RedirectToAction("Index");
                 }
             }
@@ -539,10 +564,13 @@ namespace Partie_Consumation_API_Frontend.Controllers
 
             if (formation == null)
             {
-                ViewData["Error"] = "training not found.";
+
+                ViewData["Error_formation"] = "training not found.";
                 return RedirectToAction("Index");
             }
             
+
+
             var inscriptin = await _admineService.GetInscriptionByFormationAsync(idFormation);
 
             if (inscriptin != null && inscriptin.Any())
@@ -557,7 +585,7 @@ namespace Partie_Consumation_API_Frontend.Controllers
 
                 if (!isDeleted)
                 {
-                    ViewData["Error"] = "Échec de la suppression du Formation.";
+                    ViewData["Error_formation"] = "Échec de la suppression du Formation.";
                     return RedirectToAction("Index");
                 }
             }
@@ -566,6 +594,11 @@ namespace Partie_Consumation_API_Frontend.Controllers
             // Rediriger vers l'index après une opération réussie
             return RedirectToAction("Index");
         }
+
+
+
+
+
 
 
     }
