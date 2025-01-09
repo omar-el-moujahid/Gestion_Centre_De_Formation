@@ -35,9 +35,9 @@
                 @*    class="btn btn-success"> *@
                 @*     Compléter le cours *@
                 @* </a> *@
-                <p>Formation ID: @Model.Id</p>
-                <p>Formation ID: @ViewData["id_p"]</p>
-                <p>Formation ID: @Model.Titre</p>
+                @* <p>Formation ID: @Model.Id</p> *@
+                @* <p>Formation ID: @ViewData["id_p"]</p> *@
+                @* <p>Formation ID: @Model.Titre</p> *@
                 <a asp-controller="CertificateController1"
                    asp-action="CreateCertificate"
                    asp-route-formationId="@Model.Id"
